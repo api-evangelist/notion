@@ -3,7 +3,7 @@ url: >-
   https://raw.githubusercontent.com/api-evangelist/notion/refs/heads/main/apis.yml
 apis:
   - aid: notion:notion
-    name: Notion
+    name: Notion API
     tags:
       - API
     humanURL: https://developers.notion.com
