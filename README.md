@@ -16,7 +16,7 @@ Notion is a versatile all-in-one workspace tool that helps individuals and teams
 ## Timestamps
 
 - **Created:** 2025-01-08 
-- **Modified:** 2025-03-02 
+- **Modified:** 2025-08-04 
 
 ## APIs
 
@@ -33,6 +33,18 @@ Notion API provides developers with the tools and resources to seamlessly integr
 #### Properties
 
 - [Documentation](https://developers.notion.com)
+
+## Common Properties
+
+- [Guide](https://developers.notion.com/docs/getting-started)
+- [Documentation](https://developers.notion.com/reference/intro)
+- [Blog](https://www.notion.com/blog)
+- [Examples](https://developers.notion.com/page/examples)
+- [ChangeLog](https://developers.notion.com/page/changelog)
+- [Versioning](https://developers.notion.com/reference/versioning)
+- [Errors](https://developers.notion.com/reference/status-codes)
+- [RateLimits](https://developers.notion.com/reference/request-limits)
+- [Webhooks](https://developers.notion.com/reference/webhooks)
 
 ## Maintainers
 
