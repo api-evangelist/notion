@@ -13,6 +13,8 @@ apis:
     properties:
       - url: https://developers.notion.com
         type: Documentation
+      - type: OpenAPI
+        url: properties/notion-openapi.yml
     description: >-
       Notion API provides developers with the tools and resources to seamlessly
       integrate Notion, a popular productivity and collaboration tool, with
