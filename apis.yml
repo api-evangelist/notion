@@ -13,8 +13,8 @@ apis:
     properties:
       - url: https://developers.notion.com
         type: Documentation
-      - type: OpenAPI
-        url: properties/notion-openapi.yml
+      - url: properties/notion-openapi.yml
+        type: OpenAPI
     description: >-
       Notion API provides developers with the tools and resources to seamlessly
       integrate Notion, a popular productivity and collaboration tool, with
@@ -31,6 +31,7 @@ tags:
   - Tasks
   - Ideas
   - Collaboration
+  - T1
 type: Index
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 access: 3rd-Party
@@ -73,7 +74,7 @@ common:
   - url: https://www.postman.com/notionhq/notion-s-api-workspace/overview
     name: PostmanWorkspace
 created: '2025-01-08'
-modified: '2025-09-01'
+modified: '2025-09-05'
 position: Consumer
 description: >-
   Notion is a versatile all-in-one workspace tool that helps individuals and
