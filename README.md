@@ -1,5 +1,5 @@
 # Notion (notion)
-Notion is a versatile all-in-one workspace tool that helps individuals and teams organize their tasks, projects, and ideas in a centralized and collaborative platform. With features such as databases, boards, calendars, and documents, Notion allows users to create personalized workflows, track progress, and manage information efficiently. Users can customize their workspace to fit their unique needs, whether it be for project management, note-taking, or knowledge sharing. Notion aims to streamline workflows and enhance productivity by providing a flexible and intuitive platform for organizing and managing projects and information.
+Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases. The Notion API allows developers to integrate Notion with other tools and build custom applications on top of Notion's platform.
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/notion/refs/heads/main/apis.yml)
 
@@ -11,12 +11,12 @@ Notion is a versatile all-in-one workspace tool that helps individuals and teams
 
 ## Tags:
 
- - Projects, Tasks, Ideas, Collaboration
+ - Collaboration, Ideas, Projects, T1, Tasks, collaboration, database, notes, productivity, wiki, workspace
 
 ## Timestamps
 
 - **Created:** 2025-01-08 
-- **Modified:** 2025-08-04 
+- **Modified:** 2025-09-05 
 
 ## APIs
 
@@ -33,6 +33,7 @@ Notion API provides developers with the tools and resources to seamlessly integr
 #### Properties
 
 - [Documentation](https://developers.notion.com)
+- [OpenAPI](properties/notion-openapi.yml)
 
 ## Common Properties
 
@@ -45,10 +46,13 @@ Notion API provides developers with the tools and resources to seamlessly integr
 - [Errors](https://developers.notion.com/reference/status-codes)
 - [RateLimits](https://developers.notion.com/reference/request-limits)
 - [Webhooks](https://developers.notion.com/reference/webhooks)
+- [PostmanWorkspace](https://www.postman.com/notionhq/notion-s-api-workspace/overview)
 
 ## Maintainers
 
 **FN:** Kin Lane
 
 **Email:** info@apievangelist.com
+**FN:** Notion Labs Inc.
 
+**Email:** developers@makenotion.com
