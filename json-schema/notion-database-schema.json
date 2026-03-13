@@ -1,0 +1,516 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/notion/refs/heads/main/json-schema/notion-database-schema.json",
+  "title": "Notion Database",
+  "description": "A Database object represents a database in Notion. Databases are collections of pages organized with a shared schema of properties that define the columns and their types. Databases support filtering, sorting, and querying through the API.",
+  "type": "object",
+  "properties": {
+    "object": {
+      "type": "string",
+      "const": "database",
+      "description": "Always 'database' for database objects."
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the database (UUIDv4)."
+    },
+    "created_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time when the database was created, in ISO 8601 format."
+    },
+    "last_edited_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time when the database was last edited, in ISO 8601 format."
+    },
+    "created_by": {
+      "$ref": "#/$defs/PartialUser",
+      "description": "The user who created the database."
+    },
+    "last_edited_by": {
+      "$ref": "#/$defs/PartialUser",
+      "description": "The user who last edited the database."
+    },
+    "title": {
+      "type": "array",
+      "description": "Title of the database as an array of rich text objects.",
+      "items": {
+        "$ref": "#/$defs/RichText"
+      }
+    },
+    "description": {
+      "type": "array",
+      "description": "Description of the database as an array of rich text objects.",
+      "items": {
+        "$ref": "#/$defs/RichText"
+      }
+    },
+    "icon": {
+      "description": "Database icon, either an emoji or a file.",
+      "oneOf": [
+        { "$ref": "#/$defs/Emoji" },
+        { "$ref": "#/$defs/File" },
+        { "type": "null" }
+      ]
+    },
+    "cover": {
+      "description": "Database cover image, or null if not set.",
+      "oneOf": [
+        { "$ref": "#/$defs/File" },
+        { "type": "null" }
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "description": "Schema of database properties. Keys are property names, values are property schema objects defining the type and configuration of each column.",
+      "additionalProperties": {
+        "$ref": "#/$defs/PropertySchema"
+      }
+    },
+    "parent": {
+      "$ref": "#/$defs/Parent",
+      "description": "The parent of the database (workspace or page)."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The URL of the database in Notion."
+    },
+    "public_url": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "The public URL of the database if published to the web, otherwise null."
+    },
+    "archived": {
+      "type": "boolean",
+      "description": "Whether the database has been archived."
+    },
+    "in_trash": {
+      "type": "boolean",
+      "description": "Whether the database is in the trash."
+    },
+    "is_inline": {
+      "type": "boolean",
+      "description": "Whether the database appears inline within its parent page rather than as a full page."
+    },
+    "request_id": {
+      "type": "string",
+      "description": "A unique identifier for the API request that returned this object."
+    }
+  },
+  "required": [
+    "object",
+    "id",
+    "created_time",
+    "last_edited_time",
+    "created_by",
+    "last_edited_by",
+    "title",
+    "description",
+    "properties",
+    "parent",
+    "url",
+    "archived"
+  ],
+  "$defs": {
+    "PartialUser": {
+      "type": "object",
+      "description": "A partial user reference containing only the object type and ID.",
+      "properties": {
+        "object": {
+          "type": "string",
+          "const": "user",
+          "description": "Always 'user'."
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier for the user."
+        }
+      },
+      "required": ["object", "id"]
+    },
+    "Parent": {
+      "type": "object",
+      "description": "The parent of a database. Can be a workspace or a page.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["database_id", "page_id", "block_id", "workspace"],
+          "description": "The type of parent."
+        },
+        "database_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "page_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "block_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "workspace": {
+          "type": "boolean"
+        }
+      },
+      "required": ["type"]
+    },
+    "PropertySchema": {
+      "type": "object",
+      "description": "Defines a database property's type and configuration. The type field determines which type-specific configuration object is present.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The ID of the property."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the property (column name)."
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the property."
+        },
+        "type": {
+          "type": "string",
+          "description": "The type of property.",
+          "enum": [
+            "title",
+            "rich_text",
+            "number",
+            "select",
+            "multi_select",
+            "date",
+            "people",
+            "files",
+            "checkbox",
+            "url",
+            "email",
+            "phone_number",
+            "formula",
+            "relation",
+            "rollup",
+            "created_time",
+            "created_by",
+            "last_edited_time",
+            "last_edited_by",
+            "status",
+            "unique_id",
+            "verification"
+          ]
+        },
+        "title": {
+          "type": "object",
+          "description": "Title property configuration (empty object)."
+        },
+        "rich_text": {
+          "type": "object",
+          "description": "Rich text property configuration (empty object)."
+        },
+        "number": {
+          "type": "object",
+          "description": "Number property configuration.",
+          "properties": {
+            "format": {
+              "type": "string",
+              "enum": [
+                "number",
+                "number_with_commas",
+                "percent",
+                "dollar",
+                "canadian_dollar",
+                "euro",
+                "pound",
+                "yen",
+                "ruble",
+                "rupee",
+                "won",
+                "yuan",
+                "real",
+                "lira",
+                "rupiah",
+                "franc",
+                "hong_kong_dollar",
+                "new_zealand_dollar",
+                "krona",
+                "norwegian_krone",
+                "mexican_peso",
+                "rand",
+                "new_taiwan_dollar",
+                "danish_krone",
+                "zloty",
+                "baht",
+                "forint",
+                "koruna",
+                "shekel",
+                "chilean_peso",
+                "philippine_peso",
+                "dirham",
+                "colombian_peso",
+                "riyal",
+                "ringgit",
+                "leu",
+                "argentine_peso",
+                "uruguayan_peso",
+                "singapore_dollar"
+              ]
+            }
+          }
+        },
+        "select": {
+          "type": "object",
+          "description": "Select property configuration.",
+          "properties": {
+            "options": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/SelectOption"
+              }
+            }
+          }
+        },
+        "multi_select": {
+          "type": "object",
+          "description": "Multi-select property configuration.",
+          "properties": {
+            "options": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/SelectOption"
+              }
+            }
+          }
+        },
+        "status": {
+          "type": "object",
+          "description": "Status property configuration.",
+          "properties": {
+            "options": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/SelectOption"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "name": { "type": "string" },
+                  "color": { "type": "string" },
+                  "option_ids": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "formula": {
+          "type": "object",
+          "description": "Formula property configuration.",
+          "properties": {
+            "expression": {
+              "type": "string",
+              "description": "The formula expression."
+            }
+          }
+        },
+        "relation": {
+          "type": "object",
+          "description": "Relation property configuration.",
+          "properties": {
+            "database_id": {
+              "type": "string",
+              "format": "uuid",
+              "description": "The ID of the related database."
+            },
+            "type": {
+              "type": "string",
+              "enum": ["single_property", "dual_property"]
+            },
+            "single_property": {
+              "type": "object"
+            },
+            "dual_property": {
+              "type": "object",
+              "properties": {
+                "synced_property_name": { "type": "string" },
+                "synced_property_id": { "type": "string" }
+              }
+            }
+          }
+        },
+        "rollup": {
+          "type": "object",
+          "description": "Rollup property configuration.",
+          "properties": {
+            "relation_property_name": { "type": "string" },
+            "relation_property_id": { "type": "string" },
+            "rollup_property_name": { "type": "string" },
+            "rollup_property_id": { "type": "string" },
+            "function": {
+              "type": "string",
+              "enum": [
+                "count",
+                "count_values",
+                "empty",
+                "not_empty",
+                "unique",
+                "show_unique",
+                "percent_empty",
+                "percent_not_empty",
+                "sum",
+                "average",
+                "median",
+                "min",
+                "max",
+                "range",
+                "earliest_date",
+                "latest_date",
+                "date_range",
+                "checked",
+                "unchecked",
+                "percent_checked",
+                "percent_unchecked",
+                "count_per_group",
+                "show_original"
+              ]
+            }
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "SelectOption": {
+      "type": "object",
+      "description": "A select or multi-select option.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The ID of the option."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the option."
+        },
+        "color": {
+          "type": "string",
+          "description": "The color of the option.",
+          "enum": [
+            "default",
+            "gray",
+            "brown",
+            "orange",
+            "yellow",
+            "green",
+            "blue",
+            "purple",
+            "pink",
+            "red"
+          ]
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the option."
+        }
+      }
+    },
+    "Emoji": {
+      "type": "object",
+      "description": "An emoji icon.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "emoji"
+        },
+        "emoji": {
+          "type": "string",
+          "description": "The emoji character."
+        }
+      },
+      "required": ["type", "emoji"]
+    },
+    "File": {
+      "type": "object",
+      "description": "A file object, either Notion-hosted or external.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["file", "external"]
+        },
+        "file": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri"
+            },
+            "expiry_time": {
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        },
+        "external": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": ["type"]
+    },
+    "RichText": {
+      "type": "object",
+      "description": "A rich text element.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["text", "mention", "equation"]
+        },
+        "text": {
+          "type": "object",
+          "properties": {
+            "content": { "type": "string" },
+            "link": {
+              "type": ["object", "null"],
+              "properties": {
+                "url": { "type": "string", "format": "uri" }
+              }
+            }
+          }
+        },
+        "annotations": {
+          "type": "object",
+          "properties": {
+            "bold": { "type": "boolean" },
+            "italic": { "type": "boolean" },
+            "strikethrough": { "type": "boolean" },
+            "underline": { "type": "boolean" },
+            "code": { "type": "boolean" },
+            "color": { "type": "string" }
+          }
+        },
+        "plain_text": { "type": "string" },
+        "href": {
+          "type": ["string", "null"],
+          "format": "uri"
+        }
+      },
+      "required": ["type", "plain_text"]
+    }
+  }
+}

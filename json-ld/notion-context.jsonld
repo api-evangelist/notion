@@ -1,0 +1,404 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@vocab": "https://api.notion.com/v1/",
+    "notion": "https://api.notion.com/v1/",
+    "schema": "https://schema.org/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+
+    "Page": {
+      "@id": "notion:Page",
+      "@context": {
+        "object": {
+          "@id": "notion:objectType",
+          "@type": "xsd:string"
+        },
+        "id": {
+          "@id": "schema:identifier",
+          "@type": "xsd:string"
+        },
+        "created_time": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "last_edited_time": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "created_by": {
+          "@id": "dcterms:creator",
+          "@type": "@id"
+        },
+        "last_edited_by": {
+          "@id": "notion:lastEditedBy",
+          "@type": "@id"
+        },
+        "archived": {
+          "@id": "notion:archived",
+          "@type": "xsd:boolean"
+        },
+        "in_trash": {
+          "@id": "notion:inTrash",
+          "@type": "xsd:boolean"
+        },
+        "icon": {
+          "@id": "schema:image",
+          "@type": "@id"
+        },
+        "cover": {
+          "@id": "schema:image",
+          "@type": "@id"
+        },
+        "properties": {
+          "@id": "notion:properties",
+          "@container": "@index"
+        },
+        "parent": {
+          "@id": "schema:isPartOf",
+          "@type": "@id"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "public_url": {
+          "@id": "notion:publicUrl",
+          "@type": "@id"
+        }
+      }
+    },
+
+    "Database": {
+      "@id": "notion:Database",
+      "@context": {
+        "object": {
+          "@id": "notion:objectType",
+          "@type": "xsd:string"
+        },
+        "id": {
+          "@id": "schema:identifier",
+          "@type": "xsd:string"
+        },
+        "created_time": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "last_edited_time": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "created_by": {
+          "@id": "dcterms:creator",
+          "@type": "@id"
+        },
+        "last_edited_by": {
+          "@id": "notion:lastEditedBy",
+          "@type": "@id"
+        },
+        "title": {
+          "@id": "schema:name"
+        },
+        "description": {
+          "@id": "schema:description"
+        },
+        "icon": {
+          "@id": "schema:image",
+          "@type": "@id"
+        },
+        "cover": {
+          "@id": "schema:image",
+          "@type": "@id"
+        },
+        "properties": {
+          "@id": "notion:properties",
+          "@container": "@index"
+        },
+        "parent": {
+          "@id": "schema:isPartOf",
+          "@type": "@id"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "public_url": {
+          "@id": "notion:publicUrl",
+          "@type": "@id"
+        },
+        "archived": {
+          "@id": "notion:archived",
+          "@type": "xsd:boolean"
+        },
+        "in_trash": {
+          "@id": "notion:inTrash",
+          "@type": "xsd:boolean"
+        },
+        "is_inline": {
+          "@id": "notion:isInline",
+          "@type": "xsd:boolean"
+        }
+      }
+    },
+
+    "Block": {
+      "@id": "notion:Block",
+      "@context": {
+        "object": {
+          "@id": "notion:objectType",
+          "@type": "xsd:string"
+        },
+        "id": {
+          "@id": "schema:identifier",
+          "@type": "xsd:string"
+        },
+        "type": {
+          "@id": "notion:blockType",
+          "@type": "xsd:string"
+        },
+        "created_time": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "last_edited_time": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "created_by": {
+          "@id": "dcterms:creator",
+          "@type": "@id"
+        },
+        "last_edited_by": {
+          "@id": "notion:lastEditedBy",
+          "@type": "@id"
+        },
+        "parent": {
+          "@id": "schema:isPartOf",
+          "@type": "@id"
+        },
+        "archived": {
+          "@id": "notion:archived",
+          "@type": "xsd:boolean"
+        },
+        "in_trash": {
+          "@id": "notion:inTrash",
+          "@type": "xsd:boolean"
+        },
+        "has_children": {
+          "@id": "notion:hasChildren",
+          "@type": "xsd:boolean"
+        }
+      }
+    },
+
+    "User": {
+      "@id": "notion:User",
+      "@context": {
+        "object": {
+          "@id": "notion:objectType",
+          "@type": "xsd:string"
+        },
+        "id": {
+          "@id": "schema:identifier",
+          "@type": "xsd:string"
+        },
+        "type": {
+          "@id": "notion:userType",
+          "@type": "xsd:string"
+        },
+        "name": {
+          "@id": "schema:name",
+          "@type": "xsd:string"
+        },
+        "avatar_url": {
+          "@id": "schema:image",
+          "@type": "@id"
+        },
+        "person": {
+          "@id": "notion:person"
+        },
+        "bot": {
+          "@id": "notion:bot"
+        }
+      }
+    },
+
+    "Comment": {
+      "@id": "notion:Comment",
+      "@context": {
+        "object": {
+          "@id": "notion:objectType",
+          "@type": "xsd:string"
+        },
+        "id": {
+          "@id": "schema:identifier",
+          "@type": "xsd:string"
+        },
+        "parent": {
+          "@id": "schema:isPartOf",
+          "@type": "@id"
+        },
+        "discussion_id": {
+          "@id": "notion:discussionId",
+          "@type": "xsd:string"
+        },
+        "created_time": {
+          "@id": "dcterms:created",
+          "@type": "xsd:dateTime"
+        },
+        "last_edited_time": {
+          "@id": "dcterms:modified",
+          "@type": "xsd:dateTime"
+        },
+        "created_by": {
+          "@id": "dcterms:creator",
+          "@type": "@id"
+        },
+        "rich_text": {
+          "@id": "notion:richText"
+        }
+      }
+    },
+
+    "RichText": {
+      "@id": "notion:RichText",
+      "@context": {
+        "type": {
+          "@id": "notion:richTextType",
+          "@type": "xsd:string"
+        },
+        "plain_text": {
+          "@id": "schema:text",
+          "@type": "xsd:string"
+        },
+        "href": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "annotations": {
+          "@id": "notion:annotations"
+        }
+      }
+    },
+
+    "Parent": {
+      "@id": "notion:Parent",
+      "@context": {
+        "type": {
+          "@id": "notion:parentType",
+          "@type": "xsd:string"
+        },
+        "database_id": {
+          "@id": "notion:databaseId",
+          "@type": "xsd:string"
+        },
+        "page_id": {
+          "@id": "notion:pageId",
+          "@type": "xsd:string"
+        },
+        "block_id": {
+          "@id": "notion:blockId",
+          "@type": "xsd:string"
+        },
+        "workspace": {
+          "@id": "notion:workspace",
+          "@type": "xsd:boolean"
+        }
+      }
+    },
+
+    "PropertySchema": {
+      "@id": "notion:PropertySchema",
+      "@context": {
+        "id": {
+          "@id": "schema:identifier",
+          "@type": "xsd:string"
+        },
+        "name": {
+          "@id": "schema:name",
+          "@type": "xsd:string"
+        },
+        "type": {
+          "@id": "notion:propertyType",
+          "@type": "xsd:string"
+        }
+      }
+    },
+
+    "Emoji": {
+      "@id": "notion:Emoji",
+      "@context": {
+        "type": {
+          "@id": "notion:iconType",
+          "@type": "xsd:string"
+        },
+        "emoji": {
+          "@id": "notion:emojiCharacter",
+          "@type": "xsd:string"
+        }
+      }
+    },
+
+    "File": {
+      "@id": "notion:File",
+      "@context": {
+        "type": {
+          "@id": "notion:fileHosting",
+          "@type": "xsd:string"
+        },
+        "name": {
+          "@id": "schema:name",
+          "@type": "xsd:string"
+        }
+      }
+    },
+
+    "PaginatedList": {
+      "@id": "notion:PaginatedList",
+      "@context": {
+        "object": {
+          "@id": "notion:objectType",
+          "@type": "xsd:string"
+        },
+        "results": {
+          "@id": "schema:itemListElement",
+          "@container": "@list"
+        },
+        "next_cursor": {
+          "@id": "notion:nextCursor",
+          "@type": "xsd:string"
+        },
+        "has_more": {
+          "@id": "notion:hasMore",
+          "@type": "xsd:boolean"
+        },
+        "type": {
+          "@id": "notion:resultType",
+          "@type": "xsd:string"
+        }
+      }
+    },
+
+    "Error": {
+      "@id": "notion:Error",
+      "@context": {
+        "object": {
+          "@id": "notion:objectType",
+          "@type": "xsd:string"
+        },
+        "status": {
+          "@id": "notion:httpStatus",
+          "@type": "xsd:integer"
+        },
+        "code": {
+          "@id": "notion:errorCode",
+          "@type": "xsd:string"
+        },
+        "message": {
+          "@id": "schema:description",
+          "@type": "xsd:string"
+        }
+      }
+    }
+  }
+}

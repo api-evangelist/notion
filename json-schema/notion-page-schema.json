@@ -1,0 +1,253 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/notion/refs/heads/main/json-schema/notion-page-schema.json",
+  "title": "Notion Page",
+  "description": "A Page object represents a page in a Notion workspace. Pages can exist as standalone pages in a workspace or as items within a database. Each page has properties (metadata fields) and content composed of blocks.",
+  "type": "object",
+  "properties": {
+    "object": {
+      "type": "string",
+      "const": "page",
+      "description": "Always 'page' for page objects."
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the page (UUIDv4)."
+    },
+    "created_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time when the page was created, in ISO 8601 format."
+    },
+    "last_edited_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time when the page was last edited, in ISO 8601 format."
+    },
+    "created_by": {
+      "$ref": "#/$defs/PartialUser",
+      "description": "The user who created the page."
+    },
+    "last_edited_by": {
+      "$ref": "#/$defs/PartialUser",
+      "description": "The user who last edited the page."
+    },
+    "archived": {
+      "type": "boolean",
+      "description": "Whether the page has been archived (trashed)."
+    },
+    "in_trash": {
+      "type": "boolean",
+      "description": "Whether the page is in the trash."
+    },
+    "icon": {
+      "description": "Page icon, either an emoji or a file object.",
+      "oneOf": [
+        { "$ref": "#/$defs/Emoji" },
+        { "$ref": "#/$defs/File" },
+        { "type": "null" }
+      ]
+    },
+    "cover": {
+      "description": "Page cover image as a file object, or null if not set.",
+      "oneOf": [
+        { "$ref": "#/$defs/File" },
+        { "type": "null" }
+      ]
+    },
+    "properties": {
+      "type": "object",
+      "description": "Property values of the page. Keys are property names or IDs, and values are property value objects whose structure depends on the property type.",
+      "additionalProperties": true
+    },
+    "parent": {
+      "$ref": "#/$defs/Parent",
+      "description": "The parent of the page (workspace, page, database, or block)."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "The URL of the page in Notion."
+    },
+    "public_url": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "The public URL of the page if published to the web, otherwise null."
+    },
+    "request_id": {
+      "type": "string",
+      "description": "A unique identifier for the API request that returned this object."
+    }
+  },
+  "required": [
+    "object",
+    "id",
+    "created_time",
+    "last_edited_time",
+    "created_by",
+    "last_edited_by",
+    "archived",
+    "properties",
+    "parent",
+    "url"
+  ],
+  "$defs": {
+    "PartialUser": {
+      "type": "object",
+      "description": "A partial user reference containing only the object type and ID.",
+      "properties": {
+        "object": {
+          "type": "string",
+          "const": "user",
+          "description": "Always 'user'."
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Unique identifier for the user."
+        }
+      },
+      "required": ["object", "id"]
+    },
+    "Parent": {
+      "type": "object",
+      "description": "The parent of a page. Can be a workspace, another page, a database, or a block.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["database_id", "page_id", "block_id", "workspace"],
+          "description": "The type of parent."
+        },
+        "database_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The ID of the parent database. Present when type is 'database_id'."
+        },
+        "page_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The ID of the parent page. Present when type is 'page_id'."
+        },
+        "block_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "The ID of the parent block. Present when type is 'block_id'."
+        },
+        "workspace": {
+          "type": "boolean",
+          "description": "Always true when the parent is the workspace."
+        }
+      },
+      "required": ["type"]
+    },
+    "Emoji": {
+      "type": "object",
+      "description": "An emoji icon.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "emoji"
+        },
+        "emoji": {
+          "type": "string",
+          "description": "The emoji character."
+        }
+      },
+      "required": ["type", "emoji"]
+    },
+    "File": {
+      "type": "object",
+      "description": "A file object, either hosted by Notion or externally.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["file", "external"],
+          "description": "The hosting type of the file."
+        },
+        "file": {
+          "type": "object",
+          "description": "Notion-hosted file details. URLs expire after one hour.",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "description": "The authenticated S3 URL."
+            },
+            "expiry_time": {
+              "type": "string",
+              "format": "date-time",
+              "description": "When the URL expires."
+            }
+          }
+        },
+        "external": {
+          "type": "object",
+          "description": "Externally hosted file details.",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "description": "The external URL."
+            }
+          }
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the file."
+        }
+      },
+      "required": ["type"]
+    },
+    "RichText": {
+      "type": "object",
+      "description": "A rich text element with content, annotations, and optional links.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["text", "mention", "equation"],
+          "description": "The type of rich text."
+        },
+        "text": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "string",
+              "description": "The text content."
+            },
+            "link": {
+              "type": ["object", "null"],
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              }
+            }
+          }
+        },
+        "annotations": {
+          "type": "object",
+          "properties": {
+            "bold": { "type": "boolean" },
+            "italic": { "type": "boolean" },
+            "strikethrough": { "type": "boolean" },
+            "underline": { "type": "boolean" },
+            "code": { "type": "boolean" },
+            "color": { "type": "string" }
+          }
+        },
+        "plain_text": {
+          "type": "string",
+          "description": "The plain text content without annotations."
+        },
+        "href": {
+          "type": ["string", "null"],
+          "format": "uri",
+          "description": "The URL of any link, or null."
+        }
+      },
+      "required": ["type", "plain_text"]
+    }
+  }
+}

@@ -1,0 +1,598 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/notion/refs/heads/main/json-schema/notion-block-schema.json",
+  "title": "Notion Block",
+  "description": "A Block object represents a piece of content within a Notion page. Blocks are the fundamental building units of all page content. They can be paragraphs, headings, lists, images, code, tables, and many other types. Blocks can contain child blocks, forming a tree structure.",
+  "type": "object",
+  "properties": {
+    "object": {
+      "type": "string",
+      "const": "block",
+      "description": "Always 'block' for block objects."
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the block (UUIDv4)."
+    },
+    "parent": {
+      "$ref": "#/$defs/Parent",
+      "description": "The parent of the block (page, block, or database)."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of block. Determines which type-specific content field is populated on this object.",
+      "enum": [
+        "paragraph",
+        "heading_1",
+        "heading_2",
+        "heading_3",
+        "bulleted_list_item",
+        "numbered_list_item",
+        "to_do",
+        "toggle",
+        "child_page",
+        "child_database",
+        "embed",
+        "image",
+        "video",
+        "file",
+        "pdf",
+        "bookmark",
+        "callout",
+        "quote",
+        "equation",
+        "divider",
+        "table_of_contents",
+        "column_list",
+        "column",
+        "link_preview",
+        "synced_block",
+        "template",
+        "link_to_page",
+        "table",
+        "table_row",
+        "code",
+        "audio",
+        "breadcrumb"
+      ]
+    },
+    "created_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time when the block was created, in ISO 8601 format."
+    },
+    "last_edited_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time when the block was last edited, in ISO 8601 format."
+    },
+    "created_by": {
+      "$ref": "#/$defs/PartialUser",
+      "description": "The user who created the block."
+    },
+    "last_edited_by": {
+      "$ref": "#/$defs/PartialUser",
+      "description": "The user who last edited the block."
+    },
+    "archived": {
+      "type": "boolean",
+      "description": "Whether the block has been archived (deleted)."
+    },
+    "in_trash": {
+      "type": "boolean",
+      "description": "Whether the block is in the trash."
+    },
+    "has_children": {
+      "type": "boolean",
+      "description": "Whether the block has child blocks nested within it."
+    },
+    "paragraph": {
+      "$ref": "#/$defs/TextBlock",
+      "description": "Paragraph content. Present when type is 'paragraph'."
+    },
+    "heading_1": {
+      "$ref": "#/$defs/HeadingBlock",
+      "description": "Heading 1 content. Present when type is 'heading_1'."
+    },
+    "heading_2": {
+      "$ref": "#/$defs/HeadingBlock",
+      "description": "Heading 2 content. Present when type is 'heading_2'."
+    },
+    "heading_3": {
+      "$ref": "#/$defs/HeadingBlock",
+      "description": "Heading 3 content. Present when type is 'heading_3'."
+    },
+    "bulleted_list_item": {
+      "$ref": "#/$defs/TextBlock",
+      "description": "Bulleted list item content. Present when type is 'bulleted_list_item'."
+    },
+    "numbered_list_item": {
+      "$ref": "#/$defs/TextBlock",
+      "description": "Numbered list item content. Present when type is 'numbered_list_item'."
+    },
+    "to_do": {
+      "type": "object",
+      "description": "To-do item content. Present when type is 'to_do'.",
+      "properties": {
+        "rich_text": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/RichText" }
+        },
+        "checked": {
+          "type": "boolean",
+          "description": "Whether the to-do is checked."
+        },
+        "color": {
+          "type": "string",
+          "description": "The color of the block."
+        },
+        "children": {
+          "type": "array",
+          "description": "Nested child blocks.",
+          "items": { "$ref": "#" }
+        }
+      }
+    },
+    "toggle": {
+      "$ref": "#/$defs/TextBlock",
+      "description": "Toggle content. Present when type is 'toggle'."
+    },
+    "child_page": {
+      "type": "object",
+      "description": "Child page reference. Present when type is 'child_page'.",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The title of the child page."
+        }
+      },
+      "required": ["title"]
+    },
+    "child_database": {
+      "type": "object",
+      "description": "Child database reference. Present when type is 'child_database'.",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "The title of the child database."
+        }
+      },
+      "required": ["title"]
+    },
+    "embed": {
+      "type": "object",
+      "description": "Embed content. Present when type is 'embed'.",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL of the embedded content."
+        },
+        "caption": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/RichText" }
+        }
+      }
+    },
+    "image": {
+      "$ref": "#/$defs/FileBlock",
+      "description": "Image content. Present when type is 'image'."
+    },
+    "video": {
+      "$ref": "#/$defs/FileBlock",
+      "description": "Video content. Present when type is 'video'."
+    },
+    "file": {
+      "$ref": "#/$defs/FileBlock",
+      "description": "File content. Present when type is 'file'."
+    },
+    "pdf": {
+      "$ref": "#/$defs/FileBlock",
+      "description": "PDF content. Present when type is 'pdf'."
+    },
+    "audio": {
+      "$ref": "#/$defs/FileBlock",
+      "description": "Audio content. Present when type is 'audio'."
+    },
+    "bookmark": {
+      "type": "object",
+      "description": "Bookmark content. Present when type is 'bookmark'.",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL of the bookmarked page."
+        },
+        "caption": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/RichText" }
+        }
+      },
+      "required": ["url"]
+    },
+    "callout": {
+      "type": "object",
+      "description": "Callout content. Present when type is 'callout'.",
+      "properties": {
+        "rich_text": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/RichText" }
+        },
+        "icon": {
+          "oneOf": [
+            { "$ref": "#/$defs/Emoji" },
+            { "$ref": "#/$defs/File" }
+          ]
+        },
+        "color": {
+          "type": "string"
+        },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#" }
+        }
+      }
+    },
+    "quote": {
+      "$ref": "#/$defs/TextBlock",
+      "description": "Quote content. Present when type is 'quote'."
+    },
+    "equation": {
+      "type": "object",
+      "description": "Equation (KaTeX) content. Present when type is 'equation'.",
+      "properties": {
+        "expression": {
+          "type": "string",
+          "description": "The LaTeX equation expression."
+        }
+      },
+      "required": ["expression"]
+    },
+    "divider": {
+      "type": "object",
+      "description": "Divider block (empty object). Present when type is 'divider'."
+    },
+    "table_of_contents": {
+      "type": "object",
+      "description": "Table of contents block. Present when type is 'table_of_contents'.",
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "The color of the block."
+        }
+      }
+    },
+    "code": {
+      "type": "object",
+      "description": "Code block content. Present when type is 'code'.",
+      "properties": {
+        "rich_text": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/RichText" }
+        },
+        "caption": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/RichText" }
+        },
+        "language": {
+          "type": "string",
+          "description": "The programming language of the code block."
+        }
+      }
+    },
+    "table": {
+      "type": "object",
+      "description": "Table block configuration. Present when type is 'table'.",
+      "properties": {
+        "table_width": {
+          "type": "integer",
+          "description": "Number of columns in the table."
+        },
+        "has_column_header": {
+          "type": "boolean",
+          "description": "Whether the first row is a header."
+        },
+        "has_row_header": {
+          "type": "boolean",
+          "description": "Whether the first column is a header."
+        }
+      }
+    },
+    "table_row": {
+      "type": "object",
+      "description": "Table row content. Present when type is 'table_row'.",
+      "properties": {
+        "cells": {
+          "type": "array",
+          "description": "Array of cell contents. Each cell is an array of rich text.",
+          "items": {
+            "type": "array",
+            "items": { "$ref": "#/$defs/RichText" }
+          }
+        }
+      }
+    },
+    "synced_block": {
+      "type": "object",
+      "description": "Synced block content. Present when type is 'synced_block'.",
+      "properties": {
+        "synced_from": {
+          "type": ["object", "null"],
+          "description": "Reference to the original synced block, or null if this is the original.",
+          "properties": {
+            "type": {
+              "type": "string",
+              "const": "block_id"
+            },
+            "block_id": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#" }
+        }
+      }
+    },
+    "link_preview": {
+      "type": "object",
+      "description": "Link preview content. Present when type is 'link_preview'.",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    },
+    "link_to_page": {
+      "type": "object",
+      "description": "Link to page content. Present when type is 'link_to_page'.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["page_id", "database_id"]
+        },
+        "page_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "database_id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "breadcrumb": {
+      "type": "object",
+      "description": "Breadcrumb block (empty object). Present when type is 'breadcrumb'."
+    },
+    "column_list": {
+      "type": "object",
+      "description": "Column list block. Present when type is 'column_list'. Children are column blocks.",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#" }
+        }
+      }
+    },
+    "column": {
+      "type": "object",
+      "description": "Column block. Present when type is 'column'. Children are the blocks in the column.",
+      "properties": {
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#" }
+        }
+      }
+    },
+    "template": {
+      "type": "object",
+      "description": "Template block content. Present when type is 'template'.",
+      "properties": {
+        "rich_text": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/RichText" }
+        },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#" }
+        }
+      }
+    }
+  },
+  "required": [
+    "object",
+    "id",
+    "type",
+    "created_time",
+    "last_edited_time",
+    "has_children"
+  ],
+  "additionalProperties": true,
+  "$defs": {
+    "PartialUser": {
+      "type": "object",
+      "description": "A partial user reference containing only the object type and ID.",
+      "properties": {
+        "object": {
+          "type": "string",
+          "const": "user"
+        },
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      },
+      "required": ["object", "id"]
+    },
+    "Parent": {
+      "type": "object",
+      "description": "The parent of a block.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["database_id", "page_id", "block_id", "workspace"]
+        },
+        "database_id": { "type": "string", "format": "uuid" },
+        "page_id": { "type": "string", "format": "uuid" },
+        "block_id": { "type": "string", "format": "uuid" },
+        "workspace": { "type": "boolean" }
+      },
+      "required": ["type"]
+    },
+    "RichText": {
+      "type": "object",
+      "description": "A rich text element with content, styling annotations, and optional links.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["text", "mention", "equation"]
+        },
+        "text": {
+          "type": "object",
+          "properties": {
+            "content": { "type": "string" },
+            "link": {
+              "type": ["object", "null"],
+              "properties": {
+                "url": { "type": "string", "format": "uri" }
+              }
+            }
+          }
+        },
+        "mention": {
+          "type": "object",
+          "description": "Mention content for referencing users, pages, databases, dates, or links.",
+          "additionalProperties": true
+        },
+        "equation": {
+          "type": "object",
+          "properties": {
+            "expression": { "type": "string" }
+          }
+        },
+        "annotations": {
+          "type": "object",
+          "properties": {
+            "bold": { "type": "boolean" },
+            "italic": { "type": "boolean" },
+            "strikethrough": { "type": "boolean" },
+            "underline": { "type": "boolean" },
+            "code": { "type": "boolean" },
+            "color": { "type": "string" }
+          }
+        },
+        "plain_text": { "type": "string" },
+        "href": {
+          "type": ["string", "null"],
+          "format": "uri"
+        }
+      },
+      "required": ["type", "plain_text"]
+    },
+    "Emoji": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string", "const": "emoji" },
+        "emoji": { "type": "string" }
+      },
+      "required": ["type", "emoji"]
+    },
+    "File": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["file", "external"]
+        },
+        "file": {
+          "type": "object",
+          "properties": {
+            "url": { "type": "string", "format": "uri" },
+            "expiry_time": { "type": "string", "format": "date-time" }
+          }
+        },
+        "external": {
+          "type": "object",
+          "properties": {
+            "url": { "type": "string", "format": "uri" }
+          }
+        }
+      },
+      "required": ["type"]
+    },
+    "TextBlock": {
+      "type": "object",
+      "description": "A text-based block containing rich text, color, and optional children.",
+      "properties": {
+        "rich_text": {
+          "type": "array",
+          "description": "The rich text content of the block.",
+          "items": { "$ref": "#/$defs/RichText" }
+        },
+        "color": {
+          "type": "string",
+          "description": "The color of the block text or background."
+        },
+        "children": {
+          "type": "array",
+          "description": "Nested child blocks.",
+          "items": { "$ref": "#" }
+        }
+      }
+    },
+    "HeadingBlock": {
+      "type": "object",
+      "description": "A heading block containing rich text and toggle information.",
+      "properties": {
+        "rich_text": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/RichText" }
+        },
+        "color": {
+          "type": "string"
+        },
+        "is_toggleable": {
+          "type": "boolean",
+          "description": "Whether the heading is a toggleable heading."
+        }
+      }
+    },
+    "FileBlock": {
+      "type": "object",
+      "description": "A file-based block (image, video, file, pdf, audio).",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["file", "external"],
+          "description": "Whether the file is Notion-hosted or external."
+        },
+        "file": {
+          "type": "object",
+          "properties": {
+            "url": { "type": "string", "format": "uri" },
+            "expiry_time": { "type": "string", "format": "date-time" }
+          }
+        },
+        "external": {
+          "type": "object",
+          "properties": {
+            "url": { "type": "string", "format": "uri" }
+          }
+        },
+        "caption": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/RichText" }
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": ["type"]
+    }
+  }
+}
