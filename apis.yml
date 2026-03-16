@@ -442,13 +442,10 @@ common:
   type: SDK
   description: 'null'
 created: '2025-01-08'
-modified: '2026-03-03'
+modified: '2026-03-16'
 position: Consumer
 description: Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases. The Notion API allows developers to integrate Notion with other tools and build custom applications on top of Notion's platform.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
-- name: Notion Labs Inc.
-  email: developers@makenotion.com
-  url: https://www.notion.so
 specificationVersion: '0.19'
