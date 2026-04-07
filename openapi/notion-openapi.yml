@@ -23,22 +23,6 @@ servers:
 security:
   - bearerAuth: []
 tags:
-  - name: Pages
-    description: >-
-      Pages represent documents in Notion workspaces. They can exist as
-      standalone pages or as entries within a database. Pages contain properties
-      (metadata) and content composed of blocks. Use these endpoints to create,
-      retrieve, update, archive, and manage page properties and content.
-    externalDocs:
-      url: https://developers.notion.com/reference/page
-  - name: Databases
-    description: >-
-      Databases are collections of Notion pages organized with a shared schema
-      of properties. Each database defines columns (properties) that all its
-      pages share. Databases support filtering, sorting, and querying. Use these
-      endpoints to create, retrieve, update, and query databases.
-    externalDocs:
-      url: https://developers.notion.com/reference/database
   - name: Blocks
     description: >-
       Blocks are the fundamental units of content in Notion. Every page is
@@ -48,6 +32,36 @@ tags:
       manage block children.
     externalDocs:
       url: https://developers.notion.com/reference/block
+  - name: Comments
+    description: >-
+      Comments allow integrations to read and create comments on pages and
+      blocks within Notion. Comments support rich text content and are
+      associated with discussion threads.
+    externalDocs:
+      url: https://developers.notion.com/reference/comment-object
+  - name: Databases
+    description: >-
+      Databases are collections of Notion pages organized with a shared schema
+      of properties. Each database defines columns (properties) that all its
+      pages share. Databases support filtering, sorting, and querying. Use these
+      endpoints to create, retrieve, update, and query databases.
+    externalDocs:
+      url: https://developers.notion.com/reference/database
+  - name: Pages
+    description: >-
+      Pages represent documents in Notion workspaces. They can exist as
+      standalone pages or as entries within a database. Pages contain properties
+      (metadata) and content composed of blocks. Use these endpoints to create,
+      retrieve, update, archive, and manage page properties and content.
+    externalDocs:
+      url: https://developers.notion.com/reference/page
+  - name: Search
+    description: >-
+      Search allows querying across all pages and databases that the integration
+      has access to. Results can be filtered by object type and sorted by
+      relevance or last edited time.
+    externalDocs:
+      url: https://developers.notion.com/reference/post-search
   - name: Users
     description: >-
       Users represent people or bots in a Notion workspace. Person users are
@@ -56,20 +70,6 @@ tags:
       or get information about the current bot integration.
     externalDocs:
       url: https://developers.notion.com/reference/user
-  - name: Search
-    description: >-
-      Search allows querying across all pages and databases that the integration
-      has access to. Results can be filtered by object type and sorted by
-      relevance or last edited time.
-    externalDocs:
-      url: https://developers.notion.com/reference/post-search
-  - name: Comments
-    description: >-
-      Comments allow integrations to read and create comments on pages and
-      blocks within Notion. Comments support rich text content and are
-      associated with discussion threads.
-    externalDocs:
-      url: https://developers.notion.com/reference/comment-object
 paths:
   /pages:
     post:

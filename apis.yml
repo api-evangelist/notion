@@ -1,14 +1,13 @@
 aid: notion
-url: 
-  https://raw.githubusercontent.com/api-evangelist/notion/refs/heads/main/apis.yml
+url: https://raw.githubusercontent.com/api-evangelist/notion/refs/heads/main/apis.yml
 apis:
   - aid: notion:notion
     name: Notion API
     tags:
+      - Collaboration
+      - Ideas
       - Projects
       - Tasks
-      - Ideas
-      - Collaboration
     humanURL: https://developers.notion.com
     properties:
       - url: https://developers.notion.com
@@ -121,16 +120,15 @@ apis:
 name: Notion
 tags:
   - Collaboration
+  - Database
   - Ideas
+  - Notes
+  - Productivity
   - Projects
   - T1
   - Tasks
-  - collaboration
-  - database
-  - notes
-  - productivity
-  - wiki
-  - workspace
+  - Wiki
+  - Workspace
 type: Index
 image: https://www.notion.so/images/meta/default.png
 access: 3rd-Party
@@ -192,8 +190,7 @@ common:
     name: Build Your First Integration
     type: GettingStarted
     description: 'null'
-  - url: 
-      https://developers.notion.com/docs/publishing-integrations-to-notions-integration-gallery
+  - url: https://developers.notion.com/docs/publishing-integrations-to-notions-integration-gallery
     name: Publishing to Integration Gallery
     type: Guide
     description: 'null'
@@ -301,8 +298,7 @@ common:
     name: Working with Files and Media
     type: Guide
     description: 'null'
-  - url: 
-      https://developers.notion.com/reference/search-optimizations-and-limitations
+  - url: https://developers.notion.com/reference/search-optimizations-and-limitations
     name: Search Optimizations and Limitations
     type: Documentation
     description: 'null'
@@ -453,9 +449,7 @@ common:
 created: '2025-01-08'
 modified: '2026-03-16'
 position: Consumer
-description: Notion is an all-in-one workspace that combines notes, tasks, 
-  wikis, and databases. The Notion API allows developers to integrate Notion 
-  with other tools and build custom applications on top of Notion's platform.
+description: Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases. The Notion API allows developers to integrate Notion with other tools and build custom applications on top of Notion's platform.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
