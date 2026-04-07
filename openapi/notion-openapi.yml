@@ -74,7 +74,7 @@ paths:
   /pages:
     post:
       operationId: createPage
-      summary: Create a page
+      summary: Notion Create a page
       description: >-
         Creates a new page that is a child of an existing page or database. If
         the parent is a database, the property values of the new page must
@@ -137,7 +137,7 @@ paths:
   /pages/{page_id}:
     get:
       operationId: retrievePage
-      summary: Retrieve a page
+      summary: Notion Retrieve a page
       description: >-
         Retrieves a Page object using the ID specified in the path. Returns page
         properties but not page content (blocks). To retrieve page content, use
@@ -180,7 +180,7 @@ paths:
           $ref: '#/components/responses/RateLimited'
     patch:
       operationId: updatePage
-      summary: Update page properties
+      summary: Notion Update page properties
       description: >-
         Updates the properties of a page. Only the properties specified in the
         request body will be updated. Properties that are not included will
@@ -242,7 +242,7 @@ paths:
   /pages/{page_id}/properties/{property_id}:
     get:
       operationId: retrievePageProperty
-      summary: Retrieve a page property item
+      summary: Notion Retrieve a page property item
       description: >-
         Retrieves a property item from a page. For paginated properties like
         rich text, relation, rollup, and people, this endpoint returns a
@@ -301,7 +301,7 @@ paths:
   /databases:
     post:
       operationId: createDatabase
-      summary: Create a database
+      summary: Notion Create a database
       description: >-
         Creates a database as a subpage of the specified parent page, with the
         specified properties schema. A database can be created with a title,
@@ -374,7 +374,7 @@ paths:
   /databases/{database_id}:
     get:
       operationId: retrieveDatabase
-      summary: Retrieve a database
+      summary: Notion Retrieve a database
       description: >-
         Retrieves a Database object using the ID specified in the path. Returns
         the database properties schema and metadata.
@@ -406,7 +406,7 @@ paths:
           $ref: '#/components/responses/RateLimited'
     patch:
       operationId: updateDatabase
-      summary: Update a database
+      summary: Notion Update a database
       description: >-
         Updates an existing database's title, description, or properties schema.
         Only the fields specified in the request body will be updated. To remove
@@ -479,7 +479,7 @@ paths:
   /databases/{database_id}/query:
     post:
       operationId: queryDatabase
-      summary: Query a database
+      summary: Notion Query a database
       description: >-
         Gets a list of Pages and/or Databases contained in the database,
         filtered and ordered according to the filter and sort conditions
@@ -573,7 +573,7 @@ paths:
   /blocks/{block_id}:
     get:
       operationId: retrieveBlock
-      summary: Retrieve a block
+      summary: Notion Retrieve a block
       description: >-
         Retrieves a Block object using the ID specified in the path. If the
         block is a page, the page properties will be returned. The block's
@@ -607,7 +607,7 @@ paths:
           $ref: '#/components/responses/RateLimited'
     patch:
       operationId: updateBlock
-      summary: Update a block
+      summary: Notion Update a block
       description: >-
         Updates the content of a block. The fields that can be updated depend on
         the block type. Blocks can also be archived by setting the archived
@@ -656,7 +656,7 @@ paths:
           $ref: '#/components/responses/RateLimited'
     delete:
       operationId: deleteBlock
-      summary: Delete a block
+      summary: Notion Delete a block
       description: >-
         Sets a Block object, including page blocks, to archived: true using the
         ID specified in the path. This is equivalent to trashing the block in
@@ -691,7 +691,7 @@ paths:
   /blocks/{block_id}/children:
     get:
       operationId: retrieveBlockChildren
-      summary: Retrieve block children
+      summary: Notion Retrieve block children
       description: >-
         Returns a paginated array of child block objects contained in the block
         using the ID specified. This is used to read page content by passing a
@@ -740,7 +740,7 @@ paths:
           $ref: '#/components/responses/RateLimited'
     patch:
       operationId: appendBlockChildren
-      summary: Append block children
+      summary: Notion Append block children
       description: >-
         Creates and appends new children blocks to the parent block specified by
         block_id. Returns the updated parent block. Blocks can be appended to
@@ -802,7 +802,7 @@ paths:
   /users:
     get:
       operationId: listUsers
-      summary: List all users
+      summary: Notion List all users
       description: >-
         Returns a paginated list of Users for the workspace. Guest users are
         not included. The response may include person users and bot users.
@@ -840,7 +840,7 @@ paths:
   /users/{user_id}:
     get:
       operationId: retrieveUser
-      summary: Retrieve a user
+      summary: Notion Retrieve a user
       description: >-
         Retrieves a User object using the ID specified in the path. Returns
         user details including name, avatar, and type (person or bot).
@@ -873,7 +873,7 @@ paths:
   /users/me:
     get:
       operationId: retrieveBotUser
-      summary: Retrieve the bot user
+      summary: Notion Retrieve the bot user
       description: >-
         Retrieves the bot User associated with the current API token. Returns
         information about the integration including its name, owner, and the
@@ -898,7 +898,7 @@ paths:
   /search:
     post:
       operationId: search
-      summary: Search by title
+      summary: Notion Search by title
       description: >-
         Searches all parent or child pages and databases that have been shared
         with an integration. Returns results based on the query, filter, and
@@ -978,7 +978,7 @@ paths:
   /comments:
     get:
       operationId: listComments
-      summary: Retrieve comments
+      summary: Notion Retrieve comments
       description: >-
         Retrieves a list of unresolved comments from a page or block.
         Requires the integration to have read comment capabilities.
@@ -1024,7 +1024,7 @@ paths:
           $ref: '#/components/responses/RateLimited'
     post:
       operationId: createComment
-      summary: Create a comment
+      summary: Notion Create a comment
       description: >-
         Creates a comment on a page or in an existing discussion thread. The
         integration must have comment capabilities to use this endpoint.
