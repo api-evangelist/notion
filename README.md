@@ -5,35 +5,44 @@ Notion is an all-in-one workspace that combines notes, tasks, wikis, and databas
 
 ## Scope
 
-- **Type:** Index 
-- **Position:** Consumer 
-- **Access:** 3rd-Party 
+- **Type:** Index
+- **Position:** Consumer
+- **Access:** 3rd-Party
 
 ## Tags:
 
- - Collaboration, Ideas, Projects, T1, Tasks, collaboration, database, notes, productivity, wiki, workspace
+ - Collaboration, Database, Ideas, Notes, Productivity, Projects, T1, Tasks, Wiki, Workspace
 
 ## Timestamps
 
-- **Created:** 2025-01-08 
-- **Modified:** 2025-09-05 
+- **Created:** 2025-01-08
+- **Modified:** 2026-04-28
 
 ## APIs
 
 ### Notion API
-Notion API provides developers with the tools and resources to seamlessly integrate Notion, a popular productivity and collaboration tool, with other applications and services. With Notion API, developers can create custom integrations, automate workflows, and access data stored in Notion databases. This enables users to leverage the full potential of Notion by connecting it to their existing software stack and simplifying cross-platform collaboration. In essence, Notion API empowers developers to extend the functionality of Notion and enhance productivity for users across various industries and use cases.
+Notion API provides developers with the tools and resources to seamlessly integrate Notion, a popular productivity and collaboration tool, with other applications and services. With Notion API, developers can create custom integrations, automate workflows, and access data stored in Notion databases. This enables users to leverage the full potential of Notion by connecting it to their existing software stack and simplifying cross-platform collaboration.
 
 **Human URL:** [https://developers.notion.com](https://developers.notion.com)
 
+**Base URL:** https://api.notion.com
 
 #### Tags:
 
- - Projects, Tasks, Ideas, Collaboration
+ - Collaboration, Ideas, Projects, Tasks
 
 #### Properties
 
 - [Documentation](https://developers.notion.com)
-- [OpenAPI](properties/notion-openapi.yml)
+- [OpenAPI](openapi/notion-openapi.yml)
+- [JSONSchema](json-schema/notion-page-schema.json)
+- [JSONSchema](json-schema/notion-database-schema.json)
+- [JSONSchema](json-schema/notion-block-schema.json)
+- [JSONLD](json-ld/notion-context.jsonld)
+- [Authentication](https://developers.notion.com/reference/authentication)
+- [Authorization](https://developers.notion.com/docs/authorization)
+- [GettingStarted](https://developers.notion.com/docs/getting-started)
+- [GitHubRepo](https://github.com/makenotion/notion-sdk-js)
 
 ## Common Properties
 
@@ -46,13 +55,23 @@ Notion API provides developers with the tools and resources to seamlessly integr
 - [Errors](https://developers.notion.com/reference/status-codes)
 - [RateLimits](https://developers.notion.com/reference/request-limits)
 - [Webhooks](https://developers.notion.com/reference/webhooks)
-- [PostmanWorkspace](https://www.postman.com/notionhq/notion-s-api-workspace/overview)
+- [Authentication](https://developers.notion.com/reference/authentication)
+- [Authorization](https://developers.notion.com/docs/authorization)
+- [FAQ](https://developers.notion.com/page/frequently-asked-questions)
+- [OpenAPI Spec](https://developers.notion.com/openapi.json)
+- [TermsOfService](https://www.notion.so/terms)
+- [Security](https://www.notion.com/security)
+- [PrivacyPolicy](https://privacycenter.notion.so/policies)
+- [Pricing](https://www.notion.com/pricing)
+- [StatusPage](https://status.notion.so/)
+- [IntegrationGallery](https://www.notion.com/integrations)
+- [SDK (JavaScript)](https://github.com/makenotion/notion-sdk-js)
+- [GitHubOrg](https://github.com/makenotion)
+- [Support](https://www.notion.com/help)
+- [Community](https://www.notion.com/community)
 
 ## Maintainers
 
 **FN:** Kin Lane
 
-**Email:** info@apievangelist.com
-**FN:** Notion Labs Inc.
-
-**Email:** developers@makenotion.com
+**Email:** kin@apievangelist.com
