@@ -1,0 +1,103 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Notion
+providerId: notion
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - Productivity
+  - Notes
+  - Wiki
+description: Notion per-member-per-month pricing. AI capabilities included on Business+.
+sources:
+  - https://www.notion.com/pricing
+plans:
+  - id: notion-free
+    name: Free
+    type: freemium
+    description: Free plan for individuals.
+    entries:
+      - label: Per member
+        name: seat
+        type: subscription
+        metric: user
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '0.00'
+        userMultiplied: true
+    elements:
+      - name: Trial Notion AI
+      - name: Basic forms and sites
+      - name: 10 external guests
+      - name: 7-day page history
+      - name: 5MB file upload limit
+  - id: notion-plus
+    name: Plus
+    type: paid
+    description: $10/member/month.
+    entries:
+      - label: Per member
+        name: seat
+        type: subscription
+        metric: user
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '10.00'
+        userMultiplied: true
+    elements:
+      - name: Custom forms and sites
+      - name: Unlimited charts/blocks/file uploads
+      - name: Basic integrations
+      - name: 30-day page history
+      - name: Unlimited external guests
+  - id: notion-business
+    name: Business
+    type: paid
+    description: $20/member/month.
+    entries:
+      - label: Per member
+        name: seat
+        type: subscription
+        metric: user
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: '20.00'
+        userMultiplied: true
+    elements:
+      - name: Notion Agent for automation
+      - name: AI Meeting Notes
+      - name: Enterprise Search (Beta)
+      - name: SAML SSO
+      - name: Granular DB permissions
+      - name: Private teamspaces
+      - name: 90-day page history
+  - id: notion-enterprise
+    name: Enterprise
+    type: enterprise
+    description: Custom pricing.
+    entries:
+      - label: Per member (custom)
+        name: seat
+        type: subscription
+        metric: user
+        limit: -1
+        timeFrame: month
+        geo: global
+        unit: 1
+        price: custom
+        userMultiplied: true
+    elements:
+      - name: Zero data retention with LLM providers
+      - name: SCIM
+      - name: Audit log
+      - name: CSM
+      - name: Domain management
+      - name: Unlimited page history

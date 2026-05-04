@@ -110,13 +110,11 @@ apis:
         type: TokenRefreshAPI
       - url: https://developers.notion.com/reference/revoke-token
         type: TokenRevokeAPI
-    description: >-
-      Notion API provides developers with the tools and resources to seamlessly integrate
-      Notion, a popular productivity and collaboration tool, with other applications
-      and services. With Notion API, developers can create custom integrations, automate
-      workflows, and access data stored in Notion databases. This enables users to
-      leverage the full potential of Notion by connecting it to their existing software
-      stack and simplifying cross-platform collaboration.
+    description: Notion API provides developers with the tools and resources to seamlessly integrate Notion,
+      a popular productivity and collaboration tool, with other applications and services. With Notion
+      API, developers can create custom integrations, automate workflows, and access data stored in Notion
+      databases. This enables users to leverage the full potential of Notion by connecting it to their
+      existing software stack and simplifying cross-platform collaboration.
 name: Notion
 tags:
   - Collaboration
@@ -446,10 +444,33 @@ common:
     name: Notion Python SDK (Community)
     type: SDK
     description: 'null'
+  - type: Features
+    data:
+      - Free plan with trial AI, basic forms/sites, 7-day page history
+      - Plus at $10/member/mo with unlimited file uploads and 30-day history
+      - Business at $20/member/mo with Notion Agent, SAML SSO, AI Meeting Notes
+      - Enterprise with SCIM, audit log, zero-retention with LLM providers
+      - REST API for pages, databases, blocks, users, comments, search
+      - 'Rate limit: ~3 req/sec average per integration'
+      - Webhooks for page and database changes
+      - Notion AI integrated across editor and search
+      - Notion Calendar and Notion Mail
+      - Database queries with filters, sorts, and rollups
+      - Custom forms and public sites
+      - Up to 1,000 blocks per request
+      - OAuth 2.0 for public integrations; internal integration tokens
+      - Synced blocks for multi-page content reuse
+      - Comments and mentions across pages
+      - Page version history (7/30/90 days/unlimited by tier)
+    sources:
+      - https://www.notion.com/pricing
+    updated: '2026-05-04'
 created: '2025-01-08'
-modified: '2026-04-28'
+modified: '2026-05-04'
 position: Consumer
-description: Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases. The Notion API allows developers to integrate Notion with other tools and build custom applications on top of Notion's platform.
+description: Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases. The Notion
+  API allows developers to integrate Notion with other tools and build custom applications on top of Notion's
+  platform.
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

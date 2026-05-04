@@ -1,0 +1,36 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Notion
+providerId: notion
+created: '2026-05-04'
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - Rate Limiting
+  - Productivity
+description: 'Notion API: 3 req/sec average per integration.'
+sources:
+  - https://www.notion.com/pricing
+  - https://developers.notion.com/reference/request-limits
+headers:
+  retryAfter: Retry-After
+responseCodes:
+  throttled: 429
+limits:
+  - name: REST API
+    scope: integration
+    metric: requests_per_second
+    limit: 3
+    timeFrame: second
+    notes: Average rate; bursts allowed but sustained rate enforced.
+  - name: Block size
+    scope: request
+    metric: blocks
+    limit: 1000
+    timeFrame: request
+  - name: Property size
+    scope: request
+    metric: characters
+    limit: 2000
+    timeFrame: field
