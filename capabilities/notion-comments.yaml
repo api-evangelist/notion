@@ -1,0 +1,127 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Notion API — Comments
+  description: 'Notion API — Comments. 2 operations. Lead operation: Notion Retrieve comments. Self-contained Naftiko capability
+    covering one Notion business surface.'
+  tags:
+  - Notion
+  - Comments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    NOTION_API_KEY: NOTION_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: notion-comments
+    baseUri: https://api.notion.com/v1
+    description: Notion API — Comments business capability. Self-contained, no shared references.
+    resources:
+    - name: comments
+      path: /comments
+      operations:
+      - name: listcomments
+        method: GET
+        description: Notion Retrieve comments
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: block_id
+          in: query
+          type: string
+          description: The ID of the block or page to retrieve comments for.
+          required: true
+        - name: start_cursor
+          in: query
+          type: string
+          description: Pagination cursor to continue fetching results.
+        - name: page_size
+          in: query
+          type: integer
+          description: Maximum number of comments to return (max 100).
+      - name: createcomment
+        method: POST
+        description: Notion Create a comment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.NOTION_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: notion-comments-rest
+    port: 8080
+    description: REST adapter for Notion API — Comments. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/comments
+      name: comments
+      description: REST surface for comments.
+      operations:
+      - method: GET
+        name: listcomments
+        description: Notion Retrieve comments
+        call: notion-comments.listcomments
+        with:
+          block_id: rest.block_id
+          start_cursor: rest.start_cursor
+          page_size: rest.page_size
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcomment
+        description: Notion Create a comment
+        call: notion-comments.createcomment
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: notion-comments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Notion API — Comments. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: notion-retrieve-comments
+      description: Notion Retrieve comments
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: notion-comments.listcomments
+      with:
+        block_id: tools.block_id
+        start_cursor: tools.start_cursor
+        page_size: tools.page_size
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: notion-create-comment
+      description: Notion Create a comment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: notion-comments.createcomment
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

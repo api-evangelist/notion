@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Notion API — Search
+  description: 'Notion API — Search. 1 operations. Lead operation: Notion Search by title. Self-contained Naftiko capability
+    covering one Notion business surface.'
+  tags:
+  - Notion
+  - Search
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    NOTION_API_KEY: NOTION_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: notion-search
+    baseUri: https://api.notion.com/v1
+    description: Notion API — Search business capability. Self-contained, no shared references.
+    resources:
+    - name: search
+      path: /search
+      operations:
+      - name: search
+        method: POST
+        description: Notion Search by title
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.NOTION_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: notion-search-rest
+    port: 8080
+    description: REST adapter for Notion API — Search. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/search
+      name: search
+      description: REST surface for search.
+      operations:
+      - method: POST
+        name: search
+        description: Notion Search by title
+        call: notion-search.search
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: notion-search-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Notion API — Search. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: notion-search-title
+      description: Notion Search by title
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: notion-search.search
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,220 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Notion API — Databases
+  description: 'Notion API — Databases. 4 operations. Lead operation: Notion Create a database. Self-contained Naftiko capability
+    covering one Notion business surface.'
+  tags:
+  - Notion
+  - Databases
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    NOTION_API_KEY: NOTION_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: notion-databases
+    baseUri: https://api.notion.com/v1
+    description: Notion API — Databases business capability. Self-contained, no shared references.
+    resources:
+    - name: databases
+      path: /databases
+      operations:
+      - name: createdatabase
+        method: POST
+        description: Notion Create a database
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: databases-database_id
+      path: /databases/{database_id}
+      operations:
+      - name: retrievedatabase
+        method: GET
+        description: Notion Retrieve a database
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: database_id
+          in: path
+          type: string
+          description: The ID of the database to retrieve.
+          required: true
+      - name: updatedatabase
+        method: PATCH
+        description: Notion Update a database
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: database_id
+          in: path
+          type: string
+          description: The ID of the database to update.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: databases-database_id-query
+      path: /databases/{database_id}/query
+      operations:
+      - name: querydatabase
+        method: POST
+        description: Notion Query a database
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: database_id
+          in: path
+          type: string
+          description: The ID of the database to query.
+          required: true
+        - name: filter_properties
+          in: query
+          type: array
+          description: A list of property IDs to include in the response. Only the specified properties will be returned for
+            each page.
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: bearer
+      token: '{{env.NOTION_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: notion-databases-rest
+    port: 8080
+    description: REST adapter for Notion API — Databases. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/databases
+      name: databases
+      description: REST surface for databases.
+      operations:
+      - method: POST
+        name: createdatabase
+        description: Notion Create a database
+        call: notion-databases.createdatabase
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/databases/{database-id}
+      name: databases-database-id
+      description: REST surface for databases-database_id.
+      operations:
+      - method: GET
+        name: retrievedatabase
+        description: Notion Retrieve a database
+        call: notion-databases.retrievedatabase
+        with:
+          database_id: rest.database_id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatedatabase
+        description: Notion Update a database
+        call: notion-databases.updatedatabase
+        with:
+          database_id: rest.database_id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/databases/{database-id}/query
+      name: databases-database-id-query
+      description: REST surface for databases-database_id-query.
+      operations:
+      - method: POST
+        name: querydatabase
+        description: Notion Query a database
+        call: notion-databases.querydatabase
+        with:
+          database_id: rest.database_id
+          filter_properties: rest.filter_properties
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: notion-databases-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Notion API — Databases. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: notion-create-database
+      description: Notion Create a database
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: notion-databases.createdatabase
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: notion-retrieve-database
+      description: Notion Retrieve a database
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: notion-databases.retrievedatabase
+      with:
+        database_id: tools.database_id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: notion-update-database
+      description: Notion Update a database
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: notion-databases.updatedatabase
+      with:
+        database_id: tools.database_id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: notion-query-database
+      description: Notion Query a database
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: notion-databases.querydatabase
+      with:
+        database_id: tools.database_id
+        filter_properties: tools.filter_properties
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
