@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PropertySchema",
+  "title": "PropertySchema",
+  "type": "object",
+  "description": "A Property Schema object defines a database property's configuration including its type and type-specific settings. Common property types include title, rich_text, number, select, multi_select, date, people, files, checkbox, url, email, phone_number, formula, relation, rollup, created_time, created_by, last_edited_time, last_edited_by, and status.",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "The ID of the property."
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the property."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of property.",
+      "enum": [
+        "title",
+        "rich_text",
+        "number",
+        "select",
+        "multi_select",
+        "date",
+        "people",
+        "files",
+        "checkbox",
+        "url",
+        "email",
+        "phone_number",
+        "formula",
+        "relation",
+        "rollup",
+        "created_time",
+        "created_by",
+        "last_edited_time",
+        "last_edited_by",
+        "status",
+        "unique_id",
+        "verification"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

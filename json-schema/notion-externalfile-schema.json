@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExternalFile",
+  "title": "ExternalFile",
+  "type": "object",
+  "description": "An external file reference.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "external",
+      "description": "Always \"external\"."
+    },
+    "external": {
+      "type": "object",
+      "required": [
+        "url"
+      ],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL of the external file."
+        }
+      }
+    }
+  },
+  "required": [
+    "type",
+    "external"
+  ]
+}

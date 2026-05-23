@@ -1,0 +1,27 @@
+name: Notion Domain Vocabulary
+provider: Notion
+providerId: notion
+description: Tag-derived vocabulary for the Notion API surface; sourced from openapi/ tags.
+terms:
+- term: Blocks
+  description: Blocks are the fundamental units of content in Notion. Every page is composed of blocks, which can be paragraphs,
+    headings, images, tables, lists, and many other types. Blocks can have children, forming a tree structure. Use these endpoints
+    to retrieve, update, delete blocks and manage block children.
+- term: Comments
+  description: Comments allow integrations to read and create comments on pages and blocks within Notion. Comments support
+    rich text content and are associated with discussion threads.
+- term: Databases
+  description: Databases are collections of Notion pages organized with a shared schema of properties. Each database defines
+    columns (properties) that all its pages share. Databases support filtering, sorting, and querying. Use these endpoints
+    to create, retrieve, update, and query databases.
+- term: Pages
+  description: Pages represent documents in Notion workspaces. They can exist as standalone pages or as entries within a database.
+    Pages contain properties (metadata) and content composed of blocks. Use these endpoints to create, retrieve, update, archive,
+    and manage page properties and content.
+- term: Search
+  description: Search allows querying across all pages and databases that the integration has access to. Results can be filtered
+    by object type and sorted by relevance or last edited time.
+- term: Users
+  description: Users represent people or bots in a Notion workspace. Person users are human members of the workspace, while
+    bot users represent API integrations. Use these endpoints to list users, retrieve specific users, or get information about
+    the current bot integration.

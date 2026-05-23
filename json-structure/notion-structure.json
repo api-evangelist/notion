@@ -1,0 +1,336 @@
+{
+  "provider": "Notion",
+  "providerId": "notion",
+  "kind": "json-structure",
+  "description": "Structural overview of the Notion API surface; extracted from openapi/.",
+  "schemaCount": 14,
+  "operationCount": 19,
+  "schemas": [
+    {
+      "name": "Page",
+      "type": "object",
+      "propertyCount": 14,
+      "required": [
+        "object",
+        "id",
+        "created_time",
+        "last_edited_time",
+        "created_by",
+        "last_edited_by",
+        "archived",
+        "properties",
+        "parent",
+        "url"
+      ]
+    },
+    {
+      "name": "Database",
+      "type": "object",
+      "propertyCount": 17,
+      "required": [
+        "object",
+        "id",
+        "created_time",
+        "last_edited_time",
+        "created_by",
+        "last_edited_by",
+        "title",
+        "description",
+        "properties",
+        "parent",
+        "url",
+        "archived"
+      ]
+    },
+    {
+      "name": "Block",
+      "type": "object",
+      "propertyCount": 11,
+      "required": [
+        "object",
+        "id",
+        "type",
+        "created_time",
+        "last_edited_time",
+        "has_children"
+      ]
+    },
+    {
+      "name": "User",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "object",
+        "id"
+      ]
+    },
+    {
+      "name": "PartialUser",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "object",
+        "id"
+      ]
+    },
+    {
+      "name": "Comment",
+      "type": "object",
+      "propertyCount": 8,
+      "required": [
+        "object",
+        "id",
+        "parent",
+        "discussion_id",
+        "created_time",
+        "last_edited_time",
+        "created_by",
+        "rich_text"
+      ]
+    },
+    {
+      "name": "RichText",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "type",
+        "plain_text"
+      ]
+    },
+    {
+      "name": "Parent",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "name": "PropertySchema",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "Emoji",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "type",
+        "emoji"
+      ]
+    },
+    {
+      "name": "File",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "type"
+      ]
+    },
+    {
+      "name": "ExternalFile",
+      "type": "object",
+      "propertyCount": 2,
+      "required": [
+        "type",
+        "external"
+      ]
+    },
+    {
+      "name": "PaginatedList",
+      "type": "object",
+      "propertyCount": 6,
+      "required": [
+        "object",
+        "results",
+        "next_cursor",
+        "has_more"
+      ]
+    },
+    {
+      "name": "Error",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "object",
+        "status",
+        "code",
+        "message"
+      ]
+    }
+  ],
+  "operations": [
+    {
+      "method": "POST",
+      "path": "/pages",
+      "operationId": "createPage",
+      "summary": "Notion Create a page",
+      "tags": [
+        "Pages"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/pages/{page_id}",
+      "operationId": "retrievePage",
+      "summary": "Notion Retrieve a page",
+      "tags": [
+        "Pages"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/pages/{page_id}",
+      "operationId": "updatePage",
+      "summary": "Notion Update page properties",
+      "tags": [
+        "Pages"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/pages/{page_id}/properties/{property_id}",
+      "operationId": "retrievePageProperty",
+      "summary": "Notion Retrieve a page property item",
+      "tags": [
+        "Pages"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/databases",
+      "operationId": "createDatabase",
+      "summary": "Notion Create a database",
+      "tags": [
+        "Databases"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/databases/{database_id}",
+      "operationId": "retrieveDatabase",
+      "summary": "Notion Retrieve a database",
+      "tags": [
+        "Databases"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/databases/{database_id}",
+      "operationId": "updateDatabase",
+      "summary": "Notion Update a database",
+      "tags": [
+        "Databases"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/databases/{database_id}/query",
+      "operationId": "queryDatabase",
+      "summary": "Notion Query a database",
+      "tags": [
+        "Databases"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/blocks/{block_id}",
+      "operationId": "retrieveBlock",
+      "summary": "Notion Retrieve a block",
+      "tags": [
+        "Blocks"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/blocks/{block_id}",
+      "operationId": "deleteBlock",
+      "summary": "Notion Delete a block",
+      "tags": [
+        "Blocks"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/blocks/{block_id}",
+      "operationId": "updateBlock",
+      "summary": "Notion Update a block",
+      "tags": [
+        "Blocks"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/blocks/{block_id}/children",
+      "operationId": "retrieveBlockChildren",
+      "summary": "Notion Retrieve block children",
+      "tags": [
+        "Blocks"
+      ]
+    },
+    {
+      "method": "PATCH",
+      "path": "/blocks/{block_id}/children",
+      "operationId": "appendBlockChildren",
+      "summary": "Notion Append block children",
+      "tags": [
+        "Blocks"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/users",
+      "operationId": "listUsers",
+      "summary": "Notion List all users",
+      "tags": [
+        "Users"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/users/{user_id}",
+      "operationId": "retrieveUser",
+      "summary": "Notion Retrieve a user",
+      "tags": [
+        "Users"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/users/me",
+      "operationId": "retrieveBotUser",
+      "summary": "Notion Retrieve the bot user",
+      "tags": [
+        "Users"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/search",
+      "operationId": "search",
+      "summary": "Notion Search by title",
+      "tags": [
+        "Search"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/comments",
+      "operationId": "listComments",
+      "summary": "Notion Retrieve comments",
+      "tags": [
+        "Comments"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/comments",
+      "operationId": "createComment",
+      "summary": "Notion Create a comment",
+      "tags": [
+        "Comments"
+      ]
+    }
+  ]
+}

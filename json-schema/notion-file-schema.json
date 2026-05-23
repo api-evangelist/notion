@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/File",
+  "title": "File",
+  "type": "object",
+  "description": "A File object represents a file in Notion. Files can be either hosted by Notion (type \"file\") or externally hosted (type \"external\").",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The type of file hosting.",
+      "enum": [
+        "file",
+        "external"
+      ]
+    },
+    "file": {
+      "type": "object",
+      "description": "Notion-hosted file details. Present when type is \"file\". These URLs expire after one hour.",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The authenticated S3 URL for the file."
+        },
+        "expiry_time": {
+          "type": "string",
+          "format": "date-time",
+          "description": "The expiration time of the URL."
+        }
+      }
+    },
+    "external": {
+      "type": "object",
+      "description": "External file details. Present when type is \"external\".",
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "The URL of the externally hosted file."
+        }
+      }
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the file."
+    },
+    "caption": {
+      "type": "array",
+      "description": "Caption for the file as rich text.",
+      "items": {
+        "$ref": "#/components/schemas/RichText"
+      }
+    }
+  },
+  "required": [
+    "type"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PartialUser",
+  "title": "PartialUser",
+  "type": "object",
+  "description": "A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.",
+  "properties": {
+    "object": {
+      "type": "string",
+      "description": "Always \"user\".",
+      "const": "user"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the user."
+    }
+  },
+  "required": [
+    "object",
+    "id"
+  ]
+}

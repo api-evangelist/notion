@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Comment",
+  "title": "Comment",
+  "type": "object",
+  "description": "A Comment object represents a comment on a Notion page or block. Comments contain rich text content and are associated with discussion threads.",
+  "properties": {
+    "object": {
+      "type": "string",
+      "description": "Always \"comment\" for comment objects.",
+      "const": "comment"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the comment."
+    },
+    "parent": {
+      "type": "object",
+      "description": "The parent page or block the comment belongs to.",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "page_id",
+            "block_id"
+          ]
+        },
+        "page_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "block_id": {
+          "type": "string",
+          "format": "uuid"
+        }
+      }
+    },
+    "discussion_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "The ID of the discussion thread the comment belongs to."
+    },
+    "created_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time when the comment was created (ISO 8601)."
+    },
+    "last_edited_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date and time when the comment was last edited (ISO 8601)."
+    },
+    "created_by": {
+      "$ref": "#/components/schemas/PartialUser"
+    },
+    "rich_text": {
+      "type": "array",
+      "description": "Rich text content of the comment.",
+      "items": {
+        "$ref": "#/components/schemas/RichText"
+      }
+    }
+  },
+  "required": [
+    "object",
+    "id",
+    "parent",
+    "discussion_id",
+    "created_time",
+    "last_edited_time",
+    "created_by",
+    "rich_text"
+  ]
+}

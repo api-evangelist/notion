@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Error",
+  "title": "Error",
+  "type": "object",
+  "description": "An error response from the Notion API.",
+  "properties": {
+    "object": {
+      "type": "string",
+      "description": "Always \"error\" for error responses.",
+      "const": "error"
+    },
+    "status": {
+      "type": "integer",
+      "description": "The HTTP status code."
+    },
+    "code": {
+      "type": "string",
+      "description": "A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable."
+    },
+    "message": {
+      "type": "string",
+      "description": "A human-readable error message."
+    },
+    "request_id": {
+      "type": "string",
+      "description": "A unique identifier for the failed request."
+    }
+  },
+  "required": [
+    "object",
+    "status",
+    "code",
+    "message"
+  ]
+}

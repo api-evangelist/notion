@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Emoji",
+  "title": "Emoji",
+  "type": "object",
+  "description": "An emoji icon object.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "emoji",
+      "description": "Always \"emoji\"."
+    },
+    "emoji": {
+      "type": "string",
+      "description": "The emoji character."
+    }
+  },
+  "required": [
+    "type",
+    "emoji"
+  ]
+}

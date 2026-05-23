@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/User",
+  "title": "User",
+  "type": "object",
+  "description": "A User object represents a user in a Notion workspace. Users can be either people (human workspace members) or bots (API integrations). User objects include identifying information such as name, email, and avatar URL.",
+  "properties": {
+    "object": {
+      "type": "string",
+      "description": "Always \"user\" for user objects.",
+      "const": "user"
+    },
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique identifier for the user."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of user. \"person\" for human workspace members, \"bot\" for API integrations.",
+      "enum": [
+        "person",
+        "bot"
+      ]
+    },
+    "name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Display name of the user."
+    },
+    "avatar_url": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri",
+      "description": "URL of the user's avatar image."
+    },
+    "person": {
+      "type": "object",
+      "description": "Person-specific information. Only present when type is \"person\".",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Email address of the person."
+        }
+      }
+    },
+    "bot": {
+      "type": "object",
+      "description": "Bot-specific information. Only present when type is \"bot\".",
+      "properties": {
+        "owner": {
+          "type": "object",
+          "description": "Information about the bot's owner.",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": [
+                "workspace",
+                "user"
+              ]
+            },
+            "workspace": {
+              "type": "boolean",
+              "description": "Whether the bot is owned by the workspace."
+            }
+          }
+        },
+        "workspace_name": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "The name of the workspace the bot belongs to."
+        }
+      }
+    }
+  },
+  "required": [
+    "object",
+    "id"
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/RichText",
+  "title": "RichText",
+  "type": "object",
+  "description": "A Rich Text object represents styled text content in Notion. Rich text can include annotations like bold, italic, and color, as well as links and mentions of other Notion objects.",
+  "properties": {
+    "type": {
+      "type": "string",
+      "description": "The type of this rich text object.",
+      "enum": [
+        "text",
+        "mention",
+        "equation"
+      ]
+    },
+    "text": {
+      "type": "object",
+      "description": "Text content and optional link. Present when type is \"text\".",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "The actual text content."
+        },
+        "link": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "description": "Optional link within the text.",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "description": "The URL the text links to."
+            }
+          }
+        }
+      }
+    },
+    "mention": {
+      "type": "object",
+      "description": "Mention content. Present when type is \"mention\". Can reference users, pages, databases, dates, or link previews.",
+      "additionalProperties": true
+    },
+    "equation": {
+      "type": "object",
+      "description": "Equation content in KaTeX format. Present when type is \"equation\".",
+      "properties": {
+        "expression": {
+          "type": "string",
+          "description": "The LaTeX equation expression."
+        }
+      }
+    },
+    "annotations": {
+      "type": "object",
+      "description": "Styling annotations applied to the text.",
+      "properties": {
+        "bold": {
+          "type": "boolean",
+          "description": "Whether the text is bold."
+        },
+        "italic": {
+          "type": "boolean",
+          "description": "Whether the text is italic."
+        },
+        "strikethrough": {
+          "type": "boolean",
+          "description": "Whether the text has a strikethrough."
+        },
+        "underline": {
+          "type": "boolean",
+          "description": "Whether the text is underlined."
+        },
+        "code": {
+          "type": "boolean",
+          "description": "Whether the text is formatted as inline code."
+        },
+        "color": {
+          "type": "string",
+          "description": "The color of the text. Possible values include default, gray, brown, orange, yellow, green, blue, purple, pink, red, and their background variants (e.g., gray_background)."
+        }
+      }
+    },
+    "plain_text": {
+      "type": "string",
+      "description": "The plain text content without annotations."
+    },
+    "href": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri",
+      "description": "The URL of any link in the text, or null."
+    }
+  },
+  "required": [
+    "type",
+    "plain_text"
+  ]
+}

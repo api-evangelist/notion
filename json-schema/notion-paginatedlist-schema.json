@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PaginatedList",
+  "title": "PaginatedList",
+  "type": "object",
+  "description": "A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.",
+  "properties": {
+    "object": {
+      "type": "string",
+      "description": "Always \"list\" for paginated responses.",
+      "const": "list"
+    },
+    "results": {
+      "type": "array",
+      "description": "The array of result objects for the current page.",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "next_cursor": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The cursor to use for the next page of results, or null if there are no more results."
+    },
+    "has_more": {
+      "type": "boolean",
+      "description": "Whether there are more results available beyond this page."
+    },
+    "type": {
+      "type": "string",
+      "description": "The type of objects in the results array."
+    },
+    "request_id": {
+      "type": "string",
+      "description": "A unique identifier for this API request."
+    }
+  },
+  "required": [
+    "object",
+    "results",
+    "next_cursor",
+    "has_more"
+  ]
+}
