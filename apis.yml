@@ -14,6 +14,8 @@ apis:
     type: Documentation
   - url: openapi/notion-openapi.yml
     type: OpenAPI
+  - url: asyncapi/notion-webhooks-asyncapi.yml
+    type: AsyncAPI
   - url: json-schema/notion-page-schema.json
     type: JSONSchema
   - url: json-schema/notion-database-schema.json
@@ -477,7 +479,7 @@ common:
   - https://www.notion.com/pricing
   updated: '2026-05-04'
 created: '2025-01-08'
-modified: '2026-05-19'
+modified: '2026-05-30'
 position: Consumer
 description: Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases. The Notion API allows developers
   to integrate Notion with other tools and build custom applications on top of Notion's platform.

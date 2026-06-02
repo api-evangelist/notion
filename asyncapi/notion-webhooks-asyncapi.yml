@@ -1,0 +1,915 @@
+asyncapi: 2.6.0
+info:
+  title: Notion Webhooks
+  version: '1.0.0'
+  description: |
+    AsyncAPI 2.6 description of the Notion webhooks surface. Notion delivers
+    workspace events (page, database, data source, and comment changes) to a
+    subscriber-hosted HTTPS endpoint via signed POST requests.
+
+    This document models the verification handshake, the common event
+    envelope, and every webhook event type documented at
+    https://developers.notion.com/reference/webhooks and
+    https://developers.notion.com/reference/webhooks-events-delivery.
+
+    Notion is the publisher of events; the application registering the
+    subscription is the consumer that exposes the receive endpoint. The HTTP
+    binding is used because Notion does not push over WebSocket or any
+    streaming transport — every event is a discrete POST to the subscriber
+    URL with an `X-Notion-Signature` header carrying an HMAC-SHA256 of the
+    raw request body, signed with the verification token issued during
+    subscription setup.
+  contact:
+    name: Notion Developers
+    url: https://developers.notion.com
+  license:
+    name: Notion Developer Terms
+    url: https://www.notion.so/Developer-Terms-ba4131408d0844e08330da2cbb225c20
+  externalDocs:
+    description: Notion Webhooks documentation
+    url: https://developers.notion.com/reference/webhooks
+  tags:
+    - name: webhooks
+    - name: events
+    - name: notion
+
+defaultContentType: application/json
+
+servers:
+  subscriber:
+    url: '{webhook_url}'
+    protocol: https
+    protocolVersion: '1.1'
+    description: |
+      Subscriber-hosted HTTPS endpoint configured in the Notion integration
+      settings. Notion delivers every event as an HTTPS POST to this URL.
+      The endpoint must be publicly reachable, must serve a valid TLS
+      certificate, and cannot be changed after verification.
+    variables:
+      webhook_url:
+        default: https://example.com/notion/webhook
+        description: Fully qualified HTTPS URL hosting the webhook receiver.
+
+channels:
+  webhook:
+    description: |
+      Single inbound channel that receives every Notion webhook delivery,
+      including the one-time verification handshake and all event types.
+      Notion dispatches each event as an HTTP POST with a JSON body and
+      an `X-Notion-Signature` header.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: '0.3.0'
+    subscribe:
+      operationId: receiveNotionWebhook
+      summary: Receive a webhook delivery from Notion
+      description: |
+        The subscriber accepts a POST from Notion. The payload is either the
+        verification handshake (carrying `verification_token`) or one of the
+        documented event envelopes. The receiver must respond with a 2xx
+        status promptly; failed deliveries are retried up to 8 times over
+        roughly 24 hours.
+      bindings:
+        http:
+          bindingVersion: '0.3.0'
+      message:
+        oneOf:
+          - $ref: '#/components/messages/VerificationHandshake'
+          - $ref: '#/components/messages/PageCreated'
+          - $ref: '#/components/messages/PageUpdated'
+          - $ref: '#/components/messages/PageContentUpdated'
+          - $ref: '#/components/messages/PagePropertiesUpdated'
+          - $ref: '#/components/messages/PageMoved'
+          - $ref: '#/components/messages/PageDeleted'
+          - $ref: '#/components/messages/PageUndeleted'
+          - $ref: '#/components/messages/PageLocked'
+          - $ref: '#/components/messages/PageUnlocked'
+          - $ref: '#/components/messages/DatabaseCreated'
+          - $ref: '#/components/messages/DatabaseContentUpdated'
+          - $ref: '#/components/messages/DatabaseMoved'
+          - $ref: '#/components/messages/DatabaseDeleted'
+          - $ref: '#/components/messages/DatabaseUndeleted'
+          - $ref: '#/components/messages/DatabaseSchemaUpdated'
+          - $ref: '#/components/messages/DataSourceCreated'
+          - $ref: '#/components/messages/DataSourceContentUpdated'
+          - $ref: '#/components/messages/DataSourceMoved'
+          - $ref: '#/components/messages/DataSourceDeleted'
+          - $ref: '#/components/messages/DataSourceUndeleted'
+          - $ref: '#/components/messages/DataSourceSchemaUpdated'
+          - $ref: '#/components/messages/CommentCreated'
+          - $ref: '#/components/messages/CommentUpdated'
+          - $ref: '#/components/messages/CommentDeleted'
+
+components:
+  messages:
+    VerificationHandshake:
+      name: VerificationHandshake
+      title: Subscription Verification Handshake
+      summary: One-time verification payload sent when a webhook subscription is created.
+      description: |
+        After a subscription is created in Notion, Notion sends a single POST
+        to the subscriber URL containing a `verification_token`. The token
+        must be captured and pasted back into the Notion UI to activate the
+        subscription. The same token is later used as the HMAC secret for
+        validating the `X-Notion-Signature` header on subsequent events.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        $ref: '#/components/schemas/VerificationPayload'
+      bindings:
+        http:
+          bindingVersion: '0.3.0'
+
+    PageCreated:
+      name: PageCreated
+      title: page.created
+      summary: A page was created in the workspace.
+      description: Aggregated event emitted when one or more pages are created.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: page.created
+              entity:
+                $ref: '#/components/schemas/PageEntity'
+              data:
+                $ref: '#/components/schemas/PageEventData'
+
+    PageUpdated:
+      name: PageUpdated
+      title: page.updated
+      summary: A page was updated (legacy alias covering property and content updates).
+      description: |
+        Documented in the Notion webhooks overview as a page update event.
+        For newer API versions, prefer the more specific
+        `page.properties_updated` and `page.content_updated` events.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: page.updated
+              entity:
+                $ref: '#/components/schemas/PageEntity'
+              data:
+                $ref: '#/components/schemas/PageEventData'
+
+    PageContentUpdated:
+      name: PageContentUpdated
+      title: page.content_updated
+      summary: One or more blocks on a page were updated.
+      description: |
+        Aggregated event batching frequent block edits. The `data.updated_blocks`
+        array identifies which blocks changed. Use the Notion API to fetch the
+        latest content for those blocks.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: page.content_updated
+              entity:
+                $ref: '#/components/schemas/PageEntity'
+              data:
+                $ref: '#/components/schemas/PageContentUpdatedData'
+
+    PagePropertiesUpdated:
+      name: PagePropertiesUpdated
+      title: page.properties_updated
+      summary: One or more properties on a page were updated.
+      description: Aggregated event; `data.updated_properties` lists the affected property IDs.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: page.properties_updated
+              entity:
+                $ref: '#/components/schemas/PageEntity'
+              data:
+                $ref: '#/components/schemas/PagePropertiesUpdatedData'
+
+    PageMoved:
+      name: PageMoved
+      title: page.moved
+      summary: A page was moved to a different parent.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: page.moved
+              entity:
+                $ref: '#/components/schemas/PageEntity'
+              data:
+                $ref: '#/components/schemas/PageEventData'
+
+    PageDeleted:
+      name: PageDeleted
+      title: page.deleted
+      summary: A page was moved to the trash.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: page.deleted
+              entity:
+                $ref: '#/components/schemas/PageEntity'
+              data:
+                $ref: '#/components/schemas/PageEventData'
+
+    PageUndeleted:
+      name: PageUndeleted
+      title: page.undeleted
+      summary: A page was restored from the trash.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: page.undeleted
+              entity:
+                $ref: '#/components/schemas/PageEntity'
+              data:
+                $ref: '#/components/schemas/PageEventData'
+
+    PageLocked:
+      name: PageLocked
+      title: page.locked
+      summary: A page was locked.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: page.locked
+              entity:
+                $ref: '#/components/schemas/PageEntity'
+              data:
+                $ref: '#/components/schemas/PageEventData'
+
+    PageUnlocked:
+      name: PageUnlocked
+      title: page.unlocked
+      summary: A page was unlocked.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: page.unlocked
+              entity:
+                $ref: '#/components/schemas/PageEntity'
+              data:
+                $ref: '#/components/schemas/PageEventData'
+
+    DatabaseCreated:
+      name: DatabaseCreated
+      title: database.created
+      summary: A database was created.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: database.created
+              entity:
+                $ref: '#/components/schemas/DatabaseEntity'
+              data:
+                $ref: '#/components/schemas/DatabaseEventData'
+
+    DatabaseContentUpdated:
+      name: DatabaseContentUpdated
+      title: database.content_updated
+      summary: Content within a database was updated. Deprecated in API version 2025-09-03.
+      description: |
+        Deprecated in API version 2025-09-03 in favor of
+        `data_source.content_updated`.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: database.content_updated
+              entity:
+                $ref: '#/components/schemas/DatabaseEntity'
+              data:
+                $ref: '#/components/schemas/DatabaseEventData'
+
+    DatabaseMoved:
+      name: DatabaseMoved
+      title: database.moved
+      summary: A database was moved to a different parent.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: database.moved
+              entity:
+                $ref: '#/components/schemas/DatabaseEntity'
+              data:
+                $ref: '#/components/schemas/DatabaseEventData'
+
+    DatabaseDeleted:
+      name: DatabaseDeleted
+      title: database.deleted
+      summary: A database was moved to the trash.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: database.deleted
+              entity:
+                $ref: '#/components/schemas/DatabaseEntity'
+              data:
+                $ref: '#/components/schemas/DatabaseEventData'
+
+    DatabaseUndeleted:
+      name: DatabaseUndeleted
+      title: database.undeleted
+      summary: A database was restored from the trash.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: database.undeleted
+              entity:
+                $ref: '#/components/schemas/DatabaseEntity'
+              data:
+                $ref: '#/components/schemas/DatabaseEventData'
+
+    DatabaseSchemaUpdated:
+      name: DatabaseSchemaUpdated
+      title: database.schema_updated
+      summary: A database schema was updated. Deprecated in API version 2025-09-03.
+      description: |
+        Deprecated in API version 2025-09-03 in favor of
+        `data_source.schema_updated`.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: database.schema_updated
+              entity:
+                $ref: '#/components/schemas/DatabaseEntity'
+              data:
+                $ref: '#/components/schemas/DatabaseSchemaUpdatedData'
+
+    DataSourceCreated:
+      name: DataSourceCreated
+      title: data_source.created
+      summary: A data source was created (API version 2025-09-03 and later).
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: data_source.created
+              entity:
+                $ref: '#/components/schemas/DataSourceEntity'
+              data:
+                $ref: '#/components/schemas/DataSourceEventData'
+
+    DataSourceContentUpdated:
+      name: DataSourceContentUpdated
+      title: data_source.content_updated
+      summary: Content within a data source was updated (API version 2025-09-03 and later).
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: data_source.content_updated
+              entity:
+                $ref: '#/components/schemas/DataSourceEntity'
+              data:
+                $ref: '#/components/schemas/DataSourceEventData'
+
+    DataSourceMoved:
+      name: DataSourceMoved
+      title: data_source.moved
+      summary: A data source was moved (API version 2025-09-03 and later).
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: data_source.moved
+              entity:
+                $ref: '#/components/schemas/DataSourceEntity'
+              data:
+                $ref: '#/components/schemas/DataSourceEventData'
+
+    DataSourceDeleted:
+      name: DataSourceDeleted
+      title: data_source.deleted
+      summary: A data source was deleted (API version 2025-09-03 and later).
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: data_source.deleted
+              entity:
+                $ref: '#/components/schemas/DataSourceEntity'
+              data:
+                $ref: '#/components/schemas/DataSourceEventData'
+
+    DataSourceUndeleted:
+      name: DataSourceUndeleted
+      title: data_source.undeleted
+      summary: A data source was restored (API version 2025-09-03 and later).
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: data_source.undeleted
+              entity:
+                $ref: '#/components/schemas/DataSourceEntity'
+              data:
+                $ref: '#/components/schemas/DataSourceEventData'
+
+    DataSourceSchemaUpdated:
+      name: DataSourceSchemaUpdated
+      title: data_source.schema_updated
+      summary: A data source schema was updated (API version 2025-09-03 and later).
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: data_source.schema_updated
+              entity:
+                $ref: '#/components/schemas/DataSourceEntity'
+              data:
+                $ref: '#/components/schemas/DataSourceSchemaUpdatedData'
+
+    CommentCreated:
+      name: CommentCreated
+      title: comment.created
+      summary: A comment was created. Requires the comment read capability.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: comment.created
+              entity:
+                $ref: '#/components/schemas/CommentEntity'
+              data:
+                $ref: '#/components/schemas/CommentEventData'
+
+    CommentUpdated:
+      name: CommentUpdated
+      title: comment.updated
+      summary: A comment was updated. Requires the comment read capability.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: comment.updated
+              entity:
+                $ref: '#/components/schemas/CommentEntity'
+              data:
+                $ref: '#/components/schemas/CommentEventData'
+
+    CommentDeleted:
+      name: CommentDeleted
+      title: comment.deleted
+      summary: A comment was deleted. Requires the comment read capability.
+      contentType: application/json
+      headers:
+        $ref: '#/components/schemas/WebhookHeaders'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              type:
+                const: comment.deleted
+              entity:
+                $ref: '#/components/schemas/CommentEntity'
+              data:
+                $ref: '#/components/schemas/CommentEventData'
+
+  schemas:
+    WebhookHeaders:
+      type: object
+      description: |
+        HTTP headers Notion sets on every webhook POST. The
+        `X-Notion-Signature` value is an HMAC-SHA256 of the raw request
+        body, signed with the subscription's verification token. Receivers
+        must validate it using a timing-safe comparison.
+      properties:
+        Content-Type:
+          type: string
+          const: application/json
+        X-Notion-Signature:
+          type: string
+          description: |
+            HMAC-SHA256 of the raw request body, signed with the
+            verification token. Formatted as `sha256=<hex-digest>`.
+          pattern: '^sha256=[a-f0-9]+$'
+          example: sha256=8f3b9c2a1e7d4b6f0c9d2e1a4b5f6e7d8c9b0a1d2e3f4a5b6c7d8e9f0a1b2c3d
+      required:
+        - Content-Type
+        - X-Notion-Signature
+
+    VerificationPayload:
+      type: object
+      description: |
+        One-time payload Notion POSTs to the subscriber URL when the
+        subscription is first created. The `verification_token` must be
+        captured and entered in the Notion UI to confirm ownership of the
+        endpoint. The same token is the HMAC secret used to validate
+        `X-Notion-Signature` on all subsequent deliveries.
+      properties:
+        verification_token:
+          type: string
+          description: Opaque token used to verify the subscription and to validate event signatures.
+          example: [secret]
+      required:
+        - verification_token
+
+    EventEnvelope:
+      type: object
+      description: |
+        Common envelope shared by every Notion webhook event delivery.
+        Event-specific payloads extend this envelope and refine the
+        `type`, `entity`, and `data` fields.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique ID of the webhook event delivery.
+        timestamp:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp suitable for ordering events.
+        workspace_id:
+          type: string
+          format: uuid
+          description: ID of the workspace where the event occurred.
+        workspace_name:
+          type: string
+          description: Human-readable workspace name.
+        subscription_id:
+          type: string
+          format: uuid
+          description: ID of the webhook subscription that produced this delivery.
+        integration_id:
+          type: string
+          format: uuid
+          description: ID of the Notion integration (connection / bot) associated with the subscription.
+        type:
+          type: string
+          description: |
+            Event type identifier (for example, `page.created`,
+            `database.schema_updated`, `comment.deleted`).
+        authors:
+          type: array
+          description: |
+            Actors that caused the event. Each author has an `id` and a
+            `type` (one of `person`, `bot`, `agent`).
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              type:
+                type: string
+                enum:
+                  - person
+                  - bot
+                  - agent
+            required:
+              - id
+              - type
+        accessible_by:
+          type: array
+          description: |
+            Users or bots with access to the affected entity. Present only
+            for subscriptions installed on public connections.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              type:
+                type: string
+                enum:
+                  - person
+                  - bot
+        attempt_number:
+          type: integer
+          minimum: 1
+          maximum: 8
+          description: Delivery attempt number; failed deliveries are retried up to 8 times.
+        entity:
+          type: object
+          description: ID and type of the resource the event refers to.
+          properties:
+            id:
+              type: string
+              format: uuid
+            type:
+              type: string
+              enum:
+                - page
+                - block
+                - database
+                - data_source
+                - comment
+          required:
+            - id
+            - type
+        data:
+          type: object
+          description: Event-specific payload. Shape varies by `type`.
+      required:
+        - id
+        - timestamp
+        - workspace_id
+        - subscription_id
+        - integration_id
+        - type
+        - authors
+        - attempt_number
+        - entity
+
+    PageEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          const: page
+      required:
+        - id
+        - type
+
+    DatabaseEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          const: database
+      required:
+        - id
+        - type
+
+    DataSourceEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          const: data_source
+      required:
+        - id
+        - type
+
+    CommentEntity:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          const: comment
+      required:
+        - id
+        - type
+
+    ParentReference:
+      type: object
+      description: Parent of the affected entity at the time of the event.
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - page
+            - database
+            - data_source
+            - block
+            - workspace
+      required:
+        - id
+        - type
+
+    PageEventData:
+      type: object
+      description: Default `data` shape for page lifecycle events.
+      properties:
+        parent:
+          $ref: '#/components/schemas/ParentReference'
+
+    PageContentUpdatedData:
+      type: object
+      description: |
+        `data` payload for `page.content_updated`. Identifies the blocks
+        within the page whose content changed.
+      properties:
+        parent:
+          $ref: '#/components/schemas/ParentReference'
+        updated_blocks:
+          type: array
+          description: Blocks that were updated during the aggregation window.
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              type:
+                type: string
+                const: block
+            required:
+              - id
+              - type
+
+    PagePropertiesUpdatedData:
+      type: object
+      description: |
+        `data` payload for `page.properties_updated`. Lists the page
+        properties that changed.
+      properties:
+        parent:
+          $ref: '#/components/schemas/ParentReference'
+        updated_properties:
+          type: array
+          description: IDs of the page properties that were updated.
+          items:
+            type: string
+
+    DatabaseEventData:
+      type: object
+      description: Default `data` shape for database lifecycle events.
+      properties:
+        parent:
+          $ref: '#/components/schemas/ParentReference'
+
+    DatabaseSchemaUpdatedData:
+      type: object
+      description: |
+        `data` payload for `database.schema_updated`. Lists the database
+        properties whose schema changed.
+      properties:
+        parent:
+          $ref: '#/components/schemas/ParentReference'
+        updated_properties:
+          type: array
+          description: IDs of the database properties whose schema changed.
+          items:
+            type: string
+
+    DataSourceEventData:
+      type: object
+      description: Default `data` shape for data source lifecycle events.
+      properties:
+        parent:
+          $ref: '#/components/schemas/ParentReference'
+
+    DataSourceSchemaUpdatedData:
+      type: object
+      description: |
+        `data` payload for `data_source.schema_updated`. Lists the data
+        source properties whose schema changed.
+      properties:
+        parent:
+          $ref: '#/components/schemas/ParentReference'
+        updated_properties:
+          type: array
+          description: IDs of the data source properties whose schema changed.
+          items:
+            type: string
+
+    CommentEventData:
+      type: object
+      description: |
+        `data` payload for comment events. References the page and parent
+        the comment is attached to. Use the Notion API to fetch the full
+        comment object.
+      properties:
+        page_id:
+          type: string
+          format: uuid
+          description: ID of the page the comment belongs to.
+        parent:
+          $ref: '#/components/schemas/ParentReference'
