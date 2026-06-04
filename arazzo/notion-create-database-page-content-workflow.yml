@@ -1,0 +1,151 @@
+arazzo: 1.0.1
+info:
+  title: Notion Create a Database, Seed a Page, and Add Content
+  summary: Stand up a new Notion database under a page, add a first entry, then fill that entry with content blocks.
+  description: >-
+    A common workspace bootstrap pattern. The workflow creates a database as a
+    subpage of an existing parent page, creates a first page whose parent is the
+    new database (so its properties conform to the database schema), and then
+    appends content blocks to that page. Every step spells out its request
+    inline — including the Authorization bearer token and the required
+    Notion-Version header — so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: notionApi
+  url: ../openapi/notion-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-database-page-content
+  summary: Create a database, add a page to it, and append content blocks to that page.
+  description: >-
+    Creates a database under a parent page, creates a page inside that database
+    using a Title property, and appends a heading and paragraph of content to
+    the new page.
+  inputs:
+    type: object
+    required:
+    - token
+    - notionVersion
+    - parentPageId
+    - databaseTitle
+    - titlePropertyName
+    - pageTitle
+    properties:
+      token:
+        type: string
+        description: Notion integration token passed as a bearer credential.
+      notionVersion:
+        type: string
+        description: The Notion API version date sent in the Notion-Version header (e.g. 2022-06-28).
+      parentPageId:
+        type: string
+        description: The ID of the existing page that will be the parent of the new database.
+      databaseTitle:
+        type: string
+        description: Plain-text title for the new database.
+      titlePropertyName:
+        type: string
+        description: The name of the title property in the new database schema (e.g. "Name").
+      pageTitle:
+        type: string
+        description: Plain-text title for the first page created inside the database.
+  steps:
+  - stepId: createDatabase
+    description: >-
+      Create a database as a subpage of the parent page with a single title
+      property in its schema.
+    operationId: createDatabase
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        parent:
+          type: page_id
+          page_id: $inputs.parentPageId
+        title:
+        - type: text
+          text:
+            content: $inputs.databaseTitle
+        properties:
+          $inputs.titlePropertyName:
+            title: {}
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      databaseId: $response.body#/id
+  - stepId: createPage
+    description: >-
+      Create a page whose parent is the new database, setting the title property
+      so the page conforms to the database schema.
+    operationId: createPage
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        parent:
+          type: database_id
+          database_id: $steps.createDatabase.outputs.databaseId
+        properties:
+          $inputs.titlePropertyName:
+            title:
+            - type: text
+              text:
+                content: $inputs.pageTitle
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pageId: $response.body#/id
+  - stepId: appendContent
+    description: >-
+      Append a heading and a paragraph block to the newly created page using the
+      page ID as the block to append children to.
+    operationId: appendBlockChildren
+    parameters:
+    - name: block_id
+      in: path
+      value: $steps.createPage.outputs.pageId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        children:
+        - object: block
+          type: heading_2
+          heading_2:
+            rich_text:
+            - type: text
+              text:
+                content: $inputs.pageTitle
+        - object: block
+          type: paragraph
+          paragraph:
+            rich_text:
+            - type: text
+              text:
+                content: "Created via the Notion Arazzo workflow."
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      appendedResults: $response.body#/results
+  outputs:
+    databaseId: $steps.createDatabase.outputs.databaseId
+    pageId: $steps.createPage.outputs.pageId
+    appendedResults: $steps.appendContent.outputs.appendedResults

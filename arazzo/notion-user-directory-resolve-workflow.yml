@@ -1,0 +1,112 @@
+arazzo: 1.0.1
+info:
+  title: Notion Resolve a Workspace User Directory
+  summary: Identify the integration bot, list workspace users, then retrieve the first user in detail.
+  description: >-
+    A workspace-introspection pattern. The workflow first identifies the bot
+    user associated with the current token, then lists the workspace users, and
+    finally retrieves the first listed user in full detail. Every step spells
+    out its request inline — including the Authorization bearer token and the
+    required Notion-Version header — so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: notionApi
+  url: ../openapi/notion-openapi.yml
+  type: openapi
+workflows:
+- workflowId: user-directory-resolve
+  summary: Identify the bot, list users, and retrieve the first user.
+  description: >-
+    Retrieves the bot user for the current token, lists workspace users, and
+    when at least one user is returned, retrieves that first user's full record.
+  inputs:
+    type: object
+    required:
+    - token
+    - notionVersion
+    properties:
+      token:
+        type: string
+        description: Notion integration token passed as a bearer credential.
+      notionVersion:
+        type: string
+        description: The Notion API version date sent in the Notion-Version header.
+      pageSize:
+        type: integer
+        description: Maximum number of users to list (max 100).
+        default: 100
+  steps:
+  - stepId: whoAmI
+    description: >-
+      Retrieve the bot user associated with the current token to confirm the
+      integration identity.
+    operationId: retrieveBotUser
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      botUserId: $response.body#/id
+  - stepId: listUsers
+    description: >-
+      List the workspace users and capture the ID of the first user returned.
+    operationId: listUsers
+    parameters:
+    - name: page_size
+      in: query
+      value: $inputs.pageSize
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstUserId: $response.body#/results/0/id
+      users: $response.body#/results
+    onSuccess:
+    - name: userFound
+      type: goto
+      stepId: retrieveUser
+      criteria:
+      - context: $response.body
+        condition: $.results.length > 0
+        type: jsonpath
+    - name: noUsers
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.results.length == 0
+        type: jsonpath
+  - stepId: retrieveUser
+    description: >-
+      Retrieve the first listed user in full detail.
+    operationId: retrieveUser
+    parameters:
+    - name: user_id
+      in: path
+      value: $steps.listUsers.outputs.firstUserId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      userId: $response.body#/id
+      userType: $response.body#/type
+      userName: $response.body#/name
+  outputs:
+    botUserId: $steps.whoAmI.outputs.botUserId
+    users: $steps.listUsers.outputs.users
+    userId: $steps.retrieveUser.outputs.userId

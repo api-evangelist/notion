@@ -1,0 +1,134 @@
+arazzo: 1.0.1
+info:
+  title: Notion Query a Database and Update a Matched Page
+  summary: Query a database with a filter, retrieve the first matching page, then update its properties.
+  description: >-
+    A read-then-write pattern over a Notion database. The workflow queries a
+    database with a caller-supplied filter, branches on whether any pages
+    matched, and when a match is found it retrieves the first matched page and
+    updates its properties. Every step spells out its request inline — including
+    the Authorization bearer token and the required Notion-Version header — so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: notionApi
+  url: ../openapi/notion-openapi.yml
+  type: openapi
+workflows:
+- workflowId: query-update-page-properties
+  summary: Find a page in a database via filter and update its properties.
+  description: >-
+    Queries a database with a filter, and when at least one page matches,
+    retrieves the first matched page and patches its properties with the
+    supplied values.
+  inputs:
+    type: object
+    required:
+    - token
+    - notionVersion
+    - databaseId
+    - filter
+    - properties
+    properties:
+      token:
+        type: string
+        description: Notion integration token passed as a bearer credential.
+      notionVersion:
+        type: string
+        description: The Notion API version date sent in the Notion-Version header.
+      databaseId:
+        type: string
+        description: The ID of the database to query.
+      filter:
+        type: object
+        description: A Notion database filter object used to select pages.
+      properties:
+        type: object
+        description: Property values to write onto the matched page.
+  steps:
+  - stepId: findPages
+    description: >-
+      Query the database with the supplied filter, limiting to a single result
+      so the workflow operates on the first match.
+    operationId: queryDatabase
+    parameters:
+    - name: database_id
+      in: path
+      value: $inputs.databaseId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        filter: $inputs.filter
+        page_size: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedPageId: $response.body#/results/0/id
+      hasMore: $response.body#/has_more
+    onSuccess:
+    - name: pageFound
+      type: goto
+      stepId: retrievePage
+      criteria:
+      - context: $response.body
+        condition: $.results.length > 0
+        type: jsonpath
+    - name: noPage
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.results.length == 0
+        type: jsonpath
+  - stepId: retrievePage
+    description: >-
+      Retrieve the first matched page to confirm it exists and capture its
+      current state before updating.
+    operationId: retrievePage
+    parameters:
+    - name: page_id
+      in: path
+      value: $steps.findPages.outputs.matchedPageId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pageId: $response.body#/id
+  - stepId: updatePage
+    description: >-
+      Patch the matched page with the supplied property values. Only the
+      properties provided are changed; all others are left intact.
+    operationId: updatePage
+    parameters:
+    - name: page_id
+      in: path
+      value: $steps.retrievePage.outputs.pageId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        properties: $inputs.properties
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pageId: $response.body#/id
+      lastEditedTime: $response.body#/last_edited_time
+  outputs:
+    pageId: $steps.updatePage.outputs.pageId
+    lastEditedTime: $steps.updatePage.outputs.lastEditedTime

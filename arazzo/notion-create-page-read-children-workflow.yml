@@ -1,0 +1,110 @@
+arazzo: 1.0.1
+info:
+  title: Notion Create a Page and Read Back Its Content
+  summary: Create a standalone page with content blocks, then retrieve that page's block children.
+  description: >-
+    A write-then-verify pattern. The workflow creates a page under a parent page
+    with an initial paragraph of content, then retrieves the page's block
+    children using the page ID as the block ID to confirm the content was
+    written. Every step spells out its request inline — including the
+    Authorization bearer token and the required Notion-Version header — so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: notionApi
+  url: ../openapi/notion-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-page-read-children
+  summary: Create a page with content and read back its block children.
+  description: >-
+    Creates a page as a child of an existing page with a title and a paragraph
+    block, then retrieves the page's child blocks to verify the content.
+  inputs:
+    type: object
+    required:
+    - token
+    - notionVersion
+    - parentPageId
+    - pageTitle
+    - bodyText
+    properties:
+      token:
+        type: string
+        description: Notion integration token passed as a bearer credential.
+      notionVersion:
+        type: string
+        description: The Notion API version date sent in the Notion-Version header.
+      parentPageId:
+        type: string
+        description: The ID of the existing page that will be the parent of the new page.
+      pageTitle:
+        type: string
+        description: Plain-text title for the new page.
+      bodyText:
+        type: string
+        description: Plain-text content for the initial paragraph block on the page.
+  steps:
+  - stepId: createPage
+    description: >-
+      Create a page under the parent page with a title property and an initial
+      paragraph block of content.
+    operationId: createPage
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        parent:
+          type: page_id
+          page_id: $inputs.parentPageId
+        properties:
+          title:
+            title:
+            - type: text
+              text:
+                content: $inputs.pageTitle
+        children:
+        - object: block
+          type: paragraph
+          paragraph:
+            rich_text:
+            - type: text
+              text:
+                content: $inputs.bodyText
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pageId: $response.body#/id
+  - stepId: readChildren
+    description: >-
+      Retrieve the child blocks of the new page by passing the page ID as the
+      block ID, confirming the appended content is present.
+    operationId: retrieveBlockChildren
+    parameters:
+    - name: block_id
+      in: path
+      value: $steps.createPage.outputs.pageId
+    - name: page_size
+      in: query
+      value: 100
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      blocks: $response.body#/results
+      hasMore: $response.body#/has_more
+  outputs:
+    pageId: $steps.createPage.outputs.pageId
+    blocks: $steps.readChildren.outputs.blocks

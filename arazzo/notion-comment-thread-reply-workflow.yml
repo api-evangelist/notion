@@ -1,0 +1,138 @@
+arazzo: 1.0.1
+info:
+  title: Notion Reply to an Existing Comment Thread
+  summary: List a page's unresolved comments, then reply into the existing discussion or start a new one.
+  description: >-
+    A discussion-management pattern. The workflow lists the unresolved comments
+    on a page, branches on whether any comment exists, and either replies into
+    the existing discussion thread (using its discussion ID) or starts a fresh
+    comment on the page. Every step spells out its request inline — including the
+    Authorization bearer token and the required Notion-Version header — so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: notionApi
+  url: ../openapi/notion-openapi.yml
+  type: openapi
+workflows:
+- workflowId: comment-thread-reply
+  summary: List comments on a page and reply into an existing thread or start a new one.
+  description: >-
+    Retrieves a page's unresolved comments and branches: when a discussion
+    thread exists it replies into that thread, otherwise it creates a new
+    comment on the page.
+  inputs:
+    type: object
+    required:
+    - token
+    - notionVersion
+    - pageId
+    - replyText
+    properties:
+      token:
+        type: string
+        description: Notion integration token passed as a bearer credential.
+      notionVersion:
+        type: string
+        description: The Notion API version date sent in the Notion-Version header.
+      pageId:
+        type: string
+        description: The ID of the page (block) whose comments are listed and replied to.
+      replyText:
+        type: string
+        description: The plain-text body of the comment to add.
+  steps:
+  - stepId: listComments
+    description: >-
+      Retrieve the unresolved comments on the page and capture the discussion ID
+      of the first comment, if any.
+    operationId: listComments
+    parameters:
+    - name: block_id
+      in: query
+      value: $inputs.pageId
+    - name: page_size
+      in: query
+      value: 100
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      discussionId: $response.body#/results/0/discussion_id
+    onSuccess:
+    - name: threadExists
+      type: goto
+      stepId: replyToThread
+      criteria:
+      - context: $response.body
+        condition: $.results.length > 0
+        type: jsonpath
+    - name: noThread
+      type: goto
+      stepId: startThread
+      criteria:
+      - context: $response.body
+        condition: $.results.length == 0
+        type: jsonpath
+  - stepId: replyToThread
+    description: >-
+      Add a comment into the existing discussion thread using its discussion ID.
+    operationId: createComment
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        discussion_id: $steps.listComments.outputs.discussionId
+        rich_text:
+        - type: text
+          text:
+            content: $inputs.replyText
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      commentId: $response.body#/id
+      discussionId: $response.body#/discussion_id
+    onSuccess:
+    - name: done
+      type: end
+  - stepId: startThread
+    description: >-
+      Start a new comment on the page when no existing discussion thread was
+      found.
+    operationId: createComment
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        parent:
+          page_id: $inputs.pageId
+        rich_text:
+        - type: text
+          text:
+            content: $inputs.replyText
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      commentId: $response.body#/id
+      discussionId: $response.body#/discussion_id
+  outputs:
+    commentId: $steps.replyToThread.outputs.commentId
+    newCommentId: $steps.startThread.outputs.commentId

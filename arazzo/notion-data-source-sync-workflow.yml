@@ -1,0 +1,132 @@
+arazzo: 1.0.1
+info:
+  title: Notion Sync a Row into a Database Data Source
+  summary: Discover a database by title, read its schema, then add a new page row whose properties conform to it.
+  description: >-
+    A data-source ingestion pattern. Notion has no dedicated "data source"
+    endpoints, so this workflow adapts that theme by treating a Notion database
+    as the data source: it discovers the target database by title via search,
+    retrieves the database to read its property schema, and creates a page (row)
+    inside it whose properties conform to that schema. Every step spells out its
+    request inline — including the Authorization bearer token and the required
+    Notion-Version header — so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: notionApi
+  url: ../openapi/notion-openapi.yml
+  type: openapi
+workflows:
+- workflowId: data-source-sync
+  summary: Find a database by title, read its schema, and insert a conforming row.
+  description: >-
+    Searches for a database by title, and when found, retrieves its schema and
+    creates a page inside it with the supplied properties, syncing a new row
+    into the database data source.
+  inputs:
+    type: object
+    required:
+    - token
+    - notionVersion
+    - databaseQuery
+    - rowProperties
+    properties:
+      token:
+        type: string
+        description: Notion integration token passed as a bearer credential.
+      notionVersion:
+        type: string
+        description: The Notion API version date sent in the Notion-Version header.
+      databaseQuery:
+        type: string
+        description: The title text used to find the target database via search.
+      rowProperties:
+        type: object
+        description: Property values for the new row, conforming to the database schema.
+  steps:
+  - stepId: findDatabase
+    description: >-
+      Search for the target database by title, filtering results to the database
+      object type and returning a single match.
+    operationId: search
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        query: $inputs.databaseQuery
+        filter:
+          property: object
+          value: database
+        page_size: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      databaseId: $response.body#/results/0/id
+    onSuccess:
+    - name: databaseFound
+      type: goto
+      stepId: readSchema
+      criteria:
+      - context: $response.body
+        condition: $.results.length > 0
+        type: jsonpath
+    - name: noDatabase
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.results.length == 0
+        type: jsonpath
+  - stepId: readSchema
+    description: >-
+      Retrieve the matched database to read its property schema before inserting
+      a conforming row.
+    operationId: retrieveDatabase
+    parameters:
+    - name: database_id
+      in: path
+      value: $steps.findDatabase.outputs.databaseId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      databaseId: $response.body#/id
+      schema: $response.body#/properties
+  - stepId: insertRow
+    description: >-
+      Create a page (row) inside the database with the supplied property values,
+      which must conform to the database schema.
+    operationId: createPage
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        parent:
+          type: database_id
+          database_id: $steps.readSchema.outputs.databaseId
+        properties: $inputs.rowProperties
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pageId: $response.body#/id
+      createdTime: $response.body#/created_time
+  outputs:
+    databaseId: $steps.readSchema.outputs.databaseId
+    schema: $steps.readSchema.outputs.schema
+    pageId: $steps.insertRow.outputs.pageId

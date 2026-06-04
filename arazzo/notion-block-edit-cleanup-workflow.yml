@@ -1,0 +1,141 @@
+arazzo: 1.0.1
+info:
+  title: Notion Edit and Optionally Delete a Page Block
+  summary: List a page's blocks, update the first block's text, then optionally archive it based on a flag.
+  description: >-
+    A content-maintenance pattern over a page's blocks. The workflow retrieves
+    the child blocks of a page, captures the first block, updates that block's
+    paragraph text, and then branches on a caller-supplied flag — when cleanup
+    is requested it archives (deletes) the block, otherwise it ends. Every step
+    spells out its request inline — including the Authorization bearer token and
+    the required Notion-Version header — so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: notionApi
+  url: ../openapi/notion-openapi.yml
+  type: openapi
+workflows:
+- workflowId: block-edit-cleanup
+  summary: Update the first block of a page and optionally archive it.
+  description: >-
+    Retrieves a page's child blocks, updates the first block's paragraph text,
+    and conditionally archives that block when the deleteAfter flag is true.
+  inputs:
+    type: object
+    required:
+    - token
+    - notionVersion
+    - pageId
+    - newText
+    - deleteAfter
+    properties:
+      token:
+        type: string
+        description: Notion integration token passed as a bearer credential.
+      notionVersion:
+        type: string
+        description: The Notion API version date sent in the Notion-Version header.
+      pageId:
+        type: string
+        description: The ID of the page whose first block will be edited.
+      newText:
+        type: string
+        description: The new plain-text content for the first block's paragraph.
+      deleteAfter:
+        type: boolean
+        description: When true, archive (delete) the block after updating it.
+  steps:
+  - stepId: listBlocks
+    description: >-
+      Retrieve the page's child blocks and capture the ID of the first block to
+      operate on.
+    operationId: retrieveBlockChildren
+    parameters:
+    - name: block_id
+      in: path
+      value: $inputs.pageId
+    - name: page_size
+      in: query
+      value: 1
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstBlockId: $response.body#/results/0/id
+    onSuccess:
+    - name: blockFound
+      type: goto
+      stepId: updateBlock
+      criteria:
+      - context: $response.body
+        condition: $.results.length > 0
+        type: jsonpath
+    - name: noBlocks
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.results.length == 0
+        type: jsonpath
+  - stepId: updateBlock
+    description: >-
+      Update the first block's paragraph rich text with the new content.
+    operationId: updateBlock
+    parameters:
+    - name: block_id
+      in: path
+      value: $steps.listBlocks.outputs.firstBlockId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        paragraph:
+          rich_text:
+          - type: text
+            text:
+              content: $inputs.newText
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      blockId: $response.body#/id
+    onSuccess:
+    - name: cleanupRequested
+      type: goto
+      stepId: deleteBlock
+      criteria:
+      - condition: $inputs.deleteAfter == true
+    - name: keepBlock
+      type: end
+      criteria:
+      - condition: $inputs.deleteAfter == false
+  - stepId: deleteBlock
+    description: >-
+      Archive (delete) the updated block when cleanup was requested.
+    operationId: deleteBlock
+    parameters:
+    - name: block_id
+      in: path
+      value: $steps.updateBlock.outputs.blockId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      archived: $response.body#/archived
+  outputs:
+    blockId: $steps.updateBlock.outputs.blockId
+    archived: $steps.deleteBlock.outputs.archived

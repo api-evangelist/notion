@@ -1,0 +1,130 @@
+arazzo: 1.0.1
+info:
+  title: Notion Search for a Page and Comment on It
+  summary: Search the workspace by title for a page, then leave a comment on the first matching page.
+  description: >-
+    A discovery-then-engage pattern. The workflow searches the workspace for
+    objects matching a title query while filtering to pages only, branches on
+    whether a page was found, retrieves the matched page to confirm it, and then
+    creates a comment on that page. Every step spells out its request inline —
+    including the Authorization bearer token and the required Notion-Version
+    header — so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: notionApi
+  url: ../openapi/notion-openapi.yml
+  type: openapi
+workflows:
+- workflowId: search-page-comment
+  summary: Search for a page by title and add a comment to the first match.
+  description: >-
+    Searches for pages matching a title query, and when a page is found,
+    retrieves it and creates a comment on it with the supplied text.
+  inputs:
+    type: object
+    required:
+    - token
+    - notionVersion
+    - query
+    - commentText
+    properties:
+      token:
+        type: string
+        description: Notion integration token passed as a bearer credential.
+      notionVersion:
+        type: string
+        description: The Notion API version date sent in the Notion-Version header.
+      query:
+        type: string
+        description: The text to search for in page titles.
+      commentText:
+        type: string
+        description: The plain-text body of the comment to create on the matched page.
+  steps:
+  - stepId: searchPages
+    description: >-
+      Search the workspace for pages whose title matches the query, filtering
+      results to the page object type and returning a single match.
+    operationId: search
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        query: $inputs.query
+        filter:
+          property: object
+          value: page
+        page_size: 1
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedPageId: $response.body#/results/0/id
+    onSuccess:
+    - name: pageFound
+      type: goto
+      stepId: retrievePage
+      criteria:
+      - context: $response.body
+        condition: $.results.length > 0
+        type: jsonpath
+    - name: nothingFound
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.results.length == 0
+        type: jsonpath
+  - stepId: retrievePage
+    description: >-
+      Retrieve the matched page to confirm it exists and is accessible before
+      commenting on it.
+    operationId: retrievePage
+    parameters:
+    - name: page_id
+      in: path
+      value: $steps.searchPages.outputs.matchedPageId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      pageId: $response.body#/id
+  - stepId: createComment
+    description: >-
+      Create a comment on the matched page using its ID as the comment parent.
+    operationId: createComment
+    parameters:
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        parent:
+          page_id: $steps.retrievePage.outputs.pageId
+        rich_text:
+        - type: text
+          text:
+            content: $inputs.commentText
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      commentId: $response.body#/id
+      discussionId: $response.body#/discussion_id
+  outputs:
+    pageId: $steps.retrievePage.outputs.pageId
+    commentId: $steps.createComment.outputs.commentId
+    discussionId: $steps.createComment.outputs.discussionId

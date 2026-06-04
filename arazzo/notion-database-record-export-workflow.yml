@@ -1,0 +1,129 @@
+arazzo: 1.0.1
+info:
+  title: Notion Export a Database Record with Its Content
+  summary: Read a database schema, query its first record, then pull that record's page content blocks.
+  description: >-
+    A read-and-export pattern. The workflow retrieves a database to capture its
+    schema, queries the database for its first record, branches on whether a
+    record exists, and then retrieves the child blocks of that record's page so
+    both its properties and its content are captured together. Every step spells
+    out its request inline — including the Authorization bearer token and the
+    required Notion-Version header — so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: notionApi
+  url: ../openapi/notion-openapi.yml
+  type: openapi
+workflows:
+- workflowId: database-record-export
+  summary: Read a database schema, query its first record, and export that record's content blocks.
+  description: >-
+    Retrieves a database's schema, queries it for the first record, and when a
+    record exists, retrieves the child blocks of that record's page to export
+    its content alongside its properties.
+  inputs:
+    type: object
+    required:
+    - token
+    - notionVersion
+    - databaseId
+    properties:
+      token:
+        type: string
+        description: Notion integration token passed as a bearer credential.
+      notionVersion:
+        type: string
+        description: The Notion API version date sent in the Notion-Version header.
+      databaseId:
+        type: string
+        description: The ID of the database to export a record from.
+  steps:
+  - stepId: readSchema
+    description: >-
+      Retrieve the database to capture its property schema for the export.
+    operationId: retrieveDatabase
+    parameters:
+    - name: database_id
+      in: path
+      value: $inputs.databaseId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      databaseId: $response.body#/id
+      schema: $response.body#/properties
+  - stepId: queryFirstRecord
+    description: >-
+      Query the database for its first record, sorted by creation time, and
+      capture that record's page ID.
+    operationId: queryDatabase
+    parameters:
+    - name: database_id
+      in: path
+      value: $steps.readSchema.outputs.databaseId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        page_size: 1
+        sorts:
+        - timestamp: created_time
+          direction: ascending
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      recordPageId: $response.body#/results/0/id
+      recordProperties: $response.body#/results/0/properties
+    onSuccess:
+    - name: recordFound
+      type: goto
+      stepId: exportContent
+      criteria:
+      - context: $response.body
+        condition: $.results.length > 0
+        type: jsonpath
+    - name: emptyDatabase
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.results.length == 0
+        type: jsonpath
+  - stepId: exportContent
+    description: >-
+      Retrieve the child blocks of the record's page by passing the page ID as
+      the block ID, capturing the record's content.
+    operationId: retrieveBlockChildren
+    parameters:
+    - name: block_id
+      in: path
+      value: $steps.queryFirstRecord.outputs.recordPageId
+    - name: page_size
+      in: query
+      value: 100
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      contentBlocks: $response.body#/results
+      hasMore: $response.body#/has_more
+  outputs:
+    databaseId: $steps.readSchema.outputs.databaseId
+    schema: $steps.readSchema.outputs.schema
+    recordPageId: $steps.queryFirstRecord.outputs.recordPageId
+    contentBlocks: $steps.exportContent.outputs.contentBlocks

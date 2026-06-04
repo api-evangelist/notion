@@ -1,0 +1,116 @@
+arazzo: 1.0.1
+info:
+  title: Notion Evolve a Database Schema and Re-Query
+  summary: Retrieve a database, add a property to its schema, then query it back to confirm the change.
+  description: >-
+    A schema-migration pattern for Notion databases. The workflow retrieves a
+    database to read its current schema, updates the schema by adding or
+    modifying a property, then queries the database to confirm it is readable
+    under the new schema. Every step spells out its request inline — including
+    the Authorization bearer token and the required Notion-Version header — so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: notionApi
+  url: ../openapi/notion-openapi.yml
+  type: openapi
+workflows:
+- workflowId: database-schema-evolution
+  summary: Retrieve a database, update its property schema, then query it.
+  description: >-
+    Reads a database's current schema, patches the schema with a supplied
+    properties object, and queries the database to confirm it works under the
+    updated schema.
+  inputs:
+    type: object
+    required:
+    - token
+    - notionVersion
+    - databaseId
+    - properties
+    properties:
+      token:
+        type: string
+        description: Notion integration token passed as a bearer credential.
+      notionVersion:
+        type: string
+        description: The Notion API version date sent in the Notion-Version header.
+      databaseId:
+        type: string
+        description: The ID of the database to evolve.
+      properties:
+        type: object
+        description: Property schema changes to apply (add or modify properties).
+  steps:
+  - stepId: retrieveDatabase
+    description: >-
+      Retrieve the database to read its current property schema before
+      modifying it.
+    operationId: retrieveDatabase
+    parameters:
+    - name: database_id
+      in: path
+      value: $inputs.databaseId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      databaseId: $response.body#/id
+      currentProperties: $response.body#/properties
+  - stepId: updateDatabase
+    description: >-
+      Patch the database schema with the supplied properties object, adding or
+      modifying properties as specified.
+    operationId: updateDatabase
+    parameters:
+    - name: database_id
+      in: path
+      value: $steps.retrieveDatabase.outputs.databaseId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        properties: $inputs.properties
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      databaseId: $response.body#/id
+      updatedProperties: $response.body#/properties
+  - stepId: verifyQuery
+    description: >-
+      Query the database under its new schema, returning a small page of results
+      to confirm it is readable.
+    operationId: queryDatabase
+    parameters:
+    - name: database_id
+      in: path
+      value: $steps.updateDatabase.outputs.databaseId
+    - name: Authorization
+      in: header
+      value: "Bearer $inputs.token"
+    - name: Notion-Version
+      in: header
+      value: $inputs.notionVersion
+    requestBody:
+      contentType: application/json
+      payload:
+        page_size: 5
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      results: $response.body#/results
+  outputs:
+    databaseId: $steps.updateDatabase.outputs.databaseId
+    updatedProperties: $steps.updateDatabase.outputs.updatedProperties
+    results: $steps.verifyQuery.outputs.results
