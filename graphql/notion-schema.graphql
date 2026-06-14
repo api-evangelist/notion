@@ -1,0 +1,1765 @@
+# Notion API — Conceptual GraphQL Schema
+# Derived from the Notion REST API (https://developers.notion.com/reference/intro)
+# Notion does not expose a native GraphQL endpoint.
+# This schema is a comprehensive data model for tooling, catalog enrichment,
+# code generation, and integration mapping.
+# REST base URL: https://api.notion.com/v1
+
+scalar DateTime
+scalar JSON
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+enum Color {
+  default
+  gray
+  brown
+  orange
+  yellow
+  green
+  blue
+  purple
+  pink
+  red
+  gray_background
+  brown_background
+  orange_background
+  yellow_background
+  green_background
+  blue_background
+  purple_background
+  pink_background
+  red_background
+}
+
+enum ObjectType {
+  database
+  page
+  block
+  user
+  comment
+  file_upload
+  data_source
+  list
+  error
+}
+
+enum UserType {
+  person
+  bot
+}
+
+enum ParentType {
+  workspace
+  database_id
+  page_id
+  block_id
+}
+
+enum BlockType {
+  paragraph
+  heading_1
+  heading_2
+  heading_3
+  bulleted_list_item
+  numbered_list_item
+  to_do
+  toggle
+  child_page
+  child_database
+  embed
+  image
+  video
+  file
+  pdf
+  bookmark
+  callout
+  quote
+  equation
+  divider
+  table_of_contents
+  column
+  column_list
+  link_preview
+  synced_block
+  template
+  link_to_page
+  table
+  table_row
+  code
+  unsupported
+}
+
+enum PropertyType {
+  title
+  rich_text
+  number
+  select
+  multi_select
+  date
+  people
+  files
+  checkbox
+  url
+  email
+  phone_number
+  formula
+  relation
+  rollup
+  created_time
+  created_by
+  last_edited_time
+  last_edited_by
+  status
+  unique_id
+  verification
+}
+
+enum RichTextType {
+  text
+  mention
+  equation
+}
+
+enum MentionType {
+  user
+  page
+  database
+  date
+  link_preview
+  template_mention
+}
+
+enum FileType {
+  file
+  external
+}
+
+enum FileUploadStatus {
+  pending
+  in_progress
+  uploaded
+  expired
+  failed
+}
+
+enum FormulaResultType {
+  string
+  number
+  boolean
+  date
+}
+
+enum RollupFunction {
+  count
+  count_values
+  empty
+  not_empty
+  unique
+  show_unique
+  percent_empty
+  percent_not_empty
+  sum
+  average
+  median
+  min
+  max
+  range
+  earliest_date
+  latest_date
+  date_range
+  checked
+  unchecked
+  percent_checked
+  percent_unchecked
+  show_original
+}
+
+enum NumberFormat {
+  number
+  number_with_commas
+  percent
+  dollar
+  canadian_dollar
+  singaporean_dollar
+  euro
+  pound
+  yen
+  ruble
+  rupee
+  won
+  yuan
+  real
+  lira
+  rupiah
+  franc
+  hong_kong_dollar
+  new_zealand_dollar
+  krona
+  norwegian_krone
+  mexican_peso
+  rand
+  new_taiwan_dollar
+  danish_krone
+  zloty
+  baht
+  forint
+  koruna
+  shekel
+  chilean_peso
+  philippine_peso
+  dirham
+  colombian_peso
+  riyal
+  ringgit
+  leu
+  argentine_peso
+  uruguayan_peso
+  peruvian_sol
+}
+
+enum CodeLanguage {
+  abap
+  arduino
+  bash
+  basic
+  c
+  clojure
+  coffeescript
+  cpp
+  csharp
+  css
+  dart
+  diff
+  docker
+  elixir
+  elm
+  erlang
+  flow
+  fortran
+  fsharp
+  gherkin
+  glsl
+  go
+  graphql
+  groovy
+  haskell
+  html
+  java
+  javascript
+  json
+  julia
+  kotlin
+  latex
+  less
+  lisp
+  livescript
+  lua
+  makefile
+  markdown
+  markup
+  matlab
+  mermaid
+  nix
+  objective_c
+  ocaml
+  pascal
+  perl
+  php
+  plain_text
+  powershell
+  prolog
+  protobuf
+  python
+  r
+  reason
+  ruby
+  rust
+  sass
+  scala
+  scheme
+  scss
+  shell
+  sql
+  swift
+  typescript
+  vb_net
+  verilog
+  vhdl
+  visual_basic
+  webassembly
+  xml
+  yaml
+  java_or_kotlin
+}
+
+# ---------------------------------------------------------------------------
+# Shared / Primitive types
+# ---------------------------------------------------------------------------
+
+type Annotation {
+  bold: Boolean!
+  italic: Boolean!
+  strikethrough: Boolean!
+  underline: Boolean!
+  code: Boolean!
+  color: Color!
+}
+
+type TextContent {
+  content: String!
+  link: Link
+}
+
+type Link {
+  url: String!
+}
+
+type EquationContent {
+  expression: String!
+}
+
+type MentionUser {
+  object: String!
+  id: ID!
+}
+
+type MentionPage {
+  id: ID!
+}
+
+type MentionDatabase {
+  id: ID!
+}
+
+type MentionDate {
+  start: String!
+  end: String
+  time_zone: String
+}
+
+type MentionLinkPreview {
+  url: String!
+}
+
+type MentionTemplateMention {
+  type: String!
+  template_mention_date: String
+  template_mention_user: String
+}
+
+union MentionContent =
+    MentionUser
+  | MentionPage
+  | MentionDatabase
+  | MentionDate
+  | MentionLinkPreview
+  | MentionTemplateMention
+
+type RichText {
+  type: RichTextType!
+  annotations: Annotation!
+  plain_text: String!
+  href: String
+  text: TextContent
+  mention: JSON
+  equation: EquationContent
+}
+
+type Emoji {
+  type: String!
+  emoji: String!
+}
+
+type ExternalFile {
+  url: String!
+}
+
+type HostedFile {
+  url: String!
+  expiry_time: DateTime
+}
+
+type File {
+  type: FileType!
+  name: String
+  external: ExternalFile
+  file: HostedFile
+}
+
+union Icon = Emoji | File
+
+type Cover {
+  type: FileType!
+  external: ExternalFile
+  file: HostedFile
+}
+
+type DateRange {
+  start: String!
+  end: String
+  time_zone: String
+}
+
+# ---------------------------------------------------------------------------
+# Parent
+# ---------------------------------------------------------------------------
+
+type DatabaseParent {
+  type: String!
+  database_id: ID!
+}
+
+type PageParent {
+  type: String!
+  page_id: ID!
+}
+
+type BlockParent {
+  type: String!
+  block_id: ID!
+}
+
+type WorkspaceParent {
+  type: String!
+  workspace: Boolean!
+}
+
+union Parent =
+    DatabaseParent
+  | PageParent
+  | BlockParent
+  | WorkspaceParent
+
+# ---------------------------------------------------------------------------
+# User
+# ---------------------------------------------------------------------------
+
+type PersonDetails {
+  email: String
+}
+
+type BotOwnerUser {
+  type: String!
+  user: User
+}
+
+type BotOwnerWorkspace {
+  type: String!
+  workspace: Boolean!
+}
+
+union BotOwner = BotOwnerUser | BotOwnerWorkspace
+
+type BotDetails {
+  owner: BotOwner
+  workspace_name: String
+}
+
+type User {
+  object: ObjectType!
+  id: ID!
+  type: UserType
+  name: String
+  avatar_url: String
+  person: PersonDetails
+  bot: BotDetails
+}
+
+# ---------------------------------------------------------------------------
+# Select options
+# ---------------------------------------------------------------------------
+
+type SelectOption {
+  id: ID!
+  name: String!
+  color: Color!
+  description: String
+}
+
+type StatusOption {
+  id: ID!
+  name: String!
+  color: Color!
+  description: String
+}
+
+type StatusGroup {
+  id: ID!
+  name: String!
+  color: Color!
+  option_ids: [ID!]!
+}
+
+# ---------------------------------------------------------------------------
+# Database Properties (schema level)
+# ---------------------------------------------------------------------------
+
+type TitleProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  title: JSON
+}
+
+type RichTextProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  rich_text: JSON
+}
+
+type NumberProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  format: NumberFormat
+}
+
+type SelectProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  options: [SelectOption!]!
+}
+
+type MultiSelectProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  options: [SelectOption!]!
+}
+
+type DateProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  date: JSON
+}
+
+type PeopleProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  people: JSON
+}
+
+type FilesProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  files: JSON
+}
+
+type CheckboxProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  checkbox: JSON
+}
+
+type UrlProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  url: JSON
+}
+
+type EmailProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  email: JSON
+}
+
+type PhoneNumberProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  phone_number: JSON
+}
+
+type FormulaProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  expression: String
+}
+
+type RelationProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  database_id: ID
+  synced_property_id: ID
+  synced_property_name: String
+}
+
+type RollupProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  relation_property_name: String
+  relation_property_id: String
+  rollup_property_name: String
+  rollup_property_id: String
+  function: RollupFunction
+}
+
+type CreatedTimeProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  created_time: JSON
+}
+
+type CreatedByProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  created_by: JSON
+}
+
+type LastEditedTimeProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  last_edited_time: JSON
+}
+
+type LastEditedByProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  last_edited_by: JSON
+}
+
+type StatusProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  options: [StatusOption!]
+  groups: [StatusGroup!]
+}
+
+type UniqueIdProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  prefix: String
+}
+
+type VerificationProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+  verification: JSON
+}
+
+union Property =
+    TitleProperty
+  | RichTextProperty
+  | NumberProperty
+  | SelectProperty
+  | MultiSelectProperty
+  | DateProperty
+  | PeopleProperty
+  | FilesProperty
+  | CheckboxProperty
+  | UrlProperty
+  | EmailProperty
+  | PhoneNumberProperty
+  | FormulaProperty
+  | RelationProperty
+  | RollupProperty
+  | CreatedTimeProperty
+  | CreatedByProperty
+  | LastEditedTimeProperty
+  | LastEditedByProperty
+  | StatusProperty
+  | UniqueIdProperty
+  | VerificationProperty
+
+# ---------------------------------------------------------------------------
+# Page Property Values (instance level)
+# ---------------------------------------------------------------------------
+
+type TitlePropertyValue {
+  id: String!
+  type: PropertyType!
+  title: [RichText!]!
+}
+
+type RichTextPropertyValue {
+  id: String!
+  type: PropertyType!
+  rich_text: [RichText!]!
+}
+
+type NumberPropertyValue {
+  id: String!
+  type: PropertyType!
+  number: Float
+}
+
+type SelectPropertyValue {
+  id: String!
+  type: PropertyType!
+  select: SelectOption
+}
+
+type MultiSelectPropertyValue {
+  id: String!
+  type: PropertyType!
+  multi_select: [SelectOption!]!
+}
+
+type DatePropertyValue {
+  id: String!
+  type: PropertyType!
+  date: DateRange
+}
+
+type PeoplePropertyValue {
+  id: String!
+  type: PropertyType!
+  people: [User!]!
+}
+
+type FilesPropertyValue {
+  id: String!
+  type: PropertyType!
+  files: [File!]!
+}
+
+type CheckboxPropertyValue {
+  id: String!
+  type: PropertyType!
+  checkbox: Boolean!
+}
+
+type UrlPropertyValue {
+  id: String!
+  type: PropertyType!
+  url: String
+}
+
+type EmailPropertyValue {
+  id: String!
+  type: PropertyType!
+  email: String
+}
+
+type PhoneNumberPropertyValue {
+  id: String!
+  type: PropertyType!
+  phone_number: String
+}
+
+type FormulaStringResult {
+  type: FormulaResultType!
+  string: String
+}
+
+type FormulaNumberResult {
+  type: FormulaResultType!
+  number: Float
+}
+
+type FormulaBooleanResult {
+  type: FormulaResultType!
+  boolean: Boolean
+}
+
+type FormulaDateResult {
+  type: FormulaResultType!
+  date: DateRange
+}
+
+union FormulaResult =
+    FormulaStringResult
+  | FormulaNumberResult
+  | FormulaBooleanResult
+  | FormulaDateResult
+
+type FormulaPropertyValue {
+  id: String!
+  type: PropertyType!
+  formula: FormulaResult
+}
+
+type RelationReference {
+  id: ID!
+}
+
+type RelationPropertyValue {
+  id: String!
+  type: PropertyType!
+  relation: [RelationReference!]!
+  has_more: Boolean!
+}
+
+type RollupPropertyValue {
+  id: String!
+  type: PropertyType!
+  function: RollupFunction
+  type: String
+  number: Float
+  date: DateRange
+  array: [JSON]
+}
+
+type CreatedTimePropertyValue {
+  id: String!
+  type: PropertyType!
+  created_time: DateTime!
+}
+
+type CreatedByPropertyValue {
+  id: String!
+  type: PropertyType!
+  created_by: User!
+}
+
+type LastEditedTimePropertyValue {
+  id: String!
+  type: PropertyType!
+  last_edited_time: DateTime!
+}
+
+type LastEditedByPropertyValue {
+  id: String!
+  type: PropertyType!
+  last_edited_by: User!
+}
+
+type StatusPropertyValue {
+  id: String!
+  type: PropertyType!
+  status: SelectOption
+}
+
+type UniqueIdPropertyValue {
+  id: String!
+  type: PropertyType!
+  unique_id: UniqueIdValue
+}
+
+type UniqueIdValue {
+  prefix: String
+  number: Int
+}
+
+type VerificationPropertyValue {
+  id: String!
+  type: PropertyType!
+  verification: VerificationState
+}
+
+type VerificationState {
+  state: String!
+  verified_by: User
+  date: DateRange
+}
+
+union PropertyValue =
+    TitlePropertyValue
+  | RichTextPropertyValue
+  | NumberPropertyValue
+  | SelectPropertyValue
+  | MultiSelectPropertyValue
+  | DatePropertyValue
+  | PeoplePropertyValue
+  | FilesPropertyValue
+  | CheckboxPropertyValue
+  | UrlPropertyValue
+  | EmailPropertyValue
+  | PhoneNumberPropertyValue
+  | FormulaPropertyValue
+  | RelationPropertyValue
+  | RollupPropertyValue
+  | CreatedTimePropertyValue
+  | CreatedByPropertyValue
+  | LastEditedTimePropertyValue
+  | LastEditedByPropertyValue
+  | StatusPropertyValue
+  | UniqueIdPropertyValue
+  | VerificationPropertyValue
+
+# ---------------------------------------------------------------------------
+# Block content subtypes
+# ---------------------------------------------------------------------------
+
+type RichTextBlock {
+  rich_text: [RichText!]!
+  color: Color
+}
+
+type ParagraphBlock {
+  rich_text: [RichText!]!
+  color: Color
+  children: [Block!]
+}
+
+type Heading1Block {
+  rich_text: [RichText!]!
+  color: Color
+  is_toggleable: Boolean!
+}
+
+type Heading2Block {
+  rich_text: [RichText!]!
+  color: Color
+  is_toggleable: Boolean!
+}
+
+type Heading3Block {
+  rich_text: [RichText!]!
+  color: Color
+  is_toggleable: Boolean!
+}
+
+type BulletedListItemBlock {
+  rich_text: [RichText!]!
+  color: Color
+  children: [Block!]
+}
+
+type NumberedListItemBlock {
+  rich_text: [RichText!]!
+  color: Color
+  children: [Block!]
+}
+
+type ToDoBlock {
+  rich_text: [RichText!]!
+  checked: Boolean!
+  color: Color
+  children: [Block!]
+}
+
+type ToggleBlock {
+  rich_text: [RichText!]!
+  color: Color
+  children: [Block!]
+}
+
+type ChildPageBlock {
+  title: String!
+}
+
+type ChildDatabaseBlock {
+  title: String!
+}
+
+type EmbedBlock {
+  url: String!
+  caption: [RichText!]
+}
+
+type ImageBlock {
+  type: FileType!
+  external: ExternalFile
+  file: HostedFile
+  caption: [RichText!]
+}
+
+type VideoBlock {
+  type: FileType!
+  external: ExternalFile
+  file: HostedFile
+  caption: [RichText!]
+}
+
+type FileBlock {
+  type: FileType!
+  external: ExternalFile
+  file: HostedFile
+  caption: [RichText!]
+  name: String
+}
+
+type PdfBlock {
+  type: FileType!
+  external: ExternalFile
+  file: HostedFile
+  caption: [RichText!]
+}
+
+type BookmarkBlock {
+  url: String!
+  caption: [RichText!]
+}
+
+type CalloutBlock {
+  rich_text: [RichText!]!
+  icon: Icon
+  color: Color
+  children: [Block!]
+}
+
+type QuoteBlock {
+  rich_text: [RichText!]!
+  color: Color
+  children: [Block!]
+}
+
+type EquationBlock {
+  expression: String!
+}
+
+type DividerBlock {
+  _placeholder: Boolean
+}
+
+type TableOfContentsBlock {
+  color: Color
+}
+
+type ColumnBlock {
+  children: [Block!]
+}
+
+type ColumnListBlock {
+  children: [Block!]
+}
+
+type LinkPreviewBlock {
+  url: String!
+}
+
+type SyncedFromBlock {
+  block_id: ID!
+}
+
+type SyncedBlock {
+  synced_from: SyncedFromBlock
+  children: [Block!]
+}
+
+type TemplateBlock {
+  rich_text: [RichText!]!
+  children: [Block!]
+}
+
+type LinkToPageBlock {
+  type: String!
+  page_id: ID
+  database_id: ID
+}
+
+type TableBlock {
+  table_width: Int!
+  has_column_header: Boolean!
+  has_row_header: Boolean!
+  children: [Block!]
+}
+
+type TableRowBlock {
+  cells: [[RichText!]!]!
+}
+
+type CodeBlock {
+  rich_text: [RichText!]!
+  caption: [RichText!]
+  language: CodeLanguage!
+}
+
+union BlockContent =
+    ParagraphBlock
+  | Heading1Block
+  | Heading2Block
+  | Heading3Block
+  | BulletedListItemBlock
+  | NumberedListItemBlock
+  | ToDoBlock
+  | ToggleBlock
+  | ChildPageBlock
+  | ChildDatabaseBlock
+  | EmbedBlock
+  | ImageBlock
+  | VideoBlock
+  | FileBlock
+  | PdfBlock
+  | BookmarkBlock
+  | CalloutBlock
+  | QuoteBlock
+  | EquationBlock
+  | DividerBlock
+  | TableOfContentsBlock
+  | ColumnBlock
+  | ColumnListBlock
+  | LinkPreviewBlock
+  | SyncedBlock
+  | TemplateBlock
+  | LinkToPageBlock
+  | TableBlock
+  | TableRowBlock
+  | CodeBlock
+
+# ---------------------------------------------------------------------------
+# Block
+# ---------------------------------------------------------------------------
+
+type Block {
+  object: ObjectType!
+  id: ID!
+  parent: Parent!
+  type: BlockType!
+  created_time: DateTime!
+  last_edited_time: DateTime!
+  created_by: User!
+  last_edited_by: User!
+  has_children: Boolean!
+  archived: Boolean!
+  in_trash: Boolean!
+  content: BlockContent
+}
+
+# ---------------------------------------------------------------------------
+# Database
+# ---------------------------------------------------------------------------
+
+type Database {
+  object: ObjectType!
+  id: ID!
+  created_time: DateTime!
+  last_edited_time: DateTime!
+  created_by: User!
+  last_edited_by: User!
+  title: [RichText!]!
+  description: [RichText!]!
+  icon: Icon
+  cover: Cover
+  properties: JSON
+  parent: Parent!
+  url: String!
+  public_url: String
+  archived: Boolean!
+  in_trash: Boolean!
+  is_inline: Boolean!
+  request_id: ID
+}
+
+# ---------------------------------------------------------------------------
+# Page
+# ---------------------------------------------------------------------------
+
+type Page {
+  object: ObjectType!
+  id: ID!
+  created_time: DateTime!
+  last_edited_time: DateTime!
+  created_by: User!
+  last_edited_by: User!
+  cover: Cover
+  icon: Icon
+  parent: Parent!
+  archived: Boolean!
+  in_trash: Boolean!
+  properties: JSON
+  url: String!
+  public_url: String
+  request_id: ID
+}
+
+# ---------------------------------------------------------------------------
+# Comment
+# ---------------------------------------------------------------------------
+
+type CommentAttachment {
+  type: String!
+  url: String
+  file: HostedFile
+  external: ExternalFile
+  name: String
+}
+
+type Comment {
+  object: ObjectType!
+  id: ID!
+  parent: Parent!
+  discussion_id: ID!
+  created_time: DateTime!
+  last_edited_time: DateTime!
+  created_by: User!
+  rich_text: [RichText!]!
+  attachments: [CommentAttachment!]
+  resolved: Boolean
+}
+
+# ---------------------------------------------------------------------------
+# File Upload
+# ---------------------------------------------------------------------------
+
+type FileUploadPart {
+  part_number: Int!
+  etag: String
+}
+
+type FileUpload {
+  object: ObjectType!
+  id: ID!
+  created_time: DateTime!
+  last_edited_time: DateTime!
+  expiry_time: DateTime
+  status: FileUploadStatus!
+  filename: String
+  content_type: String
+  content_length: Int
+  url: String
+  upload_url: String
+  parts: [FileUploadPart!]
+}
+
+# ---------------------------------------------------------------------------
+# Data Source
+# ---------------------------------------------------------------------------
+
+type DataSourceProperty {
+  id: ID!
+  name: String!
+  type: PropertyType!
+}
+
+type DataSource {
+  object: ObjectType!
+  id: ID!
+  created_time: DateTime!
+  last_edited_time: DateTime!
+  name: String!
+  description: String
+  properties: JSON
+  parent: Parent
+  archived: Boolean!
+}
+
+# ---------------------------------------------------------------------------
+# Pagination / List wrappers
+# ---------------------------------------------------------------------------
+
+type PagedList {
+  object: String!
+  results: [JSON!]!
+  next_cursor: String
+  has_more: Boolean!
+  type: String
+  request_id: ID
+}
+
+type BlockList {
+  object: String!
+  results: [Block!]!
+  next_cursor: String
+  has_more: Boolean!
+  type: String
+}
+
+type UserList {
+  object: String!
+  results: [User!]!
+  next_cursor: String
+  has_more: Boolean!
+}
+
+type CommentList {
+  object: String!
+  results: [Comment!]!
+  next_cursor: String
+  has_more: Boolean!
+}
+
+type FileUploadList {
+  object: String!
+  results: [FileUpload!]!
+  next_cursor: String
+  has_more: Boolean!
+}
+
+type SearchResult {
+  object: String!
+  results: [JSON!]!
+  next_cursor: String
+  has_more: Boolean!
+  type: String
+  page_or_database: JSON
+}
+
+# ---------------------------------------------------------------------------
+# OAuth / Token
+# ---------------------------------------------------------------------------
+
+type Token {
+  access_token: String!
+  token_type: String!
+  bot_id: ID!
+  workspace_name: String
+  workspace_icon: String
+  workspace_id: ID!
+  owner: JSON
+  duplicated_template_id: ID
+  request_id: ID
+}
+
+type TokenIntrospection {
+  active: Boolean!
+  bot_id: ID
+  workspace_id: ID
+  workspace_name: String
+  expires_at: DateTime
+  scope: String
+}
+
+# ---------------------------------------------------------------------------
+# Input types
+# ---------------------------------------------------------------------------
+
+input DateRangeInput {
+  start: String!
+  end: String
+  time_zone: String
+}
+
+input RichTextInput {
+  type: RichTextType!
+  text: TextContentInput
+  equation: EquationInput
+  annotations: AnnotationInput
+}
+
+input TextContentInput {
+  content: String!
+  link: LinkInput
+}
+
+input LinkInput {
+  url: String!
+}
+
+input EquationInput {
+  expression: String!
+}
+
+input AnnotationInput {
+  bold: Boolean
+  italic: Boolean
+  strikethrough: Boolean
+  underline: Boolean
+  code: Boolean
+  color: Color
+}
+
+input SelectOptionInput {
+  id: ID
+  name: String!
+  color: Color
+}
+
+input CreateDatabaseInput {
+  parent: ParentInput!
+  title: [RichTextInput!]!
+  description: [RichTextInput!]
+  icon: IconInput
+  cover: CoverInput
+  properties: JSON!
+  is_inline: Boolean
+}
+
+input UpdateDatabaseInput {
+  title: [RichTextInput!]
+  description: [RichTextInput!]
+  icon: IconInput
+  cover: CoverInput
+  properties: JSON
+  archived: Boolean
+}
+
+input CreatePageInput {
+  parent: ParentInput!
+  properties: JSON!
+  icon: IconInput
+  cover: CoverInput
+  children: [BlockInput!]
+}
+
+input UpdatePageInput {
+  properties: JSON
+  icon: IconInput
+  cover: CoverInput
+  archived: Boolean
+  in_trash: Boolean
+}
+
+input ParentInput {
+  type: ParentType!
+  database_id: ID
+  page_id: ID
+  block_id: ID
+}
+
+input IconInput {
+  type: String!
+  emoji: String
+  external: ExternalFileInput
+}
+
+input CoverInput {
+  type: String!
+  external: ExternalFileInput
+}
+
+input ExternalFileInput {
+  url: String!
+}
+
+input BlockInput {
+  type: BlockType!
+  paragraph: ParagraphBlockInput
+  heading_1: HeadingBlockInput
+  heading_2: HeadingBlockInput
+  heading_3: HeadingBlockInput
+  bulleted_list_item: ListItemBlockInput
+  numbered_list_item: ListItemBlockInput
+  to_do: ToDoBlockInput
+  toggle: ToggleBlockInput
+  callout: CalloutBlockInput
+  quote: RichTextBlockInput
+  code: CodeBlockInput
+  embed: EmbedBlockInput
+  image: FileBlockInput
+  video: FileBlockInput
+  file: FileBlockInput
+  pdf: FileBlockInput
+  bookmark: BookmarkBlockInput
+  divider: JSON
+  table_of_contents: TableOfContentsBlockInput
+  equation: EquationBlockInput
+  table: TableBlockInput
+  table_row: TableRowBlockInput
+  link_to_page: LinkToPageBlockInput
+  synced_block: SyncedBlockInput
+  column_list: JSON
+  column: JSON
+}
+
+input ParagraphBlockInput {
+  rich_text: [RichTextInput!]!
+  color: Color
+  children: [BlockInput!]
+}
+
+input HeadingBlockInput {
+  rich_text: [RichTextInput!]!
+  color: Color
+  is_toggleable: Boolean
+}
+
+input ListItemBlockInput {
+  rich_text: [RichTextInput!]!
+  color: Color
+  children: [BlockInput!]
+}
+
+input ToDoBlockInput {
+  rich_text: [RichTextInput!]!
+  checked: Boolean
+  color: Color
+  children: [BlockInput!]
+}
+
+input ToggleBlockInput {
+  rich_text: [RichTextInput!]!
+  color: Color
+  children: [BlockInput!]
+}
+
+input CalloutBlockInput {
+  rich_text: [RichTextInput!]!
+  icon: IconInput
+  color: Color
+  children: [BlockInput!]
+}
+
+input RichTextBlockInput {
+  rich_text: [RichTextInput!]!
+  color: Color
+}
+
+input CodeBlockInput {
+  rich_text: [RichTextInput!]!
+  caption: [RichTextInput!]
+  language: CodeLanguage!
+}
+
+input EmbedBlockInput {
+  url: String!
+  caption: [RichTextInput!]
+}
+
+input FileBlockInput {
+  type: String!
+  external: ExternalFileInput
+  caption: [RichTextInput!]
+  name: String
+}
+
+input BookmarkBlockInput {
+  url: String!
+  caption: [RichTextInput!]
+}
+
+input TableOfContentsBlockInput {
+  color: Color
+}
+
+input EquationBlockInput {
+  expression: String!
+}
+
+input TableBlockInput {
+  table_width: Int!
+  has_column_header: Boolean!
+  has_row_header: Boolean!
+  children: [BlockInput!]
+}
+
+input TableRowBlockInput {
+  cells: [[RichTextInput!]!]!
+}
+
+input LinkToPageBlockInput {
+  type: String!
+  page_id: ID
+  database_id: ID
+}
+
+input SyncedBlockInput {
+  synced_from: SyncedFromInput
+  children: [BlockInput!]
+}
+
+input SyncedFromInput {
+  block_id: ID!
+}
+
+input CreateCommentInput {
+  parent: ParentInput
+  discussion_id: ID
+  rich_text: [RichTextInput!]!
+}
+
+input DatabaseQueryFilter {
+  and: [DatabaseQueryFilter!]
+  or: [DatabaseQueryFilter!]
+  property: String
+  title: TextFilterCondition
+  rich_text: TextFilterCondition
+  number: NumberFilterCondition
+  checkbox: CheckboxFilterCondition
+  select: SelectFilterCondition
+  multi_select: MultiSelectFilterCondition
+  date: DateFilterCondition
+  people: PeopleFilterCondition
+  files: FilesFilterCondition
+  relation: RelationFilterCondition
+  formula: FormulaFilterCondition
+  status: StatusFilterCondition
+  unique_id: NumberFilterCondition
+  rollup: JSON
+}
+
+input TextFilterCondition {
+  equals: String
+  does_not_equal: String
+  contains: String
+  does_not_contain: String
+  starts_with: String
+  ends_with: String
+  is_empty: Boolean
+  is_not_empty: Boolean
+}
+
+input NumberFilterCondition {
+  equals: Float
+  does_not_equal: Float
+  greater_than: Float
+  less_than: Float
+  greater_than_or_equal_to: Float
+  less_than_or_equal_to: Float
+  is_empty: Boolean
+  is_not_empty: Boolean
+}
+
+input CheckboxFilterCondition {
+  equals: Boolean
+  does_not_equal: Boolean
+}
+
+input SelectFilterCondition {
+  equals: String
+  does_not_equal: String
+  is_empty: Boolean
+  is_not_empty: Boolean
+}
+
+input MultiSelectFilterCondition {
+  contains: String
+  does_not_contain: String
+  is_empty: Boolean
+  is_not_empty: Boolean
+}
+
+input DateFilterCondition {
+  equals: String
+  before: String
+  after: String
+  on_or_before: String
+  on_or_after: String
+  is_empty: Boolean
+  is_not_empty: Boolean
+  past_week: JSON
+  past_month: JSON
+  past_year: JSON
+  this_week: JSON
+  next_week: JSON
+  next_month: JSON
+  next_year: JSON
+}
+
+input PeopleFilterCondition {
+  contains: ID
+  does_not_contain: ID
+  is_empty: Boolean
+  is_not_empty: Boolean
+}
+
+input FilesFilterCondition {
+  is_empty: Boolean
+  is_not_empty: Boolean
+}
+
+input RelationFilterCondition {
+  contains: ID
+  does_not_contain: ID
+  is_empty: Boolean
+  is_not_empty: Boolean
+}
+
+input FormulaFilterCondition {
+  string: TextFilterCondition
+  number: NumberFilterCondition
+  checkbox: CheckboxFilterCondition
+  date: DateFilterCondition
+}
+
+input StatusFilterCondition {
+  equals: String
+  does_not_equal: String
+  is_empty: Boolean
+  is_not_empty: Boolean
+}
+
+input DatabaseQuerySort {
+  property: String
+  timestamp: String
+  direction: String!
+}
+
+input SearchFilter {
+  value: String!
+  property: String!
+}
+
+input SearchSort {
+  direction: String!
+  timestamp: String!
+}
+
+# ---------------------------------------------------------------------------
+# Root types
+# ---------------------------------------------------------------------------
+
+type Query {
+  # Databases
+  database(id: ID!): Database
+  queryDatabase(
+    id: ID!
+    filter: DatabaseQueryFilter
+    sorts: [DatabaseQuerySort!]
+    start_cursor: String
+    page_size: Int
+    filter_properties: [String!]
+  ): PagedList
+
+  # Pages
+  page(id: ID!): Page
+  pageProperty(page_id: ID!, property_id: ID!, start_cursor: String, page_size: Int): JSON
+
+  # Blocks
+  block(id: ID!): Block
+  blockChildren(block_id: ID!, start_cursor: String, page_size: Int): BlockList
+
+  # Users
+  user(id: ID!): User
+  users(start_cursor: String, page_size: Int): UserList
+  me: User
+
+  # Comments
+  comments(block_id: ID, discussion_id: ID, start_cursor: String, page_size: Int): CommentList
+
+  # Search
+  search(
+    query: String
+    filter: SearchFilter
+    sort: SearchSort
+    start_cursor: String
+    page_size: Int
+  ): SearchResult
+
+  # File Uploads
+  fileUpload(id: ID!): FileUpload
+  fileUploads(start_cursor: String, page_size: Int): FileUploadList
+
+  # Data Sources
+  dataSource(id: ID!): DataSource
+  dataSourceTemplates: JSON
+  queryDataSource(id: ID!, filter: JSON, sorts: [JSON!], start_cursor: String, page_size: Int): PagedList
+
+  # Token introspection
+  introspectToken: TokenIntrospection
+}
+
+type Mutation {
+  # Databases
+  createDatabase(input: CreateDatabaseInput!): Database
+  updateDatabase(id: ID!, input: UpdateDatabaseInput!): Database
+
+  # Pages
+  createPage(input: CreatePageInput!): Page
+  updatePage(id: ID!, input: UpdatePageInput!): Page
+  archivePage(id: ID!): Page
+  movePage(id: ID!, parent: ParentInput!): Page
+
+  # Blocks
+  updateBlock(id: ID!, block: BlockInput!): Block
+  deleteBlock(id: ID!): Block
+  appendBlockChildren(block_id: ID!, children: [BlockInput!]!, after: ID): BlockList
+
+  # Comments
+  createComment(input: CreateCommentInput!): Comment
+
+  # File Uploads
+  createFileUpload(filename: String!, content_type: String!, content_length: Int, number_of_parts: Int): FileUpload
+  completeFileUpload(id: ID!, parts: [JSON!]): FileUpload
+
+  # Data Sources
+  createDataSource(input: JSON!): DataSource
+  updateDataSource(id: ID!, input: JSON!): DataSource
+
+  # Token management
+  createToken(code: String!, grant_type: String!, redirect_uri: String): Token
+  refreshToken(grant_type: String!, refresh_token: String!): Token
+  revokeToken(token: String!): JSON
+}
