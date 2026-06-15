@@ -1,0 +1,595 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Notion API",
+    "version": "Mon Jun 27 2022 20:00:00 GMT-0400 (Eastern Daylight Time)"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Pages",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Notion Create a page",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.notion.com/v1/pages",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new page that is a child of an existing page or database. If the parent is a database, the property values of the new page must conform to the parent database's schema. The request body must include a parent and properties. Page content can optionally be provided as an array of block objects in the children field."
+        },
+        {
+          "info": {
+            "name": "Notion Retrieve a page",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/pages/:page_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the page to retrieve."
+              },
+              {
+                "name": "filter_properties",
+                "value": "",
+                "type": "query",
+                "description": "A list of page property value IDs to include in the response. If provided, only the specified properties will be returned."
+              }
+            ]
+          },
+          "docs": "Retrieves a Page object using the ID specified in the path. Returns page properties but not page content (blocks). To retrieve page content, use the retrieve block children endpoint on the page ID."
+        },
+        {
+          "info": {
+            "name": "Notion Update page properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.notion.com/v1/pages/:page_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the page to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the properties of a page. Only the properties specified in the request body will be updated. Properties that are not included will remain unchanged. Can also update the page icon, cover, and archived status."
+        },
+        {
+          "info": {
+            "name": "Notion Retrieve a page property item",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/pages/:page_id/properties/:property_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "page_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the page."
+              },
+              {
+                "name": "property_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the property to retrieve."
+              },
+              {
+                "name": "start_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor for paginated property types. If supplied, returns results starting after the cursor."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of property items to return (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a property item from a page. For paginated properties like rich text, relation, rollup, and people, this endpoint returns a paginated list. For all other property types, it returns a single property item."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Databases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Notion Create a database",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.notion.com/v1/databases",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a database as a subpage of the specified parent page, with the specified properties schema. A database can be created with a title, properties defining the schema, and an optional description. The parent must be a page that the integration has access to."
+        },
+        {
+          "info": {
+            "name": "Notion Retrieve a database",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/databases/:database_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "database_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the database to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves a Database object using the ID specified in the path. Returns the database properties schema and metadata."
+        },
+        {
+          "info": {
+            "name": "Notion Update a database",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.notion.com/v1/databases/:database_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "database_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the database to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing database's title, description, or properties schema. Only the fields specified in the request body will be updated. To remove a property from the schema, set its value to null."
+        },
+        {
+          "info": {
+            "name": "Notion Query a database",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.notion.com/v1/databases/:database_id/query",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "database_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the database to query."
+              },
+              {
+                "name": "filter_properties",
+                "value": "",
+                "type": "query",
+                "description": "A list of property IDs to include in the response. Only the specified properties will be returned for each page."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Gets a list of Pages and/or Databases contained in the database, filtered and ordered according to the filter and sort conditions specified in the request body. Responses are paginated and limited to 100 results per request."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Blocks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Notion Retrieve a block",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/blocks/:block_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "block_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the block to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves a Block object using the ID specified in the path. If the block is a page, the page properties will be returned. The block's children are not included; use the retrieve block children endpoint to get them."
+        },
+        {
+          "info": {
+            "name": "Notion Update a block",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.notion.com/v1/blocks/:block_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "block_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the block to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the content of a block. The fields that can be updated depend on the block type. Blocks can also be archived by setting the archived field to true."
+        },
+        {
+          "info": {
+            "name": "Notion Delete a block",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.notion.com/v1/blocks/:block_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "block_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the block to delete (archive)."
+              }
+            ]
+          },
+          "docs": "Sets a Block object, including page blocks, to archived: true using the ID specified in the path. This is equivalent to trashing the block in the Notion UI. To restore an archived block, use the update block endpoint to set archived to false."
+        },
+        {
+          "info": {
+            "name": "Notion Retrieve block children",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/blocks/:block_id/children",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "block_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the block whose children to retrieve. This can be a page ID to retrieve page content."
+              },
+              {
+                "name": "start_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor to continue fetching results."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of blocks to return (max 100)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated array of child block objects contained in the block using the ID specified. This is used to read page content by passing a page ID as the block_id. Responses include a maximum of 100 blocks per request and are returned in the order they appear in the parent block."
+        },
+        {
+          "info": {
+            "name": "Notion Append block children",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.notion.com/v1/blocks/:block_id/children",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "block_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the block to append children to. This can be a page ID to add content to a page."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates and appends new children blocks to the parent block specified by block_id. Returns the updated parent block. Blocks can be appended to pages, or to other blocks that support children. The maximum number of blocks that can be appended in a single request is 100."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Notion List all users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/users",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "start_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor to continue fetching results."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of users to return (max 100)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of Users for the workspace. Guest users are not included. The response may include person users and bot users. Results are paginated with a maximum of 100 users per request."
+        },
+        {
+          "info": {
+            "name": "Notion Retrieve a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/users/:user_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves a User object using the ID specified in the path. Returns user details including name, avatar, and type (person or bot)."
+        },
+        {
+          "info": {
+            "name": "Notion Retrieve the bot user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/users/me",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieves the bot User associated with the current API token. Returns information about the integration including its name, owner, and the workspace it belongs to."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Search",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Notion Search by title",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.notion.com/v1/search",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches all parent or child pages and databases that have been shared with an integration. Returns results based on the query, filter, and sort parameters. Results are sorted by relevance by default but can be sorted by last_edited_time. The search indexing may not be immediate, so recently created or updated objects may not appear right away."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Comments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Notion Retrieve comments",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/comments",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "block_id",
+                "value": "",
+                "type": "query",
+                "description": "The ID of the block or page to retrieve comments for."
+              },
+              {
+                "name": "start_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor to continue fetching results."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of comments to return (max 100)."
+              }
+            ]
+          },
+          "docs": "Retrieves a list of unresolved comments from a page or block. Requires the integration to have read comment capabilities."
+        },
+        {
+          "info": {
+            "name": "Notion Create a comment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.notion.com/v1/comments",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a comment on a page or in an existing discussion thread. The integration must have comment capabilities to use this endpoint."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
