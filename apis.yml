@@ -136,53 +136,39 @@ type: Index
 image: https://www.notion.so/images/meta/default.png
 access: 3rd-Party
 common:
-- type: ArazzoWorkflows
-  url: arazzo/
-  workflows:
-  - url: arazzo/notion-block-edit-cleanup-workflow.yml
-    name: Notion Edit and Optionally Delete a Page Block
-    summary: List a page's blocks, update the first block's text, then optionally
-      archive it based on a flag.
-  - url: arazzo/notion-comment-thread-reply-workflow.yml
-    name: Notion Reply to an Existing Comment Thread
-    summary: List a page's unresolved comments, then reply into the existing discussion
-      or start a new one.
-  - url: arazzo/notion-create-database-page-content-workflow.yml
-    name: Notion Create a Database, Seed a Page, and Add Content
-    summary: Stand up a new Notion database under a page, add a first entry, then
-      fill that entry with content blocks.
-  - url: arazzo/notion-create-page-read-children-workflow.yml
-    name: Notion Create a Page and Read Back Its Content
-    summary: Create a standalone page with content blocks, then retrieve that page's
-      block children.
-  - url: arazzo/notion-data-source-sync-workflow.yml
-    name: Notion Sync a Row into a Database Data Source
-    summary: Discover a database by title, read its schema, then add a new page row
-      whose properties conform to it.
-  - url: arazzo/notion-database-record-export-workflow.yml
-    name: Notion Export a Database Record with Its Content
-    summary: Read a database schema, query its first record, then pull that record's
-      page content blocks.
-  - url: arazzo/notion-database-schema-evolution-workflow.yml
-    name: Notion Evolve a Database Schema and Re-Query
-    summary: Retrieve a database, add a property to its schema, then query it back
-      to confirm the change.
-  - url: arazzo/notion-page-property-audit-workflow.yml
-    name: Notion Audit a Single Page Property
-    summary: Retrieve a page, then fetch one named property item from it in full (including
-      paginated values).
-  - url: arazzo/notion-query-update-page-properties-workflow.yml
-    name: Notion Query a Database and Update a Matched Page
-    summary: Query a database with a filter, retrieve the first matching page, then
-      update its properties.
-  - url: arazzo/notion-search-page-comment-workflow.yml
-    name: Notion Search for a Page and Comment on It
-    summary: Search the workspace by title for a page, then leave a comment on the
-      first matching page.
-  - url: arazzo/notion-user-directory-resolve-workflow.yml
-    name: Notion Resolve a Workspace User Directory
-    summary: Identify the integration bot, list workspace users, then retrieve the
-      first user in detail.
+- type: Arazzo
+  url: arazzo/notion-block-edit-cleanup-workflow.yml
+  name: Notion Edit and Optionally Delete a Page Block
+- type: Arazzo
+  url: arazzo/notion-comment-thread-reply-workflow.yml
+  name: Notion Reply to an Existing Comment Thread
+- type: Arazzo
+  url: arazzo/notion-create-database-page-content-workflow.yml
+  name: Notion Create a Database, Seed a Page, and Add Content
+- type: Arazzo
+  url: arazzo/notion-create-page-read-children-workflow.yml
+  name: Notion Create a Page and Read Back Its Content
+- type: Arazzo
+  url: arazzo/notion-data-source-sync-workflow.yml
+  name: Notion Sync a Row into a Database Data Source
+- type: Arazzo
+  url: arazzo/notion-database-record-export-workflow.yml
+  name: Notion Export a Database Record with Its Content
+- type: Arazzo
+  url: arazzo/notion-database-schema-evolution-workflow.yml
+  name: Notion Evolve a Database Schema and Re-Query
+- type: Arazzo
+  url: arazzo/notion-page-property-audit-workflow.yml
+  name: Notion Audit a Single Page Property
+- type: Arazzo
+  url: arazzo/notion-query-update-page-properties-workflow.yml
+  name: Notion Query a Database and Update a Matched Page
+- type: Arazzo
+  url: arazzo/notion-search-page-comment-workflow.yml
+  name: Notion Search for a Page and Comment on It
+- type: Arazzo
+  url: arazzo/notion-user-directory-resolve-workflow.yml
+  name: Notion Resolve a Workspace User Directory
 - url: https://developers.notion.com/docs/getting-started
   name: Notion API Overview
   type: Guide
@@ -209,7 +195,7 @@ common:
   description: 'null'
 - url: https://developers.notion.com/reference/status-codes
   name: Status codes
-  type: Errors
+  type: ErrorCodes
   description: 'null'
 - url: https://developers.notion.com/reference/request-limits
   name: Request limits
@@ -294,11 +280,11 @@ common:
   description: 'null'
 - url: https://github.com/makenotion/notion-sdk-js
   name: Notion JavaScript SDK
-  type: SDK
+  type: SDKs
   description: 'null'
 - url: https://www.npmjs.com/package/@notionhq/client
   name: Notion JavaScript SDK (npm)
-  type: SDK
+  type: SDKs
   description: 'null'
 - url: https://github.com/makenotion/notion-mcp-server
   name: Notion MCP Server
@@ -494,7 +480,7 @@ common:
   description: 'null'
 - url: https://github.com/ramnes/notion-sdk-py
   name: Notion Python SDK (Community)
-  type: SDK
+  type: SDKs
   description: 'null'
 - type: Features
   data:
