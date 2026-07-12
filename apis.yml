@@ -136,6 +136,14 @@ type: Index
 image: https://www.notion.so/images/meta/default.png
 access: 3rd-Party
 common:
+- type: TrustCenter
+  url: security/notion-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/notion-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/notion-domain-security.yml
+- type: Authentication
+  url: authentication/notion-authentication.yml
 - type: Arazzo
   url: arazzo/notion-block-edit-cleanup-workflow.yml
   name: Notion Edit and Optionally Delete a Page Block

@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/notion-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: Notion API uses bearer token authentication. Obtain an integration token from
+    https://www.notion.so/my-integrations. Pass the token in the Authorization header as "Bearer
+    {token}".
+  sources:
+  - openapi/notion-openapi.yml
