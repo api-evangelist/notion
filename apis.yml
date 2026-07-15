@@ -136,6 +136,8 @@ type: Index
 image: https://www.notion.so/images/meta/default.png
 access: 3rd-Party
 common:
+- type: AgenticAccess
+  url: agentic-access/notion-agentic-access.yml
 - type: TrustCenter
   url: security/notion-trust-center.yml
 - type: VulnerabilityDisclosure
