@@ -1,0 +1,32 @@
+generated: '2026-06-20'
+method: searched
+source: live probes of Notion base hosts
+hosts:
+  - host: https://www.notion.so
+    documents:
+      - path: /.well-known/security.txt
+        status: 200
+        file: notion-security.txt
+  - host: https://www.notion.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://api.notion.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 400
+      - path: /.well-known/oauth-authorization-server
+        status: 400
+      - path: /.well-known/openid-configuration
+        status: 400
+  - host: https://mcp.notion.com
+    note: Remote Notion MCP server OAuth discovery (RFC 8414 / RFC 9728).
+    documents:
+      - path: /.well-known/oauth-authorization-server
+        status: 200
+        file: notion-mcp-oauth-authorization-server.json
+      - path: /.well-known/oauth-protected-resource
+        status: 200
+        file: notion-mcp-oauth-protected-resource.json

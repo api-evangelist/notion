@@ -1,0 +1,45 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Notion API
+  version: 1.0.0
+extends: openapi/notion-openapi.yml
+x-provenance:
+  generated: '2026-06-20'
+  method: generated
+  source: openapi/notion-openapi.yml
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-slug: notion
+      x-apievangelist-artifacts:
+        packages: packages/notion-packages.yml
+        mcp: mcp/notion-mcp.yml
+        conventions: conventions/notion-conventions.yml
+        errors: errors/notion-error-codes.yml
+        lifecycle: lifecycle/notion-lifecycle.yml
+        data_model: data-model/notion-data-model.yml
+        changelog: changelog/notion-changelog.yml
+        cli: cli/notion-cli.yml
+  - target: $.info
+    update:
+      x-notion-versioning:
+        scheme: date-header
+        header: Notion-Version
+        current: '2026-03-11'
+        note: Spec pins version 2022-06-28; latest documented version is 2026-03-11.
+  - target: $.components.securitySchemes
+    update:
+      oauth2:
+        type: oauth2
+        description: >-
+          Public connections authorize via OAuth 2.0 authorization code flow;
+          access is governed by integration "capabilities" rather than granular
+          scopes. See https://developers.notion.com/reference/capabilities.
+        flows:
+          authorizationCode:
+            authorizationUrl: https://api.notion.com/v1/oauth/authorize
+            tokenUrl: https://api.notion.com/v1/oauth/token
+            scopes: {}
+  - target: $.components.schemas.Error
+    update:
+      x-error-registry: errors/notion-error-codes.yml

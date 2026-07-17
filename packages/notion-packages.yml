@@ -1,0 +1,48 @@
+generated: '2026-06-20'
+method: searched
+source: https://developers.notion.com + npm/PyPI registries
+packages:
+  - language: javascript
+    registry: npm
+    name: "@notionhq/client"
+    url: https://www.npmjs.com/package/@notionhq/client
+    install: npm install @notionhq/client
+    version: 5.23.2
+    repo: https://github.com/makenotion/notion-sdk-js
+    official: true
+    description: Official Notion JavaScript/TypeScript SDK for the REST API.
+  - language: javascript
+    registry: npm
+    name: "@notionhq/notion-mcp-server"
+    url: https://www.npmjs.com/package/@notionhq/notion-mcp-server
+    install: npx -y @notionhq/notion-mcp-server
+    version: 2.4.1
+    repo: https://github.com/makenotion/notion-mcp-server
+    official: true
+    description: Official open-source Notion MCP server (stdio / streamable HTTP).
+  - language: javascript
+    registry: npm
+    name: ntn
+    url: https://www.npmjs.com/package/ntn
+    install: npm install --global ntn
+    version: 0.19.0
+    repo: https://github.com/makenotion/cli
+    official: true
+    description: Official Notion CLI (binary `ntn`) for API requests, Workers, and file uploads.
+  - language: javascript
+    registry: npm
+    name: "@notionhq/workers"
+    url: https://www.npmjs.com/package/@notionhq/workers
+    install: npm install @notionhq/workers
+    version: 0.8.0
+    official: true
+    description: Official SDK for building Notion Workers (schema builders, tools, syncs).
+  - language: python
+    registry: pypi
+    name: notion-client
+    url: https://pypi.org/project/notion-client/
+    install: pip install notion-client
+    version: 3.1.0
+    repo: https://github.com/ramnes/notion-sdk-py
+    official: false
+    description: Community Python SDK (ramnes) mirroring the official JS client's interface.

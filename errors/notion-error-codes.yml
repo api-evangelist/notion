@@ -1,0 +1,45 @@
+generated: '2026-06-20'
+method: searched
+source: https://developers.notion.com/reference/status-codes
+format: notion-error-object
+envelope:
+  object: error
+  fields: [object, status, code, message, request_id]
+  content_type: application/json
+  note: >-
+    Notion does not use RFC 9457 problem+json. Every error returns an object with
+    object="error", the HTTP status, a machine-readable code, a human message, and
+    a request_id for support.
+http_status_codes:
+  - {status: 200, meaning: Successful request.}
+  - {status: 400, meaning: Bad request (invalid JSON, URL, schema, headers, or authorization).}
+  - {status: 401, meaning: Invalid or missing bearer token.}
+  - {status: 403, meaning: Insufficient permissions/capabilities for the resource.}
+  - {status: 404, meaning: Resource not found or not shared with the integration.}
+  - {status: 409, meaning: Transaction conflict / data collision — safe to retry.}
+  - {status: 429, meaning: Rate limit exceeded — honor Retry-After.}
+  - {status: 500, meaning: Unexpected internal server error.}
+  - {status: 502, meaning: Bad gateway / upstream connectivity issue.}
+  - {status: 503, meaning: Service unavailable or timeout.}
+  - {status: 504, meaning: Gateway timeout.}
+  - {status: 529, meaning: Service temporarily overloaded.}
+error_codes:
+  - {code: invalid_json, status: 400, meaning: Request body could not be parsed as JSON.}
+  - {code: invalid_request_url, status: 400, meaning: Request URL is malformed or not recognized.}
+  - {code: invalid_request, status: 400, meaning: Request is not supported.}
+  - {code: invalid_grant, status: 400, meaning: OAuth authorization credentials are invalid or expired.}
+  - {code: validation_error, status: 400, meaning: Request body does not match the expected schema.}
+  - {code: missing_version, status: 400, meaning: Required Notion-Version header is missing.}
+  - {code: unauthorized, status: 401, meaning: Bearer token is invalid.}
+  - {code: restricted_resource, status: 403, meaning: Token lacks the capabilities/permission for this resource.}
+  - {code: object_not_found, status: 404, meaning: Resource does not exist or is not shared with the integration.}
+  - {code: conflict_error, status: 409, meaning: Data collision / storage conflict — retry.}
+  - {code: rate_limited, status: 429, meaning: Too many requests; back off and honor Retry-After.}
+  - {code: internal_server_error, status: 500, meaning: Unexpected server error.}
+  - {code: bad_gateway, status: 502, meaning: Upstream connection failure.}
+  - {code: service_unavailable, status: 503, meaning: Service down or request timed out.}
+  - {code: database_connection_unavailable, status: 503, meaning: Notion database unavailable; retry later.}
+  - {code: gateway_timeout, status: 504, meaning: Request timed out at the gateway.}
+  - {code: service_overload, status: 529, meaning: Temporary capacity issue; retry with backoff.}
+source_operations:
+  note: All operations in openapi/notion-openapi.yml reference shared 400/401/404/429 responses ($ref components.responses.*) whose schema is components.schemas.Error.

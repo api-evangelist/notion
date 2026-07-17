@@ -1,0 +1,43 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/notion-openapi.yml + https://developers.notion.com
+standards:
+  - id: oauth2
+    conforms: true
+    evidence: Public connections use OAuth 2.0 authorization code flow (authorize/token endpoints under api.notion.com/v1/oauth); docs https://developers.notion.com/guides/get-started/authorization
+  - id: oidc
+    conforms: false
+    evidence: No OpenID Connect discovery document served on the API host.
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: Errors use a proprietary object {object:"error", status, code, message, request_id}, not application/problem+json.
+  - id: rfc8414-oauth-metadata
+    conforms: true
+    evidence: Remote MCP server publishes /.well-known/oauth-authorization-server at mcp.notion.com.
+  - id: rfc9728-protected-resource-metadata
+    conforms: true
+    evidence: Remote MCP server publishes /.well-known/oauth-protected-resource at mcp.notion.com.
+  - id: rfc9116-security-txt
+    conforms: true
+    evidence: https://www.notion.so/.well-known/security.txt (Contact + Policy + Expires).
+  - id: cursor-pagination
+    conforms: true
+    evidence: Paginated endpoints return {has_more, next_cursor} and accept start_cursor/page_size (max 100).
+  - id: scim2
+    conforms: true
+    evidence: Enterprise SCIM 2.0 user/group provisioning documented at https://www.notion.com/help/provision-users-and-groups-with-scim
+  - id: mcp
+    conforms: true
+    evidence: Official hosted MCP server at https://mcp.notion.com/mcp plus open-source @notionhq/notion-mcp-server.
+  - id: webhooks
+    conforms: true
+    evidence: Workspace event webhooks with signature verification documented at https://developers.notion.com/reference/webhooks
+  - id: idempotency-keys
+    conforms: false
+    evidence: No Idempotency-Key header documented; retries are not idempotency-key protected.
+  - id: fhir-r4
+    conforms: false
+  - id: fapi
+    conforms: false
+  - id: odata
+    conforms: false

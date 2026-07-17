@@ -1,0 +1,43 @@
+generated: '2026-06-20'
+method: searched
+status: published
+source: https://developers.notion.com/guides/mcp/overview
+server:
+  name: notion
+  official: true
+  transports:
+    - transport: http
+      url: https://mcp.notion.com/mcp
+      auth: oauth2
+      note: Remote hosted server. User-based OAuth only (no bearer token). Discovery at /.well-known/oauth-authorization-server.
+    - transport: stdio
+      package: "@notionhq/notion-mcp-server"
+      install: npx -y @notionhq/notion-mcp-server
+      repo: https://github.com/makenotion/notion-mcp-server
+      note: Open-source local server; also supports streamable HTTP.
+  oauth:
+    issuer: https://mcp.notion.com
+    authorization_endpoint: https://mcp.notion.com/authorize
+    token_endpoint: https://mcp.notion.com/token
+    registration_endpoint: https://mcp.notion.com/register
+    code_challenge_methods_supported: [plain, S256]
+docs: https://developers.notion.com/guides/mcp/mcp-supported-tools
+tools:
+  - {name: notion-search, description: Search across the Notion workspace and connected sources (Slack, Google Drive, Jira).}
+  - {name: notion-fetch, description: Retrieve content from Notion pages, databases, or data sources by URL or ID.}
+  - {name: notion-create-pages, description: Create one or more pages with properties, content, icons, and covers.}
+  - {name: notion-update-page, description: Modify page properties, content, icons, or covers.}
+  - {name: notion-move-pages, description: Relocate pages or databases to a new parent.}
+  - {name: notion-duplicate-page, description: Copy an existing page within the workspace.}
+  - {name: notion-create-database, description: Create a new database with properties and an initial view.}
+  - {name: notion-update-data-source, description: Modify data source properties, name, or description.}
+  - {name: notion-create-view, description: Add a view (table, board, list, calendar, timeline, gallery, form, chart, map, dashboard).}
+  - {name: notion-update-view, description: Adjust view name, filters, sorts, or display configuration.}
+  - {name: notion-query-data-sources, description: Query data sources using SQL or run existing views.}
+  - {name: notion-query-database-view, description: Query database data using a pre-defined view's filters and sorts.}
+  - {name: notion-query-meeting-notes, description: Search the user's meeting notes with property filtering.}
+  - {name: notion-create-comment, description: Add comments to pages or specific content blocks.}
+  - {name: notion-get-comments, description: List comments and discussions on a page.}
+  - {name: notion-get-teams, description: Retrieve the list of teamspaces in the current workspace.}
+  - {name: notion-get-users, description: List workspace members and guests with contact information.}
+  - {name: notion-get-async-task, description: Check the status of an asynchronous operation.}

@@ -1,0 +1,22 @@
+generated: '2026-06-20'
+method: searched
+source: https://developers.notion.com/page/changelog
+scheme: date-based (dated posts; API versioned via Notion-Version)
+current_api_version: '2026-03-11'
+artifact_pointer: changelog/notion-changelog.yml
+entries:
+  - {date: '2026-07-15', breaking: false, highlight: 'User identity fields added to OAuth responses; Notion app links use a new domain; search trash and query archived pages enabled.'}
+  - {date: '2026-07-14', breaking: false, highlight: 'Notion MCP access tokens now last ~8 hours (up from 1 hour).'}
+  - {date: '2026-07-08', breaking: false, highlight: 'JavaScript SDK v5.23.0: webhook signature verification, large data-source iteration helpers, async page-write support.'}
+  - {date: '2026-07-03', breaking: false, highlight: 'HTML blocks can be created via the File Upload API using embed blocks.'}
+  - {date: '2026-07-02', breaking: false, highlight: 'Personal access tokens support custom expiration (7 days to 1 year) with admin visibility.'}
+  - {date: '2026-07-01', breaking: false, highlight: 'Icon names accept picker names; databases.retrieve returns UI-set icons.'}
+  - {date: '2026-06-29', breaking: false, highlight: 'Async page markdown writes via allow_async:true for large requests.'}
+  - {date: '2026-06-25', breaking: false, highlight: 'notion-fetch MCP tool accepts a special "self" id for workspace and user identity.'}
+  - {date: '2026-06-22', breaking: false, highlight: 'Business + Notion AI plans can query single databases; assistants get a complete feature picture.'}
+  - {date: '2026-06-16', breaking: false, highlight: 'Workspace-level rate limits added alongside per-connection limits.'}
+  - {date: '2026-06-10', breaking: false, highlight: 'Bots can be assigned to people properties and referenced in user mentions.'}
+  - {date: '2026-06-08', breaking: false, highlight: 'Public OAuth connections mint fresh tokens per authorization.'}
+related:
+  changes_by_version: https://developers.notion.com/reference/changes-by-version
+  product_releases: https://www.notion.com/releases

@@ -1,0 +1,45 @@
+generated: '2026-06-20'
+method: searched
+source: https://developers.notion.com/reference/intro
+base_url: https://api.notion.com/v1
+authentication:
+  style: bearer
+  header: Authorization
+  format: "Bearer {token}"
+  token_types: [internal integration token, OAuth 2.0 access token (public connections), personal access token]
+  authorization_model: capabilities
+  ref: authentication/notion-authentication.yml
+versioning:
+  style: date-header
+  header: Notion-Version
+  required: true
+  current: '2026-03-11'
+  ref: lifecycle/notion-lifecycle.yml
+pagination:
+  style: cursor
+  request_params: [start_cursor, page_size]
+  page_size_default: 100
+  page_size_max: 100
+  response_fields: [object (=list), results, has_more, next_cursor, type]
+  note: When has_more is true, pass next_cursor as start_cursor on the next request.
+idempotency:
+  supported: false
+  note: No Idempotency-Key header. 409 conflict_error responses are safe to retry.
+field_expansion:
+  supported: false
+  note: No expand/include params; nested objects (rich_text, parent, properties) are returned inline.
+metadata:
+  note: No general-purpose metadata bag; page/database "properties" carry user-defined structured fields.
+request_tracing:
+  request_id: present on error responses (request_id field) for support correlation.
+error_envelope:
+  shape: '{object:"error", status, code, message, request_id}'
+  ref: errors/notion-error-codes.yml
+rate_limiting:
+  average: ~3 requests/second per integration
+  scope: per-connection and (since 2026-06) workspace-level
+  overage_status: 429
+  signal: Retry-After header
+  size_limits: up to 1000 block elements and 500KB payload per request
+  ref: rate-limits/notion-rate-limits.yml
+content_type: application/json

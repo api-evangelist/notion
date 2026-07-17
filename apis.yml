@@ -136,6 +136,32 @@ type: Index
 image: https://www.notion.so/images/meta/default.png
 access: 3rd-Party
 common:
+- type: Packages
+  url: packages/notion-packages.yml
+- type: MCPServer
+  url: mcp/notion-mcp.yml
+- type: LLMsTxt
+  url: llms/notion-llms.txt
+- type: WellKnown
+  url: well-known/notion-well-known.yml
+- type: SecurityTxt
+  url: well-known/notion-security.txt
+- type: Overlay
+  url: overlays/notion-openapi-overlay.yaml
+- type: Conformance
+  url: conformance/notion-conformance.yml
+- type: ErrorCatalog
+  url: errors/notion-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/notion-lifecycle.yml
+- type: Conventions
+  url: conventions/notion-conventions.yml
+- type: ChangeLog
+  url: changelog/notion-changelog.yml
+- type: CLI
+  url: cli/notion-cli.yml
+- type: DataModel
+  url: data-model/notion-data-model.yml
 - type: AgenticAccess
   url: agentic-access/notion-agentic-access.yml
 - type: TrustCenter
@@ -514,7 +540,7 @@ common:
   - https://www.notion.com/pricing
   updated: '2026-05-04'
 created: '2025-01-08'
-modified: '2026-05-30'
+modified: '2026-06-20'
 position: Consumer
 description: Notion is an all-in-one workspace that combines notes, tasks, wikis,
   and databases. The Notion API allows developers to integrate Notion with other tools

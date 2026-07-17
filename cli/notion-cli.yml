@@ -1,0 +1,42 @@
+generated: '2026-06-20'
+method: searched
+source: https://developers.notion.com/cli/reference/commands
+binary: ntn
+official: true
+repo: https://github.com/makenotion/cli
+package: packages/notion-packages.yml
+docs: https://developers.notion.com/cli/get-started/overview
+install:
+  - {method: script, command: "curl -fsSL https://ntn.dev | bash", platforms: [macos, linux]}
+  - {method: npm, command: "npm install --global ntn", platforms: [macos, linux, windows], requires: "Node.js 22+, npm 10+"}
+  - {method: winget, command: "winget install Notion.ntn", platforms: [windows]}
+  - {method: source, command: "git clone https://github.com/makenotion/cli.git", note: "build with mise"}
+update_command: "ntn update"
+command_groups:
+  - group: auth
+    commands: [login, logout]
+  - group: api
+    commands: [api]
+    note: Execute authenticated Notion API requests from the terminal.
+  - group: datasources
+    commands: [query, resolve]
+  - group: pages
+    commands: [create, get, edit, trash]
+    note: get/create/edit operate in enhanced-markdown.
+  - group: files
+    commands: [create, get, list]
+  - group: workers
+    commands: [new, create, deploy, list, get, delete, exec, tui]
+    subgroups:
+      capabilities: [list]
+      sync: [status, trigger, pause, resume, "state get", "state reset"]
+      env: [set, list, unset, pull, push]
+      oauth: [start, token, show-redirect-url]
+      runs: [list, logs]
+      webhooks: [list]
+  - group: diagnostics
+    commands: [doctor, update]
+key_flows:
+  - Run one-off API requests without writing code (ntn api ...)
+  - Query and resolve data sources (ntn datasources ...)
+  - Build, deploy, and operate Notion Workers with syncs, env vars, and OAuth

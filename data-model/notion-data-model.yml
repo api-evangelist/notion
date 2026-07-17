@@ -1,0 +1,43 @@
+generated: '2026-06-20'
+method: derived
+source: openapi/notion-openapi.yml + json-schema/ + https://developers.notion.com/reference
+render: subway/notion-subway-map.svg
+entities:
+  - {name: Page, id_domain: page, description: A document with property values and block content.}
+  - {name: Database, id_domain: database, description: A collection with a shared property schema; container of data sources.}
+  - {name: DataSource, id_domain: data_source, description: The queryable table under a database (primary abstraction since 2025-09-03).}
+  - {name: Block, id_domain: block, description: A unit of page content; blocks can nest into a tree.}
+  - {name: User, id_domain: user, description: A workspace member, guest, or bot/connection.}
+  - {name: Comment, id_domain: comment, description: A comment on a page or block, grouped into discussion threads.}
+  - {name: FileUpload, id_domain: file_upload, description: Tracks the lifecycle of a file uploaded to the workspace.}
+  - {name: Parent, id_domain: null, description: Polymorphic reference to the container (workspace/page/database/data_source/block).}
+  - {name: RichText, id_domain: null, description: Styled text fragments used across pages, blocks, and comments.}
+relationships:
+  - {from: Page, type: belongs_to, to: Parent, via: parent}
+  - {from: Page, type: has_many, to: Block, via: children}
+  - {from: Page, type: has_many, to: PropertyValue, via: properties}
+  - {from: Page, type: has_one, to: User, via: created_by}
+  - {from: Page, type: has_one, to: User, via: last_edited_by}
+  - {from: Database, type: has_many, to: DataSource, via: data_sources}
+  - {from: DataSource, type: belongs_to, to: Database, via: database_parent}
+  - {from: DataSource, type: has_many, to: Page, via: query results}
+  - {from: DataSource, type: has_many, to: PropertySchema, via: properties}
+  - {from: Block, type: belongs_to, to: Parent, via: parent}
+  - {from: Block, type: has_many, to: Block, via: children}
+  - {from: Block, type: has_many, to: RichText, via: rich_text}
+  - {from: Comment, type: belongs_to, to: Page, via: parent (page_id)}
+  - {from: Comment, type: belongs_to, to: Block, via: parent (block_id)}
+  - {from: Comment, type: has_one, to: User, via: created_by}
+  - {from: Comment, type: has_many, to: RichText, via: rich_text}
+  - {from: FileUpload, type: has_one, to: User, via: created_by}
+id_references:
+  - {field: page_id, points_to: Page}
+  - {field: block_id, points_to: Block}
+  - {field: database_id, points_to: Database}
+  - {field: data_source_id, points_to: DataSource}
+  - {field: user_id, points_to: User}
+  - {field: comment_id, points_to: Comment}
+  - {field: file_upload_id, points_to: FileUpload}
+notes:
+  - All object ids are UUIDs (no type-prefixed ids); the object's "object" field discriminates type.
+  - Parent is polymorphic — {type: page_id|database_id|data_source_id|block_id|workspace}.

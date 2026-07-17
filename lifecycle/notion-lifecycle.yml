@@ -1,0 +1,39 @@
+generated: '2026-06-20'
+method: searched
+source: https://developers.notion.com/reference/versioning
+versioning:
+  scheme: date-header
+  header: Notion-Version
+  required: true
+  current: '2026-03-11'
+  spec_pinned: '2022-06-28'
+  known_versions:
+    - '2021-05-13'
+    - '2022-02-22'
+    - '2022-06-28'
+    - '2025-09-03'
+    - '2026-03-11'
+  policy: >-
+    A new dated version is released only for backwards-incompatible changes
+    (e.g. renaming a property type). New endpoints, optional params, added
+    response fields, error-text changes, and rate-limit tweaks are shipped
+    without a version bump.
+  docs: https://developers.notion.com/reference/versioning
+deprecation:
+  policy: >-
+    No announced plans to sunset older API versions; if that changes Notion
+    commits to communicating a time window and migration guidance to affected
+    users.
+  sunset_header: false
+  deprecation_header: false
+  upgrade_guides:
+    - https://developers.notion.com/guides/get-started/upgrade-guide-2025-09-03
+    - https://developers.notion.com/guides/get-started/upgrade-guide-2026-03-11
+  changes_by_version: https://developers.notion.com/reference/changes-by-version
+status_page: https://status.notion.so/
+sla:
+  url: null
+  note: No public numeric uptime SLA for the developer API; Enterprise plans carry contractual terms.
+deprecated_operations: []
+notes:
+  - The 2025-09-03 version introduced "data sources" as the primary abstraction under databases (breaking change).
