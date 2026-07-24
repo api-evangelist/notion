@@ -1,0 +1,637 @@
+openapi: 3.1.0
+info:
+  title: Notion Blocks Pages API
+  description: The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.
+  version: 2022-06-28
+  contact:
+    name: Notion Labs Inc.
+    email: developers@makenotion.com
+    url: https://developers.notion.com
+  license:
+    name: Notion Developer Terms
+    url: https://www.notion.so/Developer-Terms-ba4131408d0844e08330da2cbb225c20
+  termsOfService: https://www.notion.so/terms
+servers:
+- url: https://api.notion.com/v1
+  description: Notion API Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Pages
+  description: Pages represent documents in Notion workspaces. They can exist as standalone pages or as entries within a database. Pages contain properties (metadata) and content composed of blocks. Use these endpoints to create, retrieve, update, archive, and manage page properties and content.
+  externalDocs:
+    url: https://developers.notion.com/reference/page
+paths:
+  /pages:
+    post:
+      operationId: createPage
+      summary: Notion Create a page
+      description: Creates a new page that is a child of an existing page or database. If the parent is a database, the property values of the new page must conform to the parent database's schema. The request body must include a parent and properties. Page content can optionally be provided as an array of block objects in the children field.
+      tags:
+      - Pages
+      externalDocs:
+        url: https://developers.notion.com/reference/post-page
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - parent
+              - properties
+              properties:
+                parent:
+                  $ref: '#/components/schemas/Parent'
+                properties:
+                  type: object
+                  description: Property values for the new page. Keys are property names or IDs. If the parent is a database, the values must conform to the database schema.
+                  additionalProperties: true
+                children:
+                  type: array
+                  description: Page content as an array of block objects.
+                  items:
+                    $ref: '#/components/schemas/Block'
+                icon:
+                  description: Page icon, either an emoji or external URL.
+                  oneOf:
+                  - $ref: '#/components/schemas/Emoji'
+                  - $ref: '#/components/schemas/ExternalFile'
+                cover:
+                  $ref: '#/components/schemas/ExternalFile'
+                  description: Page cover image as an external URL.
+      responses:
+        '200':
+          description: Page successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /pages/{page_id}:
+    get:
+      operationId: retrievePage
+      summary: Notion Retrieve a page
+      description: Retrieves a Page object using the ID specified in the path. Returns page properties but not page content (blocks). To retrieve page content, use the retrieve block children endpoint on the page ID.
+      tags:
+      - Pages
+      externalDocs:
+        url: https://developers.notion.com/reference/retrieve-a-page
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      - name: page_id
+        in: path
+        required: true
+        description: The ID of the page to retrieve.
+        schema:
+          type: string
+          format: uuid
+      - name: filter_properties
+        in: query
+        required: false
+        description: A list of page property value IDs to include in the response. If provided, only the specified properties will be returned.
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: Page successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+    patch:
+      operationId: updatePage
+      summary: Notion Update page properties
+      description: Updates the properties of a page. Only the properties specified in the request body will be updated. Properties that are not included will remain unchanged. Can also update the page icon, cover, and archived status.
+      tags:
+      - Pages
+      externalDocs:
+        url: https://developers.notion.com/reference/patch-page
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      - name: page_id
+        in: path
+        required: true
+        description: The ID of the page to update.
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                properties:
+                  type: object
+                  description: Property values to update.
+                  additionalProperties: true
+                archived:
+                  type: boolean
+                  description: Set to true to archive (trash) the page.
+                icon:
+                  description: Page icon to set.
+                  oneOf:
+                  - $ref: '#/components/schemas/Emoji'
+                  - $ref: '#/components/schemas/ExternalFile'
+                  - type: 'null'
+                cover:
+                  oneOf:
+                  - $ref: '#/components/schemas/ExternalFile'
+                  - type: 'null'
+                  description: Page cover image to set or remove.
+      responses:
+        '200':
+          description: Page successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Page'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /pages/{page_id}/properties/{property_id}:
+    get:
+      operationId: retrievePageProperty
+      summary: Notion Retrieve a page property item
+      description: Retrieves a property item from a page. For paginated properties like rich text, relation, rollup, and people, this endpoint returns a paginated list. For all other property types, it returns a single property item.
+      tags:
+      - Pages
+      externalDocs:
+        url: https://developers.notion.com/reference/retrieve-a-page-property
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      - name: page_id
+        in: path
+        required: true
+        description: The ID of the page.
+        schema:
+          type: string
+          format: uuid
+      - name: property_id
+        in: path
+        required: true
+        description: The ID of the property to retrieve.
+        schema:
+          type: string
+      - name: start_cursor
+        in: query
+        required: false
+        description: Pagination cursor for paginated property types. If supplied, returns results starting after the cursor.
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        required: false
+        description: Maximum number of property items to return (max 100).
+        schema:
+          type: integer
+          maximum: 100
+      responses:
+        '200':
+          description: Property item successfully retrieved.
+          content:
+            application/json:
+              schema:
+                type: object
+                description: A property item object or a paginated list of property items, depending on the property type.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or the integration lacks access.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        Retry-After:
+          description: The number of seconds to wait before retrying.
+          schema:
+            type: integer
+    BadRequest:
+      description: The request was invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource does not exist or the integration lacks access to it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Emoji:
+      type: object
+      description: An emoji icon object.
+      properties:
+        type:
+          type: string
+          const: emoji
+          description: Always "emoji".
+        emoji:
+          type: string
+          description: The emoji character.
+      required:
+      - type
+      - emoji
+    File:
+      type: object
+      description: A File object represents a file in Notion. Files can be either hosted by Notion (type "file") or externally hosted (type "external").
+      properties:
+        type:
+          type: string
+          description: The type of file hosting.
+          enum:
+          - file
+          - external
+        file:
+          type: object
+          description: Notion-hosted file details. Present when type is "file". These URLs expire after one hour.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The authenticated S3 URL for the file.
+            expiry_time:
+              type: string
+              format: date-time
+              description: The expiration time of the URL.
+        external:
+          type: object
+          description: External file details. Present when type is "external".
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The URL of the externally hosted file.
+        name:
+          type: string
+          description: The name of the file.
+        caption:
+          type: array
+          description: Caption for the file as rich text.
+          items:
+            $ref: '#/components/schemas/RichText'
+      required:
+      - type
+    Block:
+      type: object
+      description: A Block object represents a piece of content within a Notion page. Blocks are the building blocks of all page content and can be of many types including paragraphs, headings, lists, images, code, tables, and more. Blocks can contain other blocks as children, forming a tree structure.
+      properties:
+        object:
+          type: string
+          description: Always "block" for block objects.
+          const: block
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the block.
+        parent:
+          $ref: '#/components/schemas/Parent'
+        type:
+          type: string
+          description: The type of block. Determines which type-specific content field is present. Common types include paragraph, heading_1, heading_2, heading_3, bulleted_list_item, numbered_list_item, to_do, toggle, code, image, divider, table, and many more.
+          enum:
+          - paragraph
+          - heading_1
+          - heading_2
+          - heading_3
+          - bulleted_list_item
+          - numbered_list_item
+          - to_do
+          - toggle
+          - child_page
+          - child_database
+          - embed
+          - image
+          - video
+          - file
+          - pdf
+          - bookmark
+          - callout
+          - quote
+          - equation
+          - divider
+          - table_of_contents
+          - column_list
+          - column
+          - link_preview
+          - synced_block
+          - template
+          - link_to_page
+          - table
+          - table_row
+          - code
+          - audio
+          - breadcrumb
+        created_time:
+          type: string
+          format: date-time
+          description: Date and time when the block was created (ISO 8601).
+        last_edited_time:
+          type: string
+          format: date-time
+          description: Date and time when the block was last edited (ISO 8601).
+        created_by:
+          $ref: '#/components/schemas/PartialUser'
+        last_edited_by:
+          $ref: '#/components/schemas/PartialUser'
+        archived:
+          type: boolean
+          description: Whether the block has been archived.
+        in_trash:
+          type: boolean
+          description: Whether the block is in the trash.
+        has_children:
+          type: boolean
+          description: Whether the block has child blocks nested within it.
+      additionalProperties: true
+      required:
+      - object
+      - id
+      - type
+      - created_time
+      - last_edited_time
+      - has_children
+    Page:
+      type: object
+      description: A Page object represents a page in a Notion workspace. Pages can exist as standalone pages in a workspace or as items within a database. Each page has properties, which are metadata fields defined by its parent database schema or by the page itself.
+      properties:
+        object:
+          type: string
+          description: Always "page" for page objects.
+          const: page
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the page.
+        created_time:
+          type: string
+          format: date-time
+          description: Date and time when the page was created (ISO 8601).
+        last_edited_time:
+          type: string
+          format: date-time
+          description: Date and time when the page was last edited (ISO 8601).
+        created_by:
+          $ref: '#/components/schemas/PartialUser'
+        last_edited_by:
+          $ref: '#/components/schemas/PartialUser'
+        archived:
+          type: boolean
+          description: Whether the page has been archived (trashed).
+        in_trash:
+          type: boolean
+          description: Whether the page is in the trash.
+        icon:
+          description: Page icon, either an emoji or file.
+          oneOf:
+          - $ref: '#/components/schemas/Emoji'
+          - $ref: '#/components/schemas/File'
+          - type: 'null'
+        cover:
+          description: Page cover image.
+          oneOf:
+          - $ref: '#/components/schemas/File'
+          - type: 'null'
+        properties:
+          type: object
+          description: Property values of the page. Keys are property names or IDs.
+          additionalProperties: true
+        parent:
+          $ref: '#/components/schemas/Parent'
+        url:
+          type: string
+          format: uri
+          description: The URL of the page in Notion.
+        public_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The public URL of the page, if the page has been published to the web. Otherwise null.
+      required:
+      - object
+      - id
+      - created_time
+      - last_edited_time
+      - created_by
+      - last_edited_by
+      - archived
+      - properties
+      - parent
+      - url
+    Parent:
+      type: object
+      description: A Parent object represents the parent of a page, database, or block. The parent can be a workspace, page, database, or block.
+      properties:
+        type:
+          type: string
+          description: The type of parent.
+          enum:
+          - database_id
+          - page_id
+          - block_id
+          - workspace
+        database_id:
+          type: string
+          format: uuid
+          description: The ID of the parent database. Present when type is "database_id".
+        page_id:
+          type: string
+          format: uuid
+          description: The ID of the parent page. Present when type is "page_id".
+        block_id:
+          type: string
+          format: uuid
+          description: The ID of the parent block. Present when type is "block_id".
+        workspace:
+          type: boolean
+          description: Always true when the parent is the workspace. Present when type is "workspace".
+      required:
+      - type
+    RichText:
+      type: object
+      description: A Rich Text object represents styled text content in Notion. Rich text can include annotations like bold, italic, and color, as well as links and mentions of other Notion objects.
+      properties:
+        type:
+          type: string
+          description: The type of this rich text object.
+          enum:
+          - text
+          - mention
+          - equation
+        text:
+          type: object
+          description: Text content and optional link. Present when type is "text".
+          properties:
+            content:
+              type: string
+              description: The actual text content.
+            link:
+              type:
+              - object
+              - 'null'
+              description: Optional link within the text.
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: The URL the text links to.
+        mention:
+          type: object
+          description: Mention content. Present when type is "mention". Can reference users, pages, databases, dates, or link previews.
+          additionalProperties: true
+        equation:
+          type: object
+          description: Equation content in KaTeX format. Present when type is "equation".
+          properties:
+            expression:
+              type: string
+              description: The LaTeX equation expression.
+        annotations:
+          type: object
+          description: Styling annotations applied to the text.
+          properties:
+            bold:
+              type: boolean
+              description: Whether the text is bold.
+            italic:
+              type: boolean
+              description: Whether the text is italic.
+            strikethrough:
+              type: boolean
+              description: Whether the text has a strikethrough.
+            underline:
+              type: boolean
+              description: Whether the text is underlined.
+            code:
+              type: boolean
+              description: Whether the text is formatted as inline code.
+            color:
+              type: string
+              description: The color of the text. Possible values include default, gray, brown, orange, yellow, green, blue, purple, pink, red, and their background variants (e.g., gray_background).
+        plain_text:
+          type: string
+          description: The plain text content without annotations.
+        href:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL of any link in the text, or null.
+      required:
+      - type
+      - plain_text
+    ExternalFile:
+      type: object
+      description: An external file reference.
+      properties:
+        type:
+          type: string
+          const: external
+          description: Always "external".
+        external:
+          type: object
+          required:
+          - url
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The URL of the external file.
+      required:
+      - type
+      - external
+    PartialUser:
+      type: object
+      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
+      properties:
+        object:
+          type: string
+          description: Always "user".
+          const: user
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the user.
+      required:
+      - object
+      - id
+    Error:
+      type: object
+      description: An error response from the Notion API.
+      properties:
+        object:
+          type: string
+          description: Always "error" for error responses.
+          const: error
+        status:
+          type: integer
+          description: The HTTP status code.
+        code:
+          type: string
+          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
+        message:
+          type: string
+          description: A human-readable error message.
+        request_id:
+          type: string
+          description: A unique identifier for the failed request.
+      required:
+      - object
+      - status
+      - code
+      - message
+  parameters:
+    NotionVersion:
+      name: Notion-Version
+      in: header
+      required: true
+      description: The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.
+      schema:
+        type: string
+        default: '2022-06-28'
+        examples:
+        - '2022-06-28'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Notion API uses bearer token authentication. Obtain an integration token from https://www.notion.so/my-integrations. Pass the token in the Authorization header as "Bearer {token}".

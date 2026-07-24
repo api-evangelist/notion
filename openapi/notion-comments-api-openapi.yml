@@ -1,0 +1,368 @@
+openapi: 3.1.0
+info:
+  title: Notion Blocks Comments API
+  description: The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.
+  version: 2022-06-28
+  contact:
+    name: Notion Labs Inc.
+    email: developers@makenotion.com
+    url: https://developers.notion.com
+  license:
+    name: Notion Developer Terms
+    url: https://www.notion.so/Developer-Terms-ba4131408d0844e08330da2cbb225c20
+  termsOfService: https://www.notion.so/terms
+servers:
+- url: https://api.notion.com/v1
+  description: Notion API Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Comments
+  description: Comments allow integrations to read and create comments on pages and blocks within Notion. Comments support rich text content and are associated with discussion threads.
+  externalDocs:
+    url: https://developers.notion.com/reference/comment-object
+paths:
+  /comments:
+    get:
+      operationId: listComments
+      summary: Notion Retrieve comments
+      description: Retrieves a list of unresolved comments from a page or block. Requires the integration to have read comment capabilities.
+      tags:
+      - Comments
+      externalDocs:
+        url: https://developers.notion.com/reference/list-comments
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      - name: block_id
+        in: query
+        required: true
+        description: The ID of the block or page to retrieve comments for.
+        schema:
+          type: string
+          format: uuid
+      - name: start_cursor
+        in: query
+        required: false
+        description: Pagination cursor to continue fetching results.
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        required: false
+        description: Maximum number of comments to return (max 100).
+        schema:
+          type: integer
+          maximum: 100
+      responses:
+        '200':
+          description: Comments successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+    post:
+      operationId: createComment
+      summary: Notion Create a comment
+      description: Creates a comment on a page or in an existing discussion thread. The integration must have comment capabilities to use this endpoint.
+      tags:
+      - Comments
+      externalDocs:
+        url: https://developers.notion.com/reference/create-a-comment
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - rich_text
+              properties:
+                parent:
+                  type: object
+                  description: The parent page to create the comment on. Required if discussion_id is not provided.
+                  properties:
+                    page_id:
+                      type: string
+                      format: uuid
+                      description: The ID of the parent page.
+                discussion_id:
+                  type: string
+                  format: uuid
+                  description: The ID of an existing discussion thread to add the comment to. Required if parent is not provided.
+                rich_text:
+                  type: array
+                  description: Rich text content of the comment.
+                  items:
+                    $ref: '#/components/schemas/RichText'
+      responses:
+        '200':
+          description: Comment successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    PaginatedList:
+      type: object
+      description: A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.
+      properties:
+        object:
+          type: string
+          description: Always "list" for paginated responses.
+          const: list
+        results:
+          type: array
+          description: The array of result objects for the current page.
+          items:
+            type: object
+            additionalProperties: true
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: The cursor to use for the next page of results, or null if there are no more results.
+        has_more:
+          type: boolean
+          description: Whether there are more results available beyond this page.
+        type:
+          type: string
+          description: The type of objects in the results array.
+        request_id:
+          type: string
+          description: A unique identifier for this API request.
+      required:
+      - object
+      - results
+      - next_cursor
+      - has_more
+    RichText:
+      type: object
+      description: A Rich Text object represents styled text content in Notion. Rich text can include annotations like bold, italic, and color, as well as links and mentions of other Notion objects.
+      properties:
+        type:
+          type: string
+          description: The type of this rich text object.
+          enum:
+          - text
+          - mention
+          - equation
+        text:
+          type: object
+          description: Text content and optional link. Present when type is "text".
+          properties:
+            content:
+              type: string
+              description: The actual text content.
+            link:
+              type:
+              - object
+              - 'null'
+              description: Optional link within the text.
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: The URL the text links to.
+        mention:
+          type: object
+          description: Mention content. Present when type is "mention". Can reference users, pages, databases, dates, or link previews.
+          additionalProperties: true
+        equation:
+          type: object
+          description: Equation content in KaTeX format. Present when type is "equation".
+          properties:
+            expression:
+              type: string
+              description: The LaTeX equation expression.
+        annotations:
+          type: object
+          description: Styling annotations applied to the text.
+          properties:
+            bold:
+              type: boolean
+              description: Whether the text is bold.
+            italic:
+              type: boolean
+              description: Whether the text is italic.
+            strikethrough:
+              type: boolean
+              description: Whether the text has a strikethrough.
+            underline:
+              type: boolean
+              description: Whether the text is underlined.
+            code:
+              type: boolean
+              description: Whether the text is formatted as inline code.
+            color:
+              type: string
+              description: The color of the text. Possible values include default, gray, brown, orange, yellow, green, blue, purple, pink, red, and their background variants (e.g., gray_background).
+        plain_text:
+          type: string
+          description: The plain text content without annotations.
+        href:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL of any link in the text, or null.
+      required:
+      - type
+      - plain_text
+    Comment:
+      type: object
+      description: A Comment object represents a comment on a Notion page or block. Comments contain rich text content and are associated with discussion threads.
+      properties:
+        object:
+          type: string
+          description: Always "comment" for comment objects.
+          const: comment
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the comment.
+        parent:
+          type: object
+          description: The parent page or block the comment belongs to.
+          properties:
+            type:
+              type: string
+              enum:
+              - page_id
+              - block_id
+            page_id:
+              type: string
+              format: uuid
+            block_id:
+              type: string
+              format: uuid
+        discussion_id:
+          type: string
+          format: uuid
+          description: The ID of the discussion thread the comment belongs to.
+        created_time:
+          type: string
+          format: date-time
+          description: Date and time when the comment was created (ISO 8601).
+        last_edited_time:
+          type: string
+          format: date-time
+          description: Date and time when the comment was last edited (ISO 8601).
+        created_by:
+          $ref: '#/components/schemas/PartialUser'
+        rich_text:
+          type: array
+          description: Rich text content of the comment.
+          items:
+            $ref: '#/components/schemas/RichText'
+      required:
+      - object
+      - id
+      - parent
+      - discussion_id
+      - created_time
+      - last_edited_time
+      - created_by
+      - rich_text
+    PartialUser:
+      type: object
+      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
+      properties:
+        object:
+          type: string
+          description: Always "user".
+          const: user
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the user.
+      required:
+      - object
+      - id
+    Error:
+      type: object
+      description: An error response from the Notion API.
+      properties:
+        object:
+          type: string
+          description: Always "error" for error responses.
+          const: error
+        status:
+          type: integer
+          description: The HTTP status code.
+        code:
+          type: string
+          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
+        message:
+          type: string
+          description: A human-readable error message.
+        request_id:
+          type: string
+          description: A unique identifier for the failed request.
+      required:
+      - object
+      - status
+      - code
+      - message
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or the integration lacks access.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        Retry-After:
+          description: The number of seconds to wait before retrying.
+          schema:
+            type: integer
+    BadRequest:
+      description: The request was invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource does not exist or the integration lacks access to it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    NotionVersion:
+      name: Notion-Version
+      in: header
+      required: true
+      description: The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.
+      schema:
+        type: string
+        default: '2022-06-28'
+        examples:
+        - '2022-06-28'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Notion API uses bearer token authentication. Obtain an integration token from https://www.notion.so/my-integrations. Pass the token in the Authorization header as "Bearer {token}".

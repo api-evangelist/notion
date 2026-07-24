@@ -1,0 +1,273 @@
+openapi: 3.1.0
+info:
+  title: Notion Blocks Users API
+  description: The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.
+  version: 2022-06-28
+  contact:
+    name: Notion Labs Inc.
+    email: developers@makenotion.com
+    url: https://developers.notion.com
+  license:
+    name: Notion Developer Terms
+    url: https://www.notion.so/Developer-Terms-ba4131408d0844e08330da2cbb225c20
+  termsOfService: https://www.notion.so/terms
+servers:
+- url: https://api.notion.com/v1
+  description: Notion API Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Users
+  description: Users represent people or bots in a Notion workspace. Person users are human members of the workspace, while bot users represent API integrations. Use these endpoints to list users, retrieve specific users, or get information about the current bot integration.
+  externalDocs:
+    url: https://developers.notion.com/reference/user
+paths:
+  /users:
+    get:
+      operationId: listUsers
+      summary: Notion List all users
+      description: Returns a paginated list of Users for the workspace. Guest users are not included. The response may include person users and bot users. Results are paginated with a maximum of 100 users per request.
+      tags:
+      - Users
+      externalDocs:
+        url: https://developers.notion.com/reference/get-users
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      - name: start_cursor
+        in: query
+        required: false
+        description: Pagination cursor to continue fetching results.
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        required: false
+        description: Maximum number of users to return (max 100).
+        schema:
+          type: integer
+          maximum: 100
+      responses:
+        '200':
+          description: Users successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /users/{user_id}:
+    get:
+      operationId: retrieveUser
+      summary: Notion Retrieve a user
+      description: Retrieves a User object using the ID specified in the path. Returns user details including name, avatar, and type (person or bot).
+      tags:
+      - Users
+      externalDocs:
+        url: https://developers.notion.com/reference/get-user
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      - name: user_id
+        in: path
+        required: true
+        description: The ID of the user to retrieve.
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: User successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /users/me:
+    get:
+      operationId: retrieveBotUser
+      summary: Notion Retrieve the bot user
+      description: Retrieves the bot User associated with the current API token. Returns information about the integration including its name, owner, and the workspace it belongs to.
+      tags:
+      - Users
+      externalDocs:
+        url: https://developers.notion.com/reference/get-self
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      responses:
+        '200':
+          description: Bot user successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    PaginatedList:
+      type: object
+      description: A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.
+      properties:
+        object:
+          type: string
+          description: Always "list" for paginated responses.
+          const: list
+        results:
+          type: array
+          description: The array of result objects for the current page.
+          items:
+            type: object
+            additionalProperties: true
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: The cursor to use for the next page of results, or null if there are no more results.
+        has_more:
+          type: boolean
+          description: Whether there are more results available beyond this page.
+        type:
+          type: string
+          description: The type of objects in the results array.
+        request_id:
+          type: string
+          description: A unique identifier for this API request.
+      required:
+      - object
+      - results
+      - next_cursor
+      - has_more
+    User:
+      type: object
+      description: A User object represents a user in a Notion workspace. Users can be either people (human workspace members) or bots (API integrations). User objects include identifying information such as name, email, and avatar URL.
+      properties:
+        object:
+          type: string
+          description: Always "user" for user objects.
+          const: user
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the user.
+        type:
+          type: string
+          description: The type of user. "person" for human workspace members, "bot" for API integrations.
+          enum:
+          - person
+          - bot
+        name:
+          type:
+          - string
+          - 'null'
+          description: Display name of the user.
+        avatar_url:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: URL of the user's avatar image.
+        person:
+          type: object
+          description: Person-specific information. Only present when type is "person".
+          properties:
+            email:
+              type: string
+              format: email
+              description: Email address of the person.
+        bot:
+          type: object
+          description: Bot-specific information. Only present when type is "bot".
+          properties:
+            owner:
+              type: object
+              description: Information about the bot's owner.
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - workspace
+                  - user
+                workspace:
+                  type: boolean
+                  description: Whether the bot is owned by the workspace.
+            workspace_name:
+              type:
+              - string
+              - 'null'
+              description: The name of the workspace the bot belongs to.
+      required:
+      - object
+      - id
+    Error:
+      type: object
+      description: An error response from the Notion API.
+      properties:
+        object:
+          type: string
+          description: Always "error" for error responses.
+          const: error
+        status:
+          type: integer
+          description: The HTTP status code.
+        code:
+          type: string
+          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
+        message:
+          type: string
+          description: A human-readable error message.
+        request_id:
+          type: string
+          description: A unique identifier for the failed request.
+      required:
+      - object
+      - status
+      - code
+      - message
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or the integration lacks access.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        Retry-After:
+          description: The number of seconds to wait before retrying.
+          schema:
+            type: integer
+    NotFound:
+      description: The requested resource does not exist or the integration lacks access to it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    NotionVersion:
+      name: Notion-Version
+      in: header
+      required: true
+      description: The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.
+      schema:
+        type: string
+        default: '2022-06-28'
+        examples:
+        - '2022-06-28'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Notion API uses bearer token authentication. Obtain an integration token from https://www.notion.so/my-integrations. Pass the token in the Authorization header as "Bearer {token}".

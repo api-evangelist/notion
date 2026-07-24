@@ -1,0 +1,195 @@
+openapi: 3.1.0
+info:
+  title: Notion Blocks Search API
+  description: The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.
+  version: 2022-06-28
+  contact:
+    name: Notion Labs Inc.
+    email: developers@makenotion.com
+    url: https://developers.notion.com
+  license:
+    name: Notion Developer Terms
+    url: https://www.notion.so/Developer-Terms-ba4131408d0844e08330da2cbb225c20
+  termsOfService: https://www.notion.so/terms
+servers:
+- url: https://api.notion.com/v1
+  description: Notion API Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Search
+  description: Search allows querying across all pages and databases that the integration has access to. Results can be filtered by object type and sorted by relevance or last edited time.
+  externalDocs:
+    url: https://developers.notion.com/reference/post-search
+paths:
+  /search:
+    post:
+      operationId: search
+      summary: Notion Search by title
+      description: Searches all parent or child pages and databases that have been shared with an integration. Returns results based on the query, filter, and sort parameters. Results are sorted by relevance by default but can be sorted by last_edited_time. The search indexing may not be immediate, so recently created or updated objects may not appear right away.
+      tags:
+      - Search
+      externalDocs:
+        url: https://developers.notion.com/reference/post-search
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  description: The text to search for in page and database titles. If omitted, returns all pages and databases.
+                filter:
+                  type: object
+                  description: Filter conditions. Currently only supports filtering by object type (page or database).
+                  properties:
+                    value:
+                      type: string
+                      description: The type of object to filter by.
+                      enum:
+                      - page
+                      - database
+                    property:
+                      type: string
+                      description: Must be "object".
+                      enum:
+                      - object
+                sort:
+                  type: object
+                  description: Sort conditions for the results.
+                  properties:
+                    direction:
+                      type: string
+                      description: The sort direction.
+                      enum:
+                      - ascending
+                      - descending
+                    timestamp:
+                      type: string
+                      description: The timestamp to sort by.
+                      enum:
+                      - last_edited_time
+                start_cursor:
+                  type: string
+                  description: Pagination cursor to continue fetching results.
+                page_size:
+                  type: integer
+                  description: Maximum number of results to return (max 100).
+                  maximum: 100
+                  default: 100
+      responses:
+        '200':
+          description: Search results successfully returned.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    PaginatedList:
+      type: object
+      description: A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.
+      properties:
+        object:
+          type: string
+          description: Always "list" for paginated responses.
+          const: list
+        results:
+          type: array
+          description: The array of result objects for the current page.
+          items:
+            type: object
+            additionalProperties: true
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: The cursor to use for the next page of results, or null if there are no more results.
+        has_more:
+          type: boolean
+          description: Whether there are more results available beyond this page.
+        type:
+          type: string
+          description: The type of objects in the results array.
+        request_id:
+          type: string
+          description: A unique identifier for this API request.
+      required:
+      - object
+      - results
+      - next_cursor
+      - has_more
+    Error:
+      type: object
+      description: An error response from the Notion API.
+      properties:
+        object:
+          type: string
+          description: Always "error" for error responses.
+          const: error
+        status:
+          type: integer
+          description: The HTTP status code.
+        code:
+          type: string
+          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
+        message:
+          type: string
+          description: A human-readable error message.
+        request_id:
+          type: string
+          description: A unique identifier for the failed request.
+      required:
+      - object
+      - status
+      - code
+      - message
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or the integration lacks access.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        Retry-After:
+          description: The number of seconds to wait before retrying.
+          schema:
+            type: integer
+    BadRequest:
+      description: The request was invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    NotionVersion:
+      name: Notion-Version
+      in: header
+      required: true
+      description: The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.
+      schema:
+        type: string
+        default: '2022-06-28'
+        examples:
+        - '2022-06-28'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Notion API uses bearer token authentication. Obtain an integration token from https://www.notion.so/my-integrations. Pass the token in the Authorization header as "Bearer {token}".

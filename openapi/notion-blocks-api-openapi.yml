@@ -1,0 +1,453 @@
+openapi: 3.1.0
+info:
+  title: Notion Blocks API
+  description: The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.
+  version: 2022-06-28
+  contact:
+    name: Notion Labs Inc.
+    email: developers@makenotion.com
+    url: https://developers.notion.com
+  license:
+    name: Notion Developer Terms
+    url: https://www.notion.so/Developer-Terms-ba4131408d0844e08330da2cbb225c20
+  termsOfService: https://www.notion.so/terms
+servers:
+- url: https://api.notion.com/v1
+  description: Notion API Production Server
+security:
+- bearerAuth: []
+tags:
+- name: Blocks
+  description: Blocks are the fundamental units of content in Notion. Every page is composed of blocks, which can be paragraphs, headings, images, tables, lists, and many other types. Blocks can have children, forming a tree structure. Use these endpoints to retrieve, update, delete blocks and manage block children.
+  externalDocs:
+    url: https://developers.notion.com/reference/block
+paths:
+  /blocks/{block_id}:
+    get:
+      operationId: retrieveBlock
+      summary: Notion Retrieve a block
+      description: Retrieves a Block object using the ID specified in the path. If the block is a page, the page properties will be returned. The block's children are not included; use the retrieve block children endpoint to get them.
+      tags:
+      - Blocks
+      externalDocs:
+        url: https://developers.notion.com/reference/retrieve-a-block
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      - name: block_id
+        in: path
+        required: true
+        description: The ID of the block to retrieve.
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Block successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Block'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+    patch:
+      operationId: updateBlock
+      summary: Notion Update a block
+      description: Updates the content of a block. The fields that can be updated depend on the block type. Blocks can also be archived by setting the archived field to true.
+      tags:
+      - Blocks
+      externalDocs:
+        url: https://developers.notion.com/reference/update-a-block
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      - name: block_id
+        in: path
+        required: true
+        description: The ID of the block to update.
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Block type-specific content to update. Include the block type key with the fields to modify.
+              properties:
+                archived:
+                  type: boolean
+                  description: Set to true to archive the block.
+              additionalProperties: true
+      responses:
+        '200':
+          description: Block successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Block'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+    delete:
+      operationId: deleteBlock
+      summary: Notion Delete a block
+      description: 'Sets a Block object, including page blocks, to archived: true using the ID specified in the path. This is equivalent to trashing the block in the Notion UI. To restore an archived block, use the update block endpoint to set archived to false.'
+      tags:
+      - Blocks
+      externalDocs:
+        url: https://developers.notion.com/reference/delete-a-block
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      - name: block_id
+        in: path
+        required: true
+        description: The ID of the block to delete (archive).
+        schema:
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Block successfully deleted (archived).
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Block'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+  /blocks/{block_id}/children:
+    get:
+      operationId: retrieveBlockChildren
+      summary: Notion Retrieve block children
+      description: Returns a paginated array of child block objects contained in the block using the ID specified. This is used to read page content by passing a page ID as the block_id. Responses include a maximum of 100 blocks per request and are returned in the order they appear in the parent block.
+      tags:
+      - Blocks
+      externalDocs:
+        url: https://developers.notion.com/reference/get-block-children
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      - name: block_id
+        in: path
+        required: true
+        description: The ID of the block whose children to retrieve. This can be a page ID to retrieve page content.
+        schema:
+          type: string
+          format: uuid
+      - name: start_cursor
+        in: query
+        required: false
+        description: Pagination cursor to continue fetching results.
+        schema:
+          type: string
+      - name: page_size
+        in: query
+        required: false
+        description: Maximum number of blocks to return (max 100).
+        schema:
+          type: integer
+          maximum: 100
+      responses:
+        '200':
+          description: Block children successfully retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+    patch:
+      operationId: appendBlockChildren
+      summary: Notion Append block children
+      description: Creates and appends new children blocks to the parent block specified by block_id. Returns the updated parent block. Blocks can be appended to pages, or to other blocks that support children. The maximum number of blocks that can be appended in a single request is 100.
+      tags:
+      - Blocks
+      externalDocs:
+        url: https://developers.notion.com/reference/patch-block-children
+      parameters:
+      - $ref: '#/components/parameters/NotionVersion'
+      - name: block_id
+        in: path
+        required: true
+        description: The ID of the block to append children to. This can be a page ID to add content to a page.
+        schema:
+          type: string
+          format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - children
+              properties:
+                children:
+                  type: array
+                  description: Array of block objects to append as children. Maximum 100 blocks per request.
+                  items:
+                    $ref: '#/components/schemas/Block'
+                  maxItems: 100
+                after:
+                  type: string
+                  format: uuid
+                  description: The ID of an existing block to insert the new children after. If omitted, blocks are appended to the end.
+      responses:
+        '200':
+          description: Block children successfully appended.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedList'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/RateLimited'
+components:
+  schemas:
+    PaginatedList:
+      type: object
+      description: A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.
+      properties:
+        object:
+          type: string
+          description: Always "list" for paginated responses.
+          const: list
+        results:
+          type: array
+          description: The array of result objects for the current page.
+          items:
+            type: object
+            additionalProperties: true
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: The cursor to use for the next page of results, or null if there are no more results.
+        has_more:
+          type: boolean
+          description: Whether there are more results available beyond this page.
+        type:
+          type: string
+          description: The type of objects in the results array.
+        request_id:
+          type: string
+          description: A unique identifier for this API request.
+      required:
+      - object
+      - results
+      - next_cursor
+      - has_more
+    Block:
+      type: object
+      description: A Block object represents a piece of content within a Notion page. Blocks are the building blocks of all page content and can be of many types including paragraphs, headings, lists, images, code, tables, and more. Blocks can contain other blocks as children, forming a tree structure.
+      properties:
+        object:
+          type: string
+          description: Always "block" for block objects.
+          const: block
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the block.
+        parent:
+          $ref: '#/components/schemas/Parent'
+        type:
+          type: string
+          description: The type of block. Determines which type-specific content field is present. Common types include paragraph, heading_1, heading_2, heading_3, bulleted_list_item, numbered_list_item, to_do, toggle, code, image, divider, table, and many more.
+          enum:
+          - paragraph
+          - heading_1
+          - heading_2
+          - heading_3
+          - bulleted_list_item
+          - numbered_list_item
+          - to_do
+          - toggle
+          - child_page
+          - child_database
+          - embed
+          - image
+          - video
+          - file
+          - pdf
+          - bookmark
+          - callout
+          - quote
+          - equation
+          - divider
+          - table_of_contents
+          - column_list
+          - column
+          - link_preview
+          - synced_block
+          - template
+          - link_to_page
+          - table
+          - table_row
+          - code
+          - audio
+          - breadcrumb
+        created_time:
+          type: string
+          format: date-time
+          description: Date and time when the block was created (ISO 8601).
+        last_edited_time:
+          type: string
+          format: date-time
+          description: Date and time when the block was last edited (ISO 8601).
+        created_by:
+          $ref: '#/components/schemas/PartialUser'
+        last_edited_by:
+          $ref: '#/components/schemas/PartialUser'
+        archived:
+          type: boolean
+          description: Whether the block has been archived.
+        in_trash:
+          type: boolean
+          description: Whether the block is in the trash.
+        has_children:
+          type: boolean
+          description: Whether the block has child blocks nested within it.
+      additionalProperties: true
+      required:
+      - object
+      - id
+      - type
+      - created_time
+      - last_edited_time
+      - has_children
+    Parent:
+      type: object
+      description: A Parent object represents the parent of a page, database, or block. The parent can be a workspace, page, database, or block.
+      properties:
+        type:
+          type: string
+          description: The type of parent.
+          enum:
+          - database_id
+          - page_id
+          - block_id
+          - workspace
+        database_id:
+          type: string
+          format: uuid
+          description: The ID of the parent database. Present when type is "database_id".
+        page_id:
+          type: string
+          format: uuid
+          description: The ID of the parent page. Present when type is "page_id".
+        block_id:
+          type: string
+          format: uuid
+          description: The ID of the parent block. Present when type is "block_id".
+        workspace:
+          type: boolean
+          description: Always true when the parent is the workspace. Present when type is "workspace".
+      required:
+      - type
+    PartialUser:
+      type: object
+      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
+      properties:
+        object:
+          type: string
+          description: Always "user".
+          const: user
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the user.
+      required:
+      - object
+      - id
+    Error:
+      type: object
+      description: An error response from the Notion API.
+      properties:
+        object:
+          type: string
+          description: Always "error" for error responses.
+          const: error
+        status:
+          type: integer
+          description: The HTTP status code.
+        code:
+          type: string
+          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
+        message:
+          type: string
+          description: A human-readable error message.
+        request_id:
+          type: string
+          description: A unique identifier for the failed request.
+      required:
+      - object
+      - status
+      - code
+      - message
+  responses:
+    Unauthorized:
+      description: The bearer token is missing, invalid, or the integration lacks access.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        Retry-After:
+          description: The number of seconds to wait before retrying.
+          schema:
+            type: integer
+    BadRequest:
+      description: The request was invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource does not exist or the integration lacks access to it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  parameters:
+    NotionVersion:
+      name: Notion-Version
+      in: header
+      required: true
+      description: The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.
+      schema:
+        type: string
+        default: '2022-06-28'
+        examples:
+        - '2022-06-28'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Notion API uses bearer token authentication. Obtain an integration token from https://www.notion.so/my-integrations. Pass the token in the Authorization header as "Bearer {token}".
