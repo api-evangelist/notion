@@ -1,125 +1,688 @@
 aid: notion
 url: https://raw.githubusercontent.com/api-evangelist/notion/refs/heads/main/apis.yml
 apis:
-- aid: notion:notion
-  name: Notion API
-  tags:
-  - Collaboration
-  - Ideas
-  - Projects
-  - Tasks
+- aid: notion:notion-blocks-api
+  name: Notion Blocks API
+  description: >-
+    Blocks are the fundamental units of content in Notion. Every page is composed of blocks, which can
+    be paragraphs, headings, images, tables, lists, and many other types. Blocks can have children, forming
+    a tree structure. Use these endpoints to retrieve, update, delete blocks and manage block children.
   humanURL: https://developers.notion.com
+  tags:
+  - Blocks
   properties:
-  - url: https://developers.notion.com
-    type: Documentation
-  - url: openapi/notion-openapi.yml
-    type: OpenAPI
-  - url: asyncapi/notion-webhooks-asyncapi.yml
-    type: AsyncAPI
-  - url: json-schema/notion-page-schema.json
-    type: JSONSchema
-  - url: json-schema/notion-database-schema.json
-    type: JSONSchema
-  - url: json-schema/notion-block-schema.json
-    type: JSONSchema
-  - url: json-ld/notion-context.jsonld
-    type: JSONLD
-  - url: https://developers.notion.com/reference/authentication
-    type: Authentication
-  - url: https://developers.notion.com/docs/authorization
-    type: Authorization
-  - url: https://developers.notion.com/docs/getting-started
-    type: GettingStarted
-  - url: https://github.com/makenotion/notion-sdk-js
-    type: GitHubRepo
-  - url: https://api.notion.com
-    type: BaseURL
-  - url: https://developers.notion.com/reference/intro
-    type: IntroductionAPI
-  - url: https://developers.notion.com/reference/create-a-database
-    type: DatabaseCreateAPI
-  - url: https://developers.notion.com/reference/retrieve-a-database
-    type: DatabaseRetrieveAPI
-  - url: https://developers.notion.com/reference/update-a-database
-    type: DatabaseUpdateAPI
-  - url: https://developers.notion.com/reference/post-database-query
-    type: DatabaseQueryAPI
-  - url: https://developers.notion.com/reference/post-page
-    type: PageCreateAPI
-  - url: https://developers.notion.com/reference/retrieve-a-page
-    type: PageRetrieveAPI
-  - url: https://developers.notion.com/reference/patch-page
-    type: PageUpdateAPI
-  - url: https://developers.notion.com/reference/archive-a-page
-    type: PageTrashAPI
-  - url: https://developers.notion.com/reference/move-page
-    type: PageMoveAPI
-  - url: https://developers.notion.com/reference/retrieve-a-page-property
-    type: PagePropertyRetrieveAPI
-  - url: https://developers.notion.com/reference/retrieve-page-markdown
-    type: PageMarkdownRetrieveAPI
-  - url: https://developers.notion.com/reference/update-page-markdown
-    type: PageMarkdownUpdateAPI
-  - url: https://developers.notion.com/reference/retrieve-a-block
-    type: BlockRetrieveAPI
-  - url: https://developers.notion.com/reference/update-a-block
-    type: BlockUpdateAPI
-  - url: https://developers.notion.com/reference/delete-a-block
-    type: BlockDeleteAPI
-  - url: https://developers.notion.com/reference/get-block-children
-    type: BlockChildrenRetrieveAPI
-  - url: https://developers.notion.com/reference/patch-block-children
-    type: BlockChildrenAppendAPI
-  - url: https://developers.notion.com/reference/get-users
-    type: UsersListAPI
-  - url: https://developers.notion.com/reference/get-user
-    type: UserRetrieveAPI
-  - url: https://developers.notion.com/reference/get-self
-    type: UserBotRetrieveAPI
-  - url: https://developers.notion.com/reference/create-a-comment
-    type: CommentCreateAPI
-  - url: https://developers.notion.com/reference/list-comments
-    type: CommentsListAPI
-  - url: https://developers.notion.com/reference/retrieve-comment
-    type: CommentRetrieveAPI
-  - url: https://developers.notion.com/reference/post-search
-    type: SearchAPI
-  - url: https://developers.notion.com/reference/create-a-data-source
-    type: DataSourceCreateAPI
-  - url: https://developers.notion.com/reference/retrieve-a-data-source
-    type: DataSourceRetrieveAPI
-  - url: https://developers.notion.com/reference/update-a-data-source
-    type: DataSourceUpdateAPI
-  - url: https://developers.notion.com/reference/query-a-data-source
-    type: DataSourceQueryAPI
-  - url: https://developers.notion.com/reference/list-data-source-templates
-    type: DataSourceTemplatesListAPI
-  - url: https://developers.notion.com/reference/create-a-file-upload
-    type: FileUploadCreateAPI
-  - url: https://developers.notion.com/reference/send-a-file-upload
-    type: FileUploadSendAPI
-  - url: https://developers.notion.com/reference/complete-a-file-upload
-    type: FileUploadCompleteAPI
-  - url: https://developers.notion.com/reference/retrieve-a-file-upload
-    type: FileUploadRetrieveAPI
-  - url: https://developers.notion.com/reference/list-file-uploads
-    type: FileUploadsListAPI
-  - url: https://developers.notion.com/reference/create-a-token
-    type: TokenCreateAPI
-  - url: https://developers.notion.com/reference/introspect-token
-    type: TokenIntrospectAPI
-  - url: https://developers.notion.com/reference/refresh-a-token
-    type: TokenRefreshAPI
-  - url: https://developers.notion.com/reference/revoke-token
-    type: TokenRevokeAPI
-  - url: graphql/notion-graphql.md
-    type: GraphQL
-  description: Notion API provides developers with the tools and resources to seamlessly
-    integrate Notion, a popular productivity and collaboration tool, with other applications
-    and services. With Notion API, developers can create custom integrations, automate
-    workflows, and access data stored in Notion databases. This enables users to leverage
-    the full potential of Notion by connecting it to their existing software stack
-    and simplifying cross-platform collaboration.
+  - type: OpenAPI
+    url: openapi/notion-blocks-api-openapi.yml
+  - type: Documentation
+    url: https://developers.notion.com
+  - type: AsyncAPI
+    url: asyncapi/notion-webhooks-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/notion-page-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-database-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-block-schema.json
+  - type: JSONLD
+    url: json-ld/notion-context.jsonld
+  - type: Authentication
+    url: https://developers.notion.com/reference/authentication
+  - type: Authorization
+    url: https://developers.notion.com/docs/authorization
+  - type: GettingStarted
+    url: https://developers.notion.com/docs/getting-started
+  - type: GitHubRepo
+    url: https://github.com/makenotion/notion-sdk-js
+  - type: BaseURL
+    url: https://api.notion.com
+  - type: IntroductionAPI
+    url: https://developers.notion.com/reference/intro
+  - type: DatabaseCreateAPI
+    url: https://developers.notion.com/reference/create-a-database
+  - type: DatabaseRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-database
+  - type: DatabaseUpdateAPI
+    url: https://developers.notion.com/reference/update-a-database
+  - type: DatabaseQueryAPI
+    url: https://developers.notion.com/reference/post-database-query
+  - type: PageCreateAPI
+    url: https://developers.notion.com/reference/post-page
+  - type: PageRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page
+  - type: PageUpdateAPI
+    url: https://developers.notion.com/reference/patch-page
+  - type: PageTrashAPI
+    url: https://developers.notion.com/reference/archive-a-page
+  - type: PageMoveAPI
+    url: https://developers.notion.com/reference/move-page
+  - type: PagePropertyRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page-property
+  - type: PageMarkdownRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-page-markdown
+  - type: PageMarkdownUpdateAPI
+    url: https://developers.notion.com/reference/update-page-markdown
+  - type: BlockRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-block
+  - type: BlockUpdateAPI
+    url: https://developers.notion.com/reference/update-a-block
+  - type: BlockDeleteAPI
+    url: https://developers.notion.com/reference/delete-a-block
+  - type: BlockChildrenRetrieveAPI
+    url: https://developers.notion.com/reference/get-block-children
+  - type: BlockChildrenAppendAPI
+    url: https://developers.notion.com/reference/patch-block-children
+  - type: UsersListAPI
+    url: https://developers.notion.com/reference/get-users
+  - type: UserRetrieveAPI
+    url: https://developers.notion.com/reference/get-user
+  - type: UserBotRetrieveAPI
+    url: https://developers.notion.com/reference/get-self
+  - type: CommentCreateAPI
+    url: https://developers.notion.com/reference/create-a-comment
+  - type: CommentsListAPI
+    url: https://developers.notion.com/reference/list-comments
+  - type: CommentRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-comment
+  - type: SearchAPI
+    url: https://developers.notion.com/reference/post-search
+  - type: DataSourceCreateAPI
+    url: https://developers.notion.com/reference/create-a-data-source
+  - type: DataSourceRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-data-source
+  - type: DataSourceUpdateAPI
+    url: https://developers.notion.com/reference/update-a-data-source
+  - type: DataSourceQueryAPI
+    url: https://developers.notion.com/reference/query-a-data-source
+  - type: DataSourceTemplatesListAPI
+    url: https://developers.notion.com/reference/list-data-source-templates
+  - type: FileUploadCreateAPI
+    url: https://developers.notion.com/reference/create-a-file-upload
+  - type: FileUploadSendAPI
+    url: https://developers.notion.com/reference/send-a-file-upload
+  - type: FileUploadCompleteAPI
+    url: https://developers.notion.com/reference/complete-a-file-upload
+  - type: FileUploadRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-file-upload
+  - type: FileUploadsListAPI
+    url: https://developers.notion.com/reference/list-file-uploads
+  - type: TokenCreateAPI
+    url: https://developers.notion.com/reference/create-a-token
+  - type: TokenIntrospectAPI
+    url: https://developers.notion.com/reference/introspect-token
+  - type: TokenRefreshAPI
+    url: https://developers.notion.com/reference/refresh-a-token
+  - type: TokenRevokeAPI
+    url: https://developers.notion.com/reference/revoke-token
+  - type: GraphQL
+    url: graphql/notion-graphql.md
+- aid: notion:notion-comments-api
+  name: Notion Comments API
+  description: >-
+    Comments allow integrations to read and create comments on pages and blocks within Notion. Comments
+    support rich text content and are associated with discussion threads.
+  humanURL: https://developers.notion.com
+  tags:
+  - Comments
+  properties:
+  - type: OpenAPI
+    url: openapi/notion-comments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.notion.com
+  - type: AsyncAPI
+    url: asyncapi/notion-webhooks-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/notion-page-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-database-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-block-schema.json
+  - type: JSONLD
+    url: json-ld/notion-context.jsonld
+  - type: Authentication
+    url: https://developers.notion.com/reference/authentication
+  - type: Authorization
+    url: https://developers.notion.com/docs/authorization
+  - type: GettingStarted
+    url: https://developers.notion.com/docs/getting-started
+  - type: GitHubRepo
+    url: https://github.com/makenotion/notion-sdk-js
+  - type: BaseURL
+    url: https://api.notion.com
+  - type: IntroductionAPI
+    url: https://developers.notion.com/reference/intro
+  - type: DatabaseCreateAPI
+    url: https://developers.notion.com/reference/create-a-database
+  - type: DatabaseRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-database
+  - type: DatabaseUpdateAPI
+    url: https://developers.notion.com/reference/update-a-database
+  - type: DatabaseQueryAPI
+    url: https://developers.notion.com/reference/post-database-query
+  - type: PageCreateAPI
+    url: https://developers.notion.com/reference/post-page
+  - type: PageRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page
+  - type: PageUpdateAPI
+    url: https://developers.notion.com/reference/patch-page
+  - type: PageTrashAPI
+    url: https://developers.notion.com/reference/archive-a-page
+  - type: PageMoveAPI
+    url: https://developers.notion.com/reference/move-page
+  - type: PagePropertyRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page-property
+  - type: PageMarkdownRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-page-markdown
+  - type: PageMarkdownUpdateAPI
+    url: https://developers.notion.com/reference/update-page-markdown
+  - type: BlockRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-block
+  - type: BlockUpdateAPI
+    url: https://developers.notion.com/reference/update-a-block
+  - type: BlockDeleteAPI
+    url: https://developers.notion.com/reference/delete-a-block
+  - type: BlockChildrenRetrieveAPI
+    url: https://developers.notion.com/reference/get-block-children
+  - type: BlockChildrenAppendAPI
+    url: https://developers.notion.com/reference/patch-block-children
+  - type: UsersListAPI
+    url: https://developers.notion.com/reference/get-users
+  - type: UserRetrieveAPI
+    url: https://developers.notion.com/reference/get-user
+  - type: UserBotRetrieveAPI
+    url: https://developers.notion.com/reference/get-self
+  - type: CommentCreateAPI
+    url: https://developers.notion.com/reference/create-a-comment
+  - type: CommentsListAPI
+    url: https://developers.notion.com/reference/list-comments
+  - type: CommentRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-comment
+  - type: SearchAPI
+    url: https://developers.notion.com/reference/post-search
+  - type: DataSourceCreateAPI
+    url: https://developers.notion.com/reference/create-a-data-source
+  - type: DataSourceRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-data-source
+  - type: DataSourceUpdateAPI
+    url: https://developers.notion.com/reference/update-a-data-source
+  - type: DataSourceQueryAPI
+    url: https://developers.notion.com/reference/query-a-data-source
+  - type: DataSourceTemplatesListAPI
+    url: https://developers.notion.com/reference/list-data-source-templates
+  - type: FileUploadCreateAPI
+    url: https://developers.notion.com/reference/create-a-file-upload
+  - type: FileUploadSendAPI
+    url: https://developers.notion.com/reference/send-a-file-upload
+  - type: FileUploadCompleteAPI
+    url: https://developers.notion.com/reference/complete-a-file-upload
+  - type: FileUploadRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-file-upload
+  - type: FileUploadsListAPI
+    url: https://developers.notion.com/reference/list-file-uploads
+  - type: TokenCreateAPI
+    url: https://developers.notion.com/reference/create-a-token
+  - type: TokenIntrospectAPI
+    url: https://developers.notion.com/reference/introspect-token
+  - type: TokenRefreshAPI
+    url: https://developers.notion.com/reference/refresh-a-token
+  - type: TokenRevokeAPI
+    url: https://developers.notion.com/reference/revoke-token
+  - type: GraphQL
+    url: graphql/notion-graphql.md
+- aid: notion:notion-databases-api
+  name: Notion Databases API
+  description: >-
+    Databases are collections of Notion pages organized with a shared schema of properties. Each database
+    defines columns (properties) that all its pages share. Databases support filtering, sorting, and querying.
+    Use these endpoints to create, retrieve, update, and query databases.
+  humanURL: https://developers.notion.com
+  tags:
+  - Databases
+  properties:
+  - type: OpenAPI
+    url: openapi/notion-databases-api-openapi.yml
+  - type: Documentation
+    url: https://developers.notion.com
+  - type: AsyncAPI
+    url: asyncapi/notion-webhooks-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/notion-page-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-database-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-block-schema.json
+  - type: JSONLD
+    url: json-ld/notion-context.jsonld
+  - type: Authentication
+    url: https://developers.notion.com/reference/authentication
+  - type: Authorization
+    url: https://developers.notion.com/docs/authorization
+  - type: GettingStarted
+    url: https://developers.notion.com/docs/getting-started
+  - type: GitHubRepo
+    url: https://github.com/makenotion/notion-sdk-js
+  - type: BaseURL
+    url: https://api.notion.com
+  - type: IntroductionAPI
+    url: https://developers.notion.com/reference/intro
+  - type: DatabaseCreateAPI
+    url: https://developers.notion.com/reference/create-a-database
+  - type: DatabaseRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-database
+  - type: DatabaseUpdateAPI
+    url: https://developers.notion.com/reference/update-a-database
+  - type: DatabaseQueryAPI
+    url: https://developers.notion.com/reference/post-database-query
+  - type: PageCreateAPI
+    url: https://developers.notion.com/reference/post-page
+  - type: PageRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page
+  - type: PageUpdateAPI
+    url: https://developers.notion.com/reference/patch-page
+  - type: PageTrashAPI
+    url: https://developers.notion.com/reference/archive-a-page
+  - type: PageMoveAPI
+    url: https://developers.notion.com/reference/move-page
+  - type: PagePropertyRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page-property
+  - type: PageMarkdownRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-page-markdown
+  - type: PageMarkdownUpdateAPI
+    url: https://developers.notion.com/reference/update-page-markdown
+  - type: BlockRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-block
+  - type: BlockUpdateAPI
+    url: https://developers.notion.com/reference/update-a-block
+  - type: BlockDeleteAPI
+    url: https://developers.notion.com/reference/delete-a-block
+  - type: BlockChildrenRetrieveAPI
+    url: https://developers.notion.com/reference/get-block-children
+  - type: BlockChildrenAppendAPI
+    url: https://developers.notion.com/reference/patch-block-children
+  - type: UsersListAPI
+    url: https://developers.notion.com/reference/get-users
+  - type: UserRetrieveAPI
+    url: https://developers.notion.com/reference/get-user
+  - type: UserBotRetrieveAPI
+    url: https://developers.notion.com/reference/get-self
+  - type: CommentCreateAPI
+    url: https://developers.notion.com/reference/create-a-comment
+  - type: CommentsListAPI
+    url: https://developers.notion.com/reference/list-comments
+  - type: CommentRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-comment
+  - type: SearchAPI
+    url: https://developers.notion.com/reference/post-search
+  - type: DataSourceCreateAPI
+    url: https://developers.notion.com/reference/create-a-data-source
+  - type: DataSourceRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-data-source
+  - type: DataSourceUpdateAPI
+    url: https://developers.notion.com/reference/update-a-data-source
+  - type: DataSourceQueryAPI
+    url: https://developers.notion.com/reference/query-a-data-source
+  - type: DataSourceTemplatesListAPI
+    url: https://developers.notion.com/reference/list-data-source-templates
+  - type: FileUploadCreateAPI
+    url: https://developers.notion.com/reference/create-a-file-upload
+  - type: FileUploadSendAPI
+    url: https://developers.notion.com/reference/send-a-file-upload
+  - type: FileUploadCompleteAPI
+    url: https://developers.notion.com/reference/complete-a-file-upload
+  - type: FileUploadRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-file-upload
+  - type: FileUploadsListAPI
+    url: https://developers.notion.com/reference/list-file-uploads
+  - type: TokenCreateAPI
+    url: https://developers.notion.com/reference/create-a-token
+  - type: TokenIntrospectAPI
+    url: https://developers.notion.com/reference/introspect-token
+  - type: TokenRefreshAPI
+    url: https://developers.notion.com/reference/refresh-a-token
+  - type: TokenRevokeAPI
+    url: https://developers.notion.com/reference/revoke-token
+  - type: GraphQL
+    url: graphql/notion-graphql.md
+- aid: notion:notion-pages-api
+  name: Notion Pages API
+  description: >-
+    Pages represent documents in Notion workspaces. They can exist as standalone pages or as entries within
+    a database. Pages contain properties (metadata) and content composed of blocks. Use these endpoints
+    to create, retrieve, update, archive, and manage page properties and content.
+  humanURL: https://developers.notion.com
+  tags:
+  - Pages
+  properties:
+  - type: OpenAPI
+    url: openapi/notion-pages-api-openapi.yml
+  - type: Documentation
+    url: https://developers.notion.com
+  - type: AsyncAPI
+    url: asyncapi/notion-webhooks-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/notion-page-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-database-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-block-schema.json
+  - type: JSONLD
+    url: json-ld/notion-context.jsonld
+  - type: Authentication
+    url: https://developers.notion.com/reference/authentication
+  - type: Authorization
+    url: https://developers.notion.com/docs/authorization
+  - type: GettingStarted
+    url: https://developers.notion.com/docs/getting-started
+  - type: GitHubRepo
+    url: https://github.com/makenotion/notion-sdk-js
+  - type: BaseURL
+    url: https://api.notion.com
+  - type: IntroductionAPI
+    url: https://developers.notion.com/reference/intro
+  - type: DatabaseCreateAPI
+    url: https://developers.notion.com/reference/create-a-database
+  - type: DatabaseRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-database
+  - type: DatabaseUpdateAPI
+    url: https://developers.notion.com/reference/update-a-database
+  - type: DatabaseQueryAPI
+    url: https://developers.notion.com/reference/post-database-query
+  - type: PageCreateAPI
+    url: https://developers.notion.com/reference/post-page
+  - type: PageRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page
+  - type: PageUpdateAPI
+    url: https://developers.notion.com/reference/patch-page
+  - type: PageTrashAPI
+    url: https://developers.notion.com/reference/archive-a-page
+  - type: PageMoveAPI
+    url: https://developers.notion.com/reference/move-page
+  - type: PagePropertyRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page-property
+  - type: PageMarkdownRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-page-markdown
+  - type: PageMarkdownUpdateAPI
+    url: https://developers.notion.com/reference/update-page-markdown
+  - type: BlockRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-block
+  - type: BlockUpdateAPI
+    url: https://developers.notion.com/reference/update-a-block
+  - type: BlockDeleteAPI
+    url: https://developers.notion.com/reference/delete-a-block
+  - type: BlockChildrenRetrieveAPI
+    url: https://developers.notion.com/reference/get-block-children
+  - type: BlockChildrenAppendAPI
+    url: https://developers.notion.com/reference/patch-block-children
+  - type: UsersListAPI
+    url: https://developers.notion.com/reference/get-users
+  - type: UserRetrieveAPI
+    url: https://developers.notion.com/reference/get-user
+  - type: UserBotRetrieveAPI
+    url: https://developers.notion.com/reference/get-self
+  - type: CommentCreateAPI
+    url: https://developers.notion.com/reference/create-a-comment
+  - type: CommentsListAPI
+    url: https://developers.notion.com/reference/list-comments
+  - type: CommentRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-comment
+  - type: SearchAPI
+    url: https://developers.notion.com/reference/post-search
+  - type: DataSourceCreateAPI
+    url: https://developers.notion.com/reference/create-a-data-source
+  - type: DataSourceRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-data-source
+  - type: DataSourceUpdateAPI
+    url: https://developers.notion.com/reference/update-a-data-source
+  - type: DataSourceQueryAPI
+    url: https://developers.notion.com/reference/query-a-data-source
+  - type: DataSourceTemplatesListAPI
+    url: https://developers.notion.com/reference/list-data-source-templates
+  - type: FileUploadCreateAPI
+    url: https://developers.notion.com/reference/create-a-file-upload
+  - type: FileUploadSendAPI
+    url: https://developers.notion.com/reference/send-a-file-upload
+  - type: FileUploadCompleteAPI
+    url: https://developers.notion.com/reference/complete-a-file-upload
+  - type: FileUploadRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-file-upload
+  - type: FileUploadsListAPI
+    url: https://developers.notion.com/reference/list-file-uploads
+  - type: TokenCreateAPI
+    url: https://developers.notion.com/reference/create-a-token
+  - type: TokenIntrospectAPI
+    url: https://developers.notion.com/reference/introspect-token
+  - type: TokenRefreshAPI
+    url: https://developers.notion.com/reference/refresh-a-token
+  - type: TokenRevokeAPI
+    url: https://developers.notion.com/reference/revoke-token
+  - type: GraphQL
+    url: graphql/notion-graphql.md
+- aid: notion:notion-search-api
+  name: Notion Search API
+  description: >-
+    Search allows querying across all pages and databases that the integration has access to. Results
+    can be filtered by object type and sorted by relevance or last edited time.
+  humanURL: https://developers.notion.com
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/notion-search-api-openapi.yml
+  - type: Documentation
+    url: https://developers.notion.com
+  - type: AsyncAPI
+    url: asyncapi/notion-webhooks-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/notion-page-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-database-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-block-schema.json
+  - type: JSONLD
+    url: json-ld/notion-context.jsonld
+  - type: Authentication
+    url: https://developers.notion.com/reference/authentication
+  - type: Authorization
+    url: https://developers.notion.com/docs/authorization
+  - type: GettingStarted
+    url: https://developers.notion.com/docs/getting-started
+  - type: GitHubRepo
+    url: https://github.com/makenotion/notion-sdk-js
+  - type: BaseURL
+    url: https://api.notion.com
+  - type: IntroductionAPI
+    url: https://developers.notion.com/reference/intro
+  - type: DatabaseCreateAPI
+    url: https://developers.notion.com/reference/create-a-database
+  - type: DatabaseRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-database
+  - type: DatabaseUpdateAPI
+    url: https://developers.notion.com/reference/update-a-database
+  - type: DatabaseQueryAPI
+    url: https://developers.notion.com/reference/post-database-query
+  - type: PageCreateAPI
+    url: https://developers.notion.com/reference/post-page
+  - type: PageRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page
+  - type: PageUpdateAPI
+    url: https://developers.notion.com/reference/patch-page
+  - type: PageTrashAPI
+    url: https://developers.notion.com/reference/archive-a-page
+  - type: PageMoveAPI
+    url: https://developers.notion.com/reference/move-page
+  - type: PagePropertyRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page-property
+  - type: PageMarkdownRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-page-markdown
+  - type: PageMarkdownUpdateAPI
+    url: https://developers.notion.com/reference/update-page-markdown
+  - type: BlockRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-block
+  - type: BlockUpdateAPI
+    url: https://developers.notion.com/reference/update-a-block
+  - type: BlockDeleteAPI
+    url: https://developers.notion.com/reference/delete-a-block
+  - type: BlockChildrenRetrieveAPI
+    url: https://developers.notion.com/reference/get-block-children
+  - type: BlockChildrenAppendAPI
+    url: https://developers.notion.com/reference/patch-block-children
+  - type: UsersListAPI
+    url: https://developers.notion.com/reference/get-users
+  - type: UserRetrieveAPI
+    url: https://developers.notion.com/reference/get-user
+  - type: UserBotRetrieveAPI
+    url: https://developers.notion.com/reference/get-self
+  - type: CommentCreateAPI
+    url: https://developers.notion.com/reference/create-a-comment
+  - type: CommentsListAPI
+    url: https://developers.notion.com/reference/list-comments
+  - type: CommentRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-comment
+  - type: SearchAPI
+    url: https://developers.notion.com/reference/post-search
+  - type: DataSourceCreateAPI
+    url: https://developers.notion.com/reference/create-a-data-source
+  - type: DataSourceRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-data-source
+  - type: DataSourceUpdateAPI
+    url: https://developers.notion.com/reference/update-a-data-source
+  - type: DataSourceQueryAPI
+    url: https://developers.notion.com/reference/query-a-data-source
+  - type: DataSourceTemplatesListAPI
+    url: https://developers.notion.com/reference/list-data-source-templates
+  - type: FileUploadCreateAPI
+    url: https://developers.notion.com/reference/create-a-file-upload
+  - type: FileUploadSendAPI
+    url: https://developers.notion.com/reference/send-a-file-upload
+  - type: FileUploadCompleteAPI
+    url: https://developers.notion.com/reference/complete-a-file-upload
+  - type: FileUploadRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-file-upload
+  - type: FileUploadsListAPI
+    url: https://developers.notion.com/reference/list-file-uploads
+  - type: TokenCreateAPI
+    url: https://developers.notion.com/reference/create-a-token
+  - type: TokenIntrospectAPI
+    url: https://developers.notion.com/reference/introspect-token
+  - type: TokenRefreshAPI
+    url: https://developers.notion.com/reference/refresh-a-token
+  - type: TokenRevokeAPI
+    url: https://developers.notion.com/reference/revoke-token
+  - type: GraphQL
+    url: graphql/notion-graphql.md
+- aid: notion:notion-users-api
+  name: Notion Users API
+  description: >-
+    Users represent people or bots in a Notion workspace. Person users are human members of the workspace,
+    while bot users represent API integrations. Use these endpoints to list users, retrieve specific users,
+    or get information about the current bot integration.
+  humanURL: https://developers.notion.com
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/notion-users-api-openapi.yml
+  - type: Documentation
+    url: https://developers.notion.com
+  - type: AsyncAPI
+    url: asyncapi/notion-webhooks-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/notion-page-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-database-schema.json
+  - type: JSONSchema
+    url: json-schema/notion-block-schema.json
+  - type: JSONLD
+    url: json-ld/notion-context.jsonld
+  - type: Authentication
+    url: https://developers.notion.com/reference/authentication
+  - type: Authorization
+    url: https://developers.notion.com/docs/authorization
+  - type: GettingStarted
+    url: https://developers.notion.com/docs/getting-started
+  - type: GitHubRepo
+    url: https://github.com/makenotion/notion-sdk-js
+  - type: BaseURL
+    url: https://api.notion.com
+  - type: IntroductionAPI
+    url: https://developers.notion.com/reference/intro
+  - type: DatabaseCreateAPI
+    url: https://developers.notion.com/reference/create-a-database
+  - type: DatabaseRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-database
+  - type: DatabaseUpdateAPI
+    url: https://developers.notion.com/reference/update-a-database
+  - type: DatabaseQueryAPI
+    url: https://developers.notion.com/reference/post-database-query
+  - type: PageCreateAPI
+    url: https://developers.notion.com/reference/post-page
+  - type: PageRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page
+  - type: PageUpdateAPI
+    url: https://developers.notion.com/reference/patch-page
+  - type: PageTrashAPI
+    url: https://developers.notion.com/reference/archive-a-page
+  - type: PageMoveAPI
+    url: https://developers.notion.com/reference/move-page
+  - type: PagePropertyRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-page-property
+  - type: PageMarkdownRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-page-markdown
+  - type: PageMarkdownUpdateAPI
+    url: https://developers.notion.com/reference/update-page-markdown
+  - type: BlockRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-block
+  - type: BlockUpdateAPI
+    url: https://developers.notion.com/reference/update-a-block
+  - type: BlockDeleteAPI
+    url: https://developers.notion.com/reference/delete-a-block
+  - type: BlockChildrenRetrieveAPI
+    url: https://developers.notion.com/reference/get-block-children
+  - type: BlockChildrenAppendAPI
+    url: https://developers.notion.com/reference/patch-block-children
+  - type: UsersListAPI
+    url: https://developers.notion.com/reference/get-users
+  - type: UserRetrieveAPI
+    url: https://developers.notion.com/reference/get-user
+  - type: UserBotRetrieveAPI
+    url: https://developers.notion.com/reference/get-self
+  - type: CommentCreateAPI
+    url: https://developers.notion.com/reference/create-a-comment
+  - type: CommentsListAPI
+    url: https://developers.notion.com/reference/list-comments
+  - type: CommentRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-comment
+  - type: SearchAPI
+    url: https://developers.notion.com/reference/post-search
+  - type: DataSourceCreateAPI
+    url: https://developers.notion.com/reference/create-a-data-source
+  - type: DataSourceRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-data-source
+  - type: DataSourceUpdateAPI
+    url: https://developers.notion.com/reference/update-a-data-source
+  - type: DataSourceQueryAPI
+    url: https://developers.notion.com/reference/query-a-data-source
+  - type: DataSourceTemplatesListAPI
+    url: https://developers.notion.com/reference/list-data-source-templates
+  - type: FileUploadCreateAPI
+    url: https://developers.notion.com/reference/create-a-file-upload
+  - type: FileUploadSendAPI
+    url: https://developers.notion.com/reference/send-a-file-upload
+  - type: FileUploadCompleteAPI
+    url: https://developers.notion.com/reference/complete-a-file-upload
+  - type: FileUploadRetrieveAPI
+    url: https://developers.notion.com/reference/retrieve-a-file-upload
+  - type: FileUploadsListAPI
+    url: https://developers.notion.com/reference/list-file-uploads
+  - type: TokenCreateAPI
+    url: https://developers.notion.com/reference/create-a-token
+  - type: TokenIntrospectAPI
+    url: https://developers.notion.com/reference/introspect-token
+  - type: TokenRefreshAPI
+    url: https://developers.notion.com/reference/refresh-a-token
+  - type: TokenRevokeAPI
+    url: https://developers.notion.com/reference/revoke-token
+  - type: GraphQL
+    url: graphql/notion-graphql.md
 name: Notion
 tags:
 - Collaboration
@@ -133,6 +696,19 @@ tags:
 - Wiki
 - Workspace
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://www.notion.so/images/meta/default.png
 access: 3rd-Party
 common:
