@@ -1,0 +1,24 @@
+{
+  "provider": "notion",
+  "sources": [
+    "notion-blocks-api-openapi.yml",
+    "notion-comments-api-openapi.yml",
+    "notion-databases-api-openapi.yml",
+    "notion-pages-api-openapi.yml",
+    "notion-search-api-openapi.yml",
+    "notion-users-api-openapi.yml"
+  ],
+  "outputs": [
+    "notion-blocks-api-openapi.yml",
+    "notion-comments-api-openapi.yml",
+    "notion-databases-api-openapi.yml",
+    "notion-pages-api-openapi.yml",
+    "notion-search-api-openapi.yml",
+    "notion-users-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

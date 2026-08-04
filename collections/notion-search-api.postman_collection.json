@@ -1,0 +1,342 @@
+{
+  "info": {
+    "_postman_id": "da060de4-e378-4a39-869a-91f5193e86c0",
+    "name": "Notion Blocks Search API",
+    "description": "The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.\n\nContact Support:\n Name: Notion Labs Inc.\n Email: developers@makenotion.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-08-03T11:21:47.000Z",
+    "updatedAt": "2026-08-03T11:21:47.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-da060de4-e378-4a39-869a-91f5193e86c0"
+  },
+  "item": [
+    {
+      "name": "search",
+      "item": [
+        {
+          "name": "Notion Search by title",
+          "id": "23c507c1-e5c0-4703-896b-427a2a3725d9",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                "key": "Notion-Version",
+                "value": "2022-06-28"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"filter\": {\n    \"value\": \"database\",\n    \"property\": \"object\"\n  },\n  \"sort\": {\n    \"direction\": \"descending\",\n    \"timestamp\": \"last_edited_time\"\n  },\n  \"start_cursor\": \"<string>\",\n  \"page_size\": 100\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/search",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "search"
+              ]
+            },
+            "description": "Searches all parent or child pages and databases that have been shared with an integration. Returns results based on the query, filter, and sort parameters. Results are sorted by relevance by default but can be sorted by last_edited_time. The search indexing may not be immediate, so recently created or updated objects may not appear right away."
+          },
+          "response": [
+            {
+              "id": "e1310135-e90e-4869-afc5-3a1c6eb0e8f8",
+              "name": "Search results successfully returned.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"filter\": {\n    \"value\": \"database\",\n    \"property\": \"object\"\n  },\n  \"sort\": {\n    \"direction\": \"descending\",\n    \"timestamp\": \"last_edited_time\"\n  },\n  \"start_cursor\": \"<string>\",\n  \"page_size\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "search"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"results\": [\n    {\n      \"proident60\": true,\n      \"proident_4ad\": false\n    },\n    {\n      \"Ut6a\": -16958447.52741827\n    }\n  ],\n  \"next_cursor\": \"<string,null>\",\n  \"has_more\": \"<boolean>\",\n  \"type\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:47.000Z",
+              "updatedAt": "2026-08-03T11:21:47.000Z",
+              "uid": "35240-e1310135-e90e-4869-afc5-3a1c6eb0e8f8"
+            },
+            {
+              "id": "47442f5b-511c-45d6-8a8e-f64a7313a032",
+              "name": "The request was invalid or malformed.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"filter\": {\n    \"value\": \"database\",\n    \"property\": \"object\"\n  },\n  \"sort\": {\n    \"direction\": \"descending\",\n    \"timestamp\": \"last_edited_time\"\n  },\n  \"start_cursor\": \"<string>\",\n  \"page_size\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "search"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:47.000Z",
+              "updatedAt": "2026-08-03T11:21:47.000Z",
+              "uid": "35240-47442f5b-511c-45d6-8a8e-f64a7313a032"
+            },
+            {
+              "id": "eeee9bc2-10c6-4ce4-a8cd-69a4b9e54c8a",
+              "name": "The bearer token is missing, invalid, or the integration lacks access.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"filter\": {\n    \"value\": \"database\",\n    \"property\": \"object\"\n  },\n  \"sort\": {\n    \"direction\": \"descending\",\n    \"timestamp\": \"last_edited_time\"\n  },\n  \"start_cursor\": \"<string>\",\n  \"page_size\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "search"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:47.000Z",
+              "updatedAt": "2026-08-03T11:21:47.000Z",
+              "uid": "35240-eeee9bc2-10c6-4ce4-a8cd-69a4b9e54c8a"
+            },
+            {
+              "id": "f4e9b03a-21e0-4ec2-8d8c-e711a043610d",
+              "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"<string>\",\n  \"filter\": {\n    \"value\": \"database\",\n    \"property\": \"object\"\n  },\n  \"sort\": {\n    \"direction\": \"descending\",\n    \"timestamp\": \"last_edited_time\"\n  },\n  \"start_cursor\": \"<string>\",\n  \"page_size\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/search",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "search"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of seconds to wait before retrying.",
+                    "type": "text/plain"
+                  },
+                  "key": "Retry-After",
+                  "value": "<integer>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:47.000Z",
+              "updatedAt": "2026-08-03T11:21:47.000Z",
+              "uid": "35240-f4e9b03a-21e0-4ec2-8d8c-e711a043610d"
+            }
+          ],
+          "createdAt": "2026-08-03T11:21:47.000Z",
+          "updatedAt": "2026-08-03T11:21:47.000Z",
+          "uid": "35240-23c507c1-e5c0-4703-896b-427a2a3725d9"
+        }
+      ],
+      "id": "6a247b81-8183-4ed3-abe1-7684409e342e",
+      "createdAt": "2026-08-03T11:21:47.000Z",
+      "updatedAt": "2026-08-03T11:21:47.000Z",
+      "uid": "35240-6a247b81-8183-4ed3-abe1-7684409e342e"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.notion.com/v1"
+    }
+  ]
+}

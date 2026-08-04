@@ -1,0 +1,721 @@
+{
+  "info": {
+    "_postman_id": "d38e4ba7-f28c-425a-9aff-66ca25c33545",
+    "name": "Notion Blocks Comments API",
+    "description": "The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.\n\nContact Support:\n Name: Notion Labs Inc.\n Email: developers@makenotion.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-08-03T11:21:09.000Z",
+    "updatedAt": "2026-08-03T11:21:09.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-d38e4ba7-f28c-425a-9aff-66ca25c33545"
+  },
+  "item": [
+    {
+      "name": "comments",
+      "item": [
+        {
+          "name": "Notion Retrieve comments",
+          "id": "97d16968-c9db-4d16-a273-5b37d29f52ab",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                "key": "Notion-Version",
+                "value": "2022-06-28"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/comments?block_id=<uuid>&start_cursor=<string>&page_size=<integer>",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "comments"
+              ],
+              "query": [
+                {
+                  "description": "(Required) The ID of the block or page to retrieve comments for.",
+                  "key": "block_id",
+                  "value": "<uuid>"
+                },
+                {
+                  "description": "Pagination cursor to continue fetching results.",
+                  "key": "start_cursor",
+                  "value": "<string>"
+                },
+                {
+                  "description": "Maximum number of comments to return (max 100).",
+                  "key": "page_size",
+                  "value": "<integer>"
+                }
+              ]
+            },
+            "description": "Retrieves a list of unresolved comments from a page or block. Requires the integration to have read comment capabilities."
+          },
+          "response": [
+            {
+              "id": "04b3cfd3-e986-45ce-b386-ef6954a74eaa",
+              "name": "Comments successfully retrieved.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/comments?block_id=<uuid>&start_cursor=<string>&page_size=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "comments"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The ID of the block or page to retrieve comments for.",
+                      "key": "block_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Pagination cursor to continue fetching results.",
+                      "key": "start_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of comments to return (max 100).",
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"results\": [\n    {\n      \"laboref\": false,\n      \"nulla_4f\": false,\n      \"sint2_d\": false,\n      \"Excepteur13_\": -44966473\n    },\n    {\n      \"cupidatata\": -19524126.840031102,\n      \"eiusmod4\": true\n    }\n  ],\n  \"next_cursor\": \"<string,null>\",\n  \"has_more\": \"<boolean>\",\n  \"type\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:09.000Z",
+              "updatedAt": "2026-08-03T11:21:09.000Z",
+              "uid": "35240-04b3cfd3-e986-45ce-b386-ef6954a74eaa"
+            },
+            {
+              "id": "1fcd79b1-eb7d-401a-9dba-85d2ae484788",
+              "name": "The bearer token is missing, invalid, or the integration lacks access.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/comments?block_id=<uuid>&start_cursor=<string>&page_size=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "comments"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The ID of the block or page to retrieve comments for.",
+                      "key": "block_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Pagination cursor to continue fetching results.",
+                      "key": "start_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of comments to return (max 100).",
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:09.000Z",
+              "updatedAt": "2026-08-03T11:21:09.000Z",
+              "uid": "35240-1fcd79b1-eb7d-401a-9dba-85d2ae484788"
+            },
+            {
+              "id": "566cb700-9f07-46c3-afbe-8a4e968a7812",
+              "name": "The requested resource does not exist or the integration lacks access to it.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/comments?block_id=<uuid>&start_cursor=<string>&page_size=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "comments"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The ID of the block or page to retrieve comments for.",
+                      "key": "block_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Pagination cursor to continue fetching results.",
+                      "key": "start_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of comments to return (max 100).",
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:09.000Z",
+              "updatedAt": "2026-08-03T11:21:09.000Z",
+              "uid": "35240-566cb700-9f07-46c3-afbe-8a4e968a7812"
+            },
+            {
+              "id": "d821d04a-fe8c-4150-848e-8fc2f0846c53",
+              "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/comments?block_id=<uuid>&start_cursor=<string>&page_size=<integer>",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "comments"
+                  ],
+                  "query": [
+                    {
+                      "description": "(Required) The ID of the block or page to retrieve comments for.",
+                      "key": "block_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "description": "Pagination cursor to continue fetching results.",
+                      "key": "start_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "description": "Maximum number of comments to return (max 100).",
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of seconds to wait before retrying.",
+                    "type": "text/plain"
+                  },
+                  "key": "Retry-After",
+                  "value": "<integer>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:09.000Z",
+              "updatedAt": "2026-08-03T11:21:09.000Z",
+              "uid": "35240-d821d04a-fe8c-4150-848e-8fc2f0846c53"
+            }
+          ],
+          "createdAt": "2026-08-03T11:21:09.000Z",
+          "updatedAt": "2026-08-03T11:21:09.000Z",
+          "uid": "35240-97d16968-c9db-4d16-a273-5b37d29f52ab"
+        },
+        {
+          "name": "Notion Create a comment",
+          "id": "350fd3a8-d0d0-4329-86b1-e1c3b635670d",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                "key": "Notion-Version",
+                "value": "2022-06-28"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rich_text\": [\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": {\n          \"url\": \"<uri>\"\n        }\n      },\n      \"mention\": {\n        \"eu__6b\": -29259512.55940804,\n        \"in_2e\": -94133146,\n        \"labore_73\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    },\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": null\n      },\n      \"mention\": {\n        \"animf\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    }\n  ],\n  \"parent\": {\n    \"page_id\": \"<uuid>\"\n  },\n  \"discussion_id\": \"<uuid>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/comments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "comments"
+              ]
+            },
+            "description": "Creates a comment on a page or in an existing discussion thread. The integration must have comment capabilities to use this endpoint."
+          },
+          "response": [
+            {
+              "id": "a6ff25b5-8ea0-40ef-8ae1-1f6d3f6dc92f",
+              "name": "Comment successfully created.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rich_text\": [\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": {\n          \"url\": \"<uri>\"\n        }\n      },\n      \"mention\": {\n        \"eu__6b\": -29259512.55940804,\n        \"in_2e\": -94133146,\n        \"labore_73\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    },\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": null\n      },\n      \"mention\": {\n        \"animf\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    }\n  ],\n  \"parent\": {\n    \"page_id\": \"<uuid>\"\n  },\n  \"discussion_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/comments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "comments"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"parent\": {\n    \"type\": \"block_id\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\"\n  },\n  \"discussion_id\": \"<uuid>\",\n  \"created_time\": \"<dateTime>\",\n  \"last_edited_time\": \"<dateTime>\",\n  \"created_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"rich_text\": [\n    {\n      \"type\": \"equation\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": {\n          \"url\": \"<uri>\"\n        }\n      },\n      \"mention\": {\n        \"reprehenderit_e6\": -49208943.17219058\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    },\n    {\n      \"type\": \"text\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": null\n      },\n      \"mention\": {\n        \"irure_b23\": \"consequat occaecat do magna\",\n        \"veniam_1b\": 84782670,\n        \"aute95\": -45543644.05311744,\n        \"in_9b1\": -66173794.16912024,\n        \"consectetur_3b\": 54828681\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    }\n  ]\n}",
+              "createdAt": "2026-08-03T11:21:09.000Z",
+              "updatedAt": "2026-08-03T11:21:09.000Z",
+              "uid": "35240-a6ff25b5-8ea0-40ef-8ae1-1f6d3f6dc92f"
+            },
+            {
+              "id": "a800c2d4-5c73-4a20-9604-6bb47f347dc9",
+              "name": "The request was invalid or malformed.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rich_text\": [\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": {\n          \"url\": \"<uri>\"\n        }\n      },\n      \"mention\": {\n        \"eu__6b\": -29259512.55940804,\n        \"in_2e\": -94133146,\n        \"labore_73\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    },\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": null\n      },\n      \"mention\": {\n        \"animf\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    }\n  ],\n  \"parent\": {\n    \"page_id\": \"<uuid>\"\n  },\n  \"discussion_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/comments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "comments"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:09.000Z",
+              "updatedAt": "2026-08-03T11:21:09.000Z",
+              "uid": "35240-a800c2d4-5c73-4a20-9604-6bb47f347dc9"
+            },
+            {
+              "id": "b3018034-ac57-4232-984a-8ad83fe217aa",
+              "name": "The bearer token is missing, invalid, or the integration lacks access.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rich_text\": [\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": {\n          \"url\": \"<uri>\"\n        }\n      },\n      \"mention\": {\n        \"eu__6b\": -29259512.55940804,\n        \"in_2e\": -94133146,\n        \"labore_73\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    },\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": null\n      },\n      \"mention\": {\n        \"animf\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    }\n  ],\n  \"parent\": {\n    \"page_id\": \"<uuid>\"\n  },\n  \"discussion_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/comments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "comments"
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:09.000Z",
+              "updatedAt": "2026-08-03T11:21:09.000Z",
+              "uid": "35240-b3018034-ac57-4232-984a-8ad83fe217aa"
+            },
+            {
+              "id": "4a488452-2dae-48e1-bbaf-fa355228fc4d",
+              "name": "The requested resource does not exist or the integration lacks access to it.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rich_text\": [\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": {\n          \"url\": \"<uri>\"\n        }\n      },\n      \"mention\": {\n        \"eu__6b\": -29259512.55940804,\n        \"in_2e\": -94133146,\n        \"labore_73\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    },\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": null\n      },\n      \"mention\": {\n        \"animf\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    }\n  ],\n  \"parent\": {\n    \"page_id\": \"<uuid>\"\n  },\n  \"discussion_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/comments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "comments"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:09.000Z",
+              "updatedAt": "2026-08-03T11:21:09.000Z",
+              "uid": "35240-4a488452-2dae-48e1-bbaf-fa355228fc4d"
+            },
+            {
+              "id": "6bfc394e-9055-4d06-84fd-26c226221c1c",
+              "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: bearer",
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"rich_text\": [\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": {\n          \"url\": \"<uri>\"\n        }\n      },\n      \"mention\": {\n        \"eu__6b\": -29259512.55940804,\n        \"in_2e\": -94133146,\n        \"labore_73\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    },\n    {\n      \"type\": \"mention\",\n      \"plain_text\": \"<string>\",\n      \"text\": {\n        \"content\": \"<string>\",\n        \"link\": null\n      },\n      \"mention\": {\n        \"animf\": true\n      },\n      \"equation\": {\n        \"expression\": \"<string>\"\n      },\n      \"annotations\": {\n        \"bold\": \"<boolean>\",\n        \"italic\": \"<boolean>\",\n        \"strikethrough\": \"<boolean>\",\n        \"underline\": \"<boolean>\",\n        \"code\": \"<boolean>\",\n        \"color\": \"<string>\"\n      },\n      \"href\": \"<string,null-uri>\"\n    }\n  ],\n  \"parent\": {\n    \"page_id\": \"<uuid>\"\n  },\n  \"discussion_id\": \"<uuid>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/comments",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "comments"
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "The number of seconds to wait before retrying.",
+                    "type": "text/plain"
+                  },
+                  "key": "Retry-After",
+                  "value": "<integer>"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+              "createdAt": "2026-08-03T11:21:09.000Z",
+              "updatedAt": "2026-08-03T11:21:09.000Z",
+              "uid": "35240-6bfc394e-9055-4d06-84fd-26c226221c1c"
+            }
+          ],
+          "createdAt": "2026-08-03T11:21:09.000Z",
+          "updatedAt": "2026-08-03T11:21:09.000Z",
+          "uid": "35240-350fd3a8-d0d0-4329-86b1-e1c3b635670d"
+        }
+      ],
+      "id": "747068a3-cbba-4c5c-895f-cd3f0f23192f",
+      "createdAt": "2026-08-03T11:21:09.000Z",
+      "updatedAt": "2026-08-03T11:21:09.000Z",
+      "uid": "35240-747068a3-cbba-4c5c-895f-cd3f0f23192f"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.notion.com/v1"
+    }
+  ]
+}

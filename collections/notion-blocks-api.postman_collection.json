@@ -1,0 +1,1732 @@
+{
+  "info": {
+    "_postman_id": "50cc2c8f-104a-4f68-af35-6e0d42a171ee",
+    "name": "Notion Blocks API",
+    "description": "The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.\n\nContact Support:\n Name: Notion Labs Inc.\n Email: developers@makenotion.com",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-08-03T11:20:56.000Z",
+    "updatedAt": "2026-08-03T11:20:57.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-50cc2c8f-104a-4f68-af35-6e0d42a171ee"
+  },
+  "item": [
+    {
+      "name": "blocks",
+      "item": [
+        {
+          "name": "{block_id}",
+          "item": [
+            {
+              "name": "children",
+              "item": [
+                {
+                  "name": "Notion Retrieve block children",
+                  "id": "c0c0a650-c614-4d45-a0a8-55ac4bdc97b8",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id/children?start_cursor=<string>&page_size=<integer>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id",
+                        "children"
+                      ],
+                      "query": [
+                        {
+                          "description": "Pagination cursor to continue fetching results.",
+                          "key": "start_cursor",
+                          "value": "<string>"
+                        },
+                        {
+                          "description": "Maximum number of blocks to return (max 100).",
+                          "key": "page_size",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "9478e7be-ff9f-4e69-9287-92ced6316eb7",
+                          "key": "block_id",
+                          "value": "<uuid>",
+                          "description": "(Required) The ID of the block whose children to retrieve. This can be a page ID to retrieve page content."
+                        }
+                      ]
+                    },
+                    "description": "Returns a paginated array of child block objects contained in the block using the ID specified. This is used to read page content by passing a page ID as the block_id. Responses include a maximum of 100 blocks per request and are returned in the order they appear in the parent block."
+                  },
+                  "response": [
+                    {
+                      "id": "c55ed390-1f13-46be-a79e-ed92c9bf3ab4",
+                      "name": "Block children successfully retrieved.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                            "key": "Notion-Version",
+                            "value": "2022-06-28"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/blocks/:block_id/children?start_cursor=<string>&page_size=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "blocks",
+                            ":block_id",
+                            "children"
+                          ],
+                          "query": [
+                            {
+                              "description": "Pagination cursor to continue fetching results.",
+                              "key": "start_cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of blocks to return (max 100).",
+                              "key": "page_size",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "block_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"<string>\",\n  \"results\": [\n    {\n      \"pariatur_9\": -79502834,\n      \"dolor_e9\": \"dolor ullamco magna deserunt\"\n    },\n    {\n      \"ea7\": \"sint dolor laboris proident\",\n      \"animba\": true,\n      \"velit_2\": 1096195,\n      \"cillumf\": false,\n      \"Duis_cf\": 41098120\n    }\n  ],\n  \"next_cursor\": \"<string,null>\",\n  \"has_more\": \"<boolean>\",\n  \"type\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                      "createdAt": "2026-08-03T11:20:57.000Z",
+                      "updatedAt": "2026-08-03T11:20:57.000Z",
+                      "uid": "35240-c55ed390-1f13-46be-a79e-ed92c9bf3ab4"
+                    },
+                    {
+                      "id": "ea851e23-8457-4212-84a2-2985ccd75b3a",
+                      "name": "The bearer token is missing, invalid, or the integration lacks access.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                            "key": "Notion-Version",
+                            "value": "2022-06-28"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/blocks/:block_id/children?start_cursor=<string>&page_size=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "blocks",
+                            ":block_id",
+                            "children"
+                          ],
+                          "query": [
+                            {
+                              "description": "Pagination cursor to continue fetching results.",
+                              "key": "start_cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of blocks to return (max 100).",
+                              "key": "page_size",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "block_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                      "createdAt": "2026-08-03T11:20:57.000Z",
+                      "updatedAt": "2026-08-03T11:20:57.000Z",
+                      "uid": "35240-ea851e23-8457-4212-84a2-2985ccd75b3a"
+                    },
+                    {
+                      "id": "4f8c7654-6061-466c-99ad-a162f67dfe80",
+                      "name": "The requested resource does not exist or the integration lacks access to it.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                            "key": "Notion-Version",
+                            "value": "2022-06-28"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/blocks/:block_id/children?start_cursor=<string>&page_size=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "blocks",
+                            ":block_id",
+                            "children"
+                          ],
+                          "query": [
+                            {
+                              "description": "Pagination cursor to continue fetching results.",
+                              "key": "start_cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of blocks to return (max 100).",
+                              "key": "page_size",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "block_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                      "createdAt": "2026-08-03T11:20:57.000Z",
+                      "updatedAt": "2026-08-03T11:20:57.000Z",
+                      "uid": "35240-4f8c7654-6061-466c-99ad-a162f67dfe80"
+                    },
+                    {
+                      "id": "df169d7a-66c3-473f-8aaa-230d0595b7fb",
+                      "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                            "key": "Notion-Version",
+                            "value": "2022-06-28"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/blocks/:block_id/children?start_cursor=<string>&page_size=<integer>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "blocks",
+                            ":block_id",
+                            "children"
+                          ],
+                          "query": [
+                            {
+                              "description": "Pagination cursor to continue fetching results.",
+                              "key": "start_cursor",
+                              "value": "<string>"
+                            },
+                            {
+                              "description": "Maximum number of blocks to return (max 100).",
+                              "key": "page_size",
+                              "value": "<integer>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "block_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                      "createdAt": "2026-08-03T11:20:57.000Z",
+                      "updatedAt": "2026-08-03T11:20:57.000Z",
+                      "uid": "35240-df169d7a-66c3-473f-8aaa-230d0595b7fb"
+                    }
+                  ],
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-c0c0a650-c614-4d45-a0a8-55ac4bdc97b8"
+                },
+                {
+                  "name": "Notion Append block children",
+                  "id": "0f94440b-5e08-44a4-b42d-8cc0d0d4639f",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"table\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"page_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"toggle\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"workspace\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"after\": \"<uuid>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id/children",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id",
+                        "children"
+                      ],
+                      "variable": [
+                        {
+                          "id": "736a0235-9c81-49ee-8b22-db4593021fb0",
+                          "key": "block_id",
+                          "value": "<uuid>",
+                          "description": "(Required) The ID of the block to append children to. This can be a page ID to add content to a page."
+                        }
+                      ]
+                    },
+                    "description": "Creates and appends new children blocks to the parent block specified by block_id. Returns the updated parent block. Blocks can be appended to pages, or to other blocks that support children. The maximum number of blocks that can be appended in a single request is 100."
+                  },
+                  "response": [
+                    {
+                      "id": "d5a26594-314a-42a3-9df5-973e7aa5d644",
+                      "name": "Block children successfully appended.",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                            "key": "Notion-Version",
+                            "value": "2022-06-28"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"table\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"page_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"toggle\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"workspace\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"after\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/blocks/:block_id/children",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "blocks",
+                            ":block_id",
+                            "children"
+                          ],
+                          "variable": [
+                            {
+                              "key": "block_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"<string>\",\n  \"results\": [\n    {\n      \"pariatur_9\": -79502834,\n      \"dolor_e9\": \"dolor ullamco magna deserunt\"\n    },\n    {\n      \"ea7\": \"sint dolor laboris proident\",\n      \"animba\": true,\n      \"velit_2\": 1096195,\n      \"cillumf\": false,\n      \"Duis_cf\": 41098120\n    }\n  ],\n  \"next_cursor\": \"<string,null>\",\n  \"has_more\": \"<boolean>\",\n  \"type\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                      "createdAt": "2026-08-03T11:20:57.000Z",
+                      "updatedAt": "2026-08-03T11:20:57.000Z",
+                      "uid": "35240-d5a26594-314a-42a3-9df5-973e7aa5d644"
+                    },
+                    {
+                      "id": "bc4ed151-043a-4bc7-add2-a3823f63e063",
+                      "name": "The request was invalid or malformed.",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                            "key": "Notion-Version",
+                            "value": "2022-06-28"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"table\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"page_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"toggle\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"workspace\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"after\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/blocks/:block_id/children",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "blocks",
+                            ":block_id",
+                            "children"
+                          ],
+                          "variable": [
+                            {
+                              "key": "block_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                      "createdAt": "2026-08-03T11:20:57.000Z",
+                      "updatedAt": "2026-08-03T11:20:57.000Z",
+                      "uid": "35240-bc4ed151-043a-4bc7-add2-a3823f63e063"
+                    },
+                    {
+                      "id": "29b9d748-db4d-46c3-8c2f-5cc13af47b37",
+                      "name": "The bearer token is missing, invalid, or the integration lacks access.",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                            "key": "Notion-Version",
+                            "value": "2022-06-28"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"table\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"page_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"toggle\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"workspace\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"after\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/blocks/:block_id/children",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "blocks",
+                            ":block_id",
+                            "children"
+                          ],
+                          "variable": [
+                            {
+                              "key": "block_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Unauthorized",
+                      "code": 401,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                      "createdAt": "2026-08-03T11:20:57.000Z",
+                      "updatedAt": "2026-08-03T11:20:57.000Z",
+                      "uid": "35240-29b9d748-db4d-46c3-8c2f-5cc13af47b37"
+                    },
+                    {
+                      "id": "d4c4c126-03a9-4cbb-910c-cf192cb65397",
+                      "name": "The requested resource does not exist or the integration lacks access to it.",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                            "key": "Notion-Version",
+                            "value": "2022-06-28"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"table\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"page_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"toggle\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"workspace\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"after\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/blocks/:block_id/children",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "blocks",
+                            ":block_id",
+                            "children"
+                          ],
+                          "variable": [
+                            {
+                              "key": "block_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                      "createdAt": "2026-08-03T11:20:57.000Z",
+                      "updatedAt": "2026-08-03T11:20:57.000Z",
+                      "uid": "35240-d4c4c126-03a9-4cbb-910c-cf192cb65397"
+                    },
+                    {
+                      "id": "aeb266d5-bb84-4bae-b118-0686a8447da8",
+                      "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+                      "originalRequest": {
+                        "method": "PATCH",
+                        "header": [
+                          {
+                            "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                            "key": "Notion-Version",
+                            "value": "2022-06-28"
+                          },
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: bearer",
+                            "key": "Authorization",
+                            "value": "Bearer <token>"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"table\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"page_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"toggle\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"workspace\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"after\": \"<uuid>\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/blocks/:block_id/children",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "blocks",
+                            ":block_id",
+                            "children"
+                          ],
+                          "variable": [
+                            {
+                              "key": "block_id"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        },
+                        {
+                          "disabled": false,
+                          "description": {
+                            "content": "The number of seconds to wait before retrying.",
+                            "type": "text/plain"
+                          },
+                          "key": "Retry-After",
+                          "value": "<integer>"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                      "createdAt": "2026-08-03T11:20:57.000Z",
+                      "updatedAt": "2026-08-03T11:20:57.000Z",
+                      "uid": "35240-aeb266d5-bb84-4bae-b118-0686a8447da8"
+                    }
+                  ],
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-0f94440b-5e08-44a4-b42d-8cc0d0d4639f"
+                }
+              ],
+              "id": "7cc0827f-29f3-4b61-8a3d-c3f1ba0f5e44",
+              "createdAt": "2026-08-03T11:20:57.000Z",
+              "updatedAt": "2026-08-03T11:20:57.000Z",
+              "uid": "35240-7cc0827f-29f3-4b61-8a3d-c3f1ba0f5e44"
+            },
+            {
+              "name": "Notion Retrieve a block",
+              "id": "c81e1df0-9286-4800-8f80-864395728c6b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/blocks/:block_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "blocks",
+                    ":block_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "0fabc4a8-a4cd-4762-97fd-70d5b4c9e5bd",
+                      "key": "block_id",
+                      "value": "<uuid>",
+                      "description": "(Required) The ID of the block to retrieve."
+                    }
+                  ]
+                },
+                "description": "Retrieves a Block object using the ID specified in the path. If the block is a page, the page properties will be returned. The block's children are not included; use the retrieve block children endpoint to get them."
+              },
+              "response": [
+                {
+                  "id": "f26a24b4-da4a-44b0-bfbd-a13e4aca2c6b",
+                  "name": "Block successfully retrieved.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"type\": \"audio\",\n  \"created_time\": \"<dateTime>\",\n  \"last_edited_time\": \"<dateTime>\",\n  \"has_children\": \"<boolean>\",\n  \"parent\": {\n    \"type\": \"block_id\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"created_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"last_edited_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"archived\": \"<boolean>\",\n  \"in_trash\": \"<boolean>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-f26a24b4-da4a-44b0-bfbd-a13e4aca2c6b"
+                },
+                {
+                  "id": "754509ff-ffcd-47d9-83e0-fb7dcc5337df",
+                  "name": "The bearer token is missing, invalid, or the integration lacks access.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-754509ff-ffcd-47d9-83e0-fb7dcc5337df"
+                },
+                {
+                  "id": "4307fae6-4458-45e5-a2c4-3a89dc914006",
+                  "name": "The requested resource does not exist or the integration lacks access to it.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-4307fae6-4458-45e5-a2c4-3a89dc914006"
+                },
+                {
+                  "id": "b04dc0ca-538d-4ee2-b273-fca72b0082e4",
+                  "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of seconds to wait before retrying.",
+                        "type": "text/plain"
+                      },
+                      "key": "Retry-After",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-b04dc0ca-538d-4ee2-b273-fca72b0082e4"
+                }
+              ],
+              "createdAt": "2026-08-03T11:20:57.000Z",
+              "updatedAt": "2026-08-03T11:20:57.000Z",
+              "uid": "35240-c81e1df0-9286-4800-8f80-864395728c6b"
+            },
+            {
+              "name": "Notion Update a block",
+              "id": "056d1e45-e69a-48fc-ba51-e1fd3adc0365",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"archived\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/blocks/:block_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "blocks",
+                    ":block_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "b9d15926-d594-47fd-87f9-27b64d7690ae",
+                      "key": "block_id",
+                      "value": "<uuid>",
+                      "description": "(Required) The ID of the block to update."
+                    }
+                  ]
+                },
+                "description": "Updates the content of a block. The fields that can be updated depend on the block type. Blocks can also be archived by setting the archived field to true."
+              },
+              "response": [
+                {
+                  "id": "b6924ad3-3d6e-4796-9444-c410c68be839",
+                  "name": "Block successfully updated.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"type\": \"audio\",\n  \"created_time\": \"<dateTime>\",\n  \"last_edited_time\": \"<dateTime>\",\n  \"has_children\": \"<boolean>\",\n  \"parent\": {\n    \"type\": \"block_id\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"created_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"last_edited_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"archived\": \"<boolean>\",\n  \"in_trash\": \"<boolean>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-b6924ad3-3d6e-4796-9444-c410c68be839"
+                },
+                {
+                  "id": "1cc467bc-f9e6-48ac-ae64-f20fcc050722",
+                  "name": "The request was invalid or malformed.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-1cc467bc-f9e6-48ac-ae64-f20fcc050722"
+                },
+                {
+                  "id": "e4885f8f-51a2-4f68-b8b3-f21c0e27f4b2",
+                  "name": "The bearer token is missing, invalid, or the integration lacks access.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-e4885f8f-51a2-4f68-b8b3-f21c0e27f4b2"
+                },
+                {
+                  "id": "0c227115-0515-422b-bef1-7228c2434147",
+                  "name": "The requested resource does not exist or the integration lacks access to it.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-0c227115-0515-422b-bef1-7228c2434147"
+                },
+                {
+                  "id": "f11d9884-265d-4623-a3df-6c36edd7f32c",
+                  "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+                  "originalRequest": {
+                    "method": "PATCH",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"archived\": \"<boolean>\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of seconds to wait before retrying.",
+                        "type": "text/plain"
+                      },
+                      "key": "Retry-After",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-f11d9884-265d-4623-a3df-6c36edd7f32c"
+                }
+              ],
+              "createdAt": "2026-08-03T11:20:57.000Z",
+              "updatedAt": "2026-08-03T11:20:57.000Z",
+              "uid": "35240-056d1e45-e69a-48fc-ba51-e1fd3adc0365"
+            },
+            {
+              "name": "Notion Delete a block",
+              "id": "ac9a2d1c-cb0a-41aa-a860-d7a38f916014",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/blocks/:block_id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "blocks",
+                    ":block_id"
+                  ],
+                  "variable": [
+                    {
+                      "id": "8c60b02b-0881-406a-81ab-de9c41e14fd8",
+                      "key": "block_id",
+                      "value": "<uuid>",
+                      "description": "(Required) The ID of the block to delete (archive)."
+                    }
+                  ]
+                },
+                "description": "Sets a Block object, including page blocks, to archived: true using the ID specified in the path. This is equivalent to trashing the block in the Notion UI. To restore an archived block, use the update block endpoint to set archived to false."
+              },
+              "response": [
+                {
+                  "id": "02bb21ae-42f7-4788-9bd5-00b7f1f33f5e",
+                  "name": "Block successfully deleted (archived).",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"type\": \"audio\",\n  \"created_time\": \"<dateTime>\",\n  \"last_edited_time\": \"<dateTime>\",\n  \"has_children\": \"<boolean>\",\n  \"parent\": {\n    \"type\": \"block_id\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"created_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"last_edited_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"archived\": \"<boolean>\",\n  \"in_trash\": \"<boolean>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-02bb21ae-42f7-4788-9bd5-00b7f1f33f5e"
+                },
+                {
+                  "id": "c271cf2e-5428-4441-8408-e45b99b81de3",
+                  "name": "The bearer token is missing, invalid, or the integration lacks access.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-c271cf2e-5428-4441-8408-e45b99b81de3"
+                },
+                {
+                  "id": "2c750f7d-6945-41e8-98fb-3c13b4c49123",
+                  "name": "The requested resource does not exist or the integration lacks access to it.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-2c750f7d-6945-41e8-98fb-3c13b4c49123"
+                },
+                {
+                  "id": "3694b3c1-3e00-47c7-a2b9-e6f5fe9fb216",
+                  "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+                  "originalRequest": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                        "key": "Notion-Version",
+                        "value": "2022-06-28"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: bearer",
+                        "key": "Authorization",
+                        "value": "Bearer <token>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/blocks/:block_id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "blocks",
+                        ":block_id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "block_id"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "The number of seconds to wait before retrying.",
+                        "type": "text/plain"
+                      },
+                      "key": "Retry-After",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
+                  "createdAt": "2026-08-03T11:20:57.000Z",
+                  "updatedAt": "2026-08-03T11:20:57.000Z",
+                  "uid": "35240-3694b3c1-3e00-47c7-a2b9-e6f5fe9fb216"
+                }
+              ],
+              "createdAt": "2026-08-03T11:20:57.000Z",
+              "updatedAt": "2026-08-03T11:20:57.000Z",
+              "uid": "35240-ac9a2d1c-cb0a-41aa-a860-d7a38f916014"
+            }
+          ],
+          "id": "72e5a9f8-38de-4441-8ed1-9a262bcc73e3",
+          "createdAt": "2026-08-03T11:20:57.000Z",
+          "updatedAt": "2026-08-03T11:20:57.000Z",
+          "uid": "35240-72e5a9f8-38de-4441-8ed1-9a262bcc73e3"
+        }
+      ],
+      "id": "f56c2030-ed69-4ace-a340-a627062e12eb",
+      "createdAt": "2026-08-03T11:20:57.000Z",
+      "updatedAt": "2026-08-03T11:20:57.000Z",
+      "uid": "35240-f56c2030-ed69-4ace-a340-a627062e12eb"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.notion.com/v1"
+    }
+  ]
+}

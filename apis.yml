@@ -712,6 +712,8 @@ accessModel:
 image: https://www.notion.so/images/meta/default.png
 access: 3rd-Party
 common:
+- type: PostmanWorkspace
+  url: https://www.postman.com/kinlaneapi/notion/overview
 - type: Packages
   url: packages/notion-packages.yml
 - type: MCPServer
