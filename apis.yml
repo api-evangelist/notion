@@ -712,6 +712,13 @@ accessModel:
 image: https://www.notion.so/images/meta/default.png
 access: 3rd-Party
 common:
+- type: IssueTracker
+  url: https://github.com/makenotion/notion-sdk-js/issues
+- type: Releases
+  url: https://github.com/makenotion/notion-sdk-js/releases
+- type: License
+  name: MIT
+  url: https://github.com/makenotion/notion-sdk-js/blob/main/LICENSE
 - type: PostmanWorkspace
   url: https://www.postman.com/kinlaneapi/notion/overview
 - type: Packages
