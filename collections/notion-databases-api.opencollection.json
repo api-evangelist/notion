@@ -1,0 +1,134 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Notion Blocks Databases API",
+    "version": "2022-06-28"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Databases",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Notion Create a database",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.notion.com/v1/databases",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a database as a subpage of the specified parent page, with the specified properties schema. A database can be created with a title, properties defining the schema, and an optional description. The parent must be a page that the integration has access to."
+        },
+        {
+          "info": {
+            "name": "Notion Retrieve a database",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/databases/:database_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "database_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the database to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves a Database object using the ID specified in the path. Returns the database properties schema and metadata."
+        },
+        {
+          "info": {
+            "name": "Notion Update a database",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.notion.com/v1/databases/:database_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "database_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the database to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing database's title, description, or properties schema. Only the fields specified in the request body will be updated. To remove a property from the schema, set its value to null."
+        },
+        {
+          "info": {
+            "name": "Notion Query a database",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.notion.com/v1/databases/:database_id/query",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "database_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the database to query."
+              },
+              {
+                "name": "filter_properties",
+                "value": "",
+                "type": "query",
+                "description": "A list of property IDs to include in the response. Only the specified properties will be returned for each page."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Gets a list of Pages and/or Databases contained in the database, filtered and ordered according to the filter and sort conditions specified in the request body. Responses are paginated and limited to 100 results per request."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

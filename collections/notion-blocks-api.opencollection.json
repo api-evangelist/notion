@@ -1,0 +1,169 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Notion Blocks API",
+    "version": "2022-06-28"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Blocks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Notion Retrieve a block",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/blocks/:block_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "block_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the block to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves a Block object using the ID specified in the path. If the block is a page, the page properties will be returned. The block's children are not included; use the retrieve block children endpoint to get them."
+        },
+        {
+          "info": {
+            "name": "Notion Update a block",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.notion.com/v1/blocks/:block_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "block_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the block to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the content of a block. The fields that can be updated depend on the block type. Blocks can also be archived by setting the archived field to true."
+        },
+        {
+          "info": {
+            "name": "Notion Delete a block",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.notion.com/v1/blocks/:block_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "block_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the block to delete (archive)."
+              }
+            ]
+          },
+          "docs": "Sets a Block object, including page blocks, to archived: true using the ID specified in the path. This is equivalent to trashing the block in the Notion UI. To restore an archived block, use the update block endpoint to set archived to false."
+        },
+        {
+          "info": {
+            "name": "Notion Retrieve block children",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/blocks/:block_id/children",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "block_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the block whose children to retrieve. This can be a page ID to retrieve page content."
+              },
+              {
+                "name": "start_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor to continue fetching results."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of blocks to return (max 100)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated array of child block objects contained in the block using the ID specified. This is used to read page content by passing a page ID as the block_id. Responses include a maximum of 100 blocks per request and are returned in the order they appear in the parent block."
+        },
+        {
+          "info": {
+            "name": "Notion Append block children",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.notion.com/v1/blocks/:block_id/children",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "block_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the block to append children to. This can be a page ID to add content to a page."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates and appends new children blocks to the parent block specified by block_id. Returns the updated parent block. Blocks can be appended to pages, or to other blocks that support children. The maximum number of blocks that can be appended in a single request is 100."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

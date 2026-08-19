@@ -1,0 +1,97 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Notion Blocks Users API",
+    "version": "2022-06-28"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Notion List all users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/users",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "start_cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor to continue fetching results."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of users to return (max 100)."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of Users for the workspace. Guest users are not included. The response may include person users and bot users. Results are paginated with a maximum of 100 users per request."
+        },
+        {
+          "info": {
+            "name": "Notion Retrieve a user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/users/:user_id",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the user to retrieve."
+              }
+            ]
+          },
+          "docs": "Retrieves a User object using the ID specified in the path. Returns user details including name, avatar, and type (person or bot)."
+        },
+        {
+          "info": {
+            "name": "Notion Retrieve the bot user",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.notion.com/v1/users/me",
+            "headers": [
+              {
+                "name": "Notion-Version",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Retrieves the bot User associated with the current API token. Returns information about the integration including its name, owner, and the workspace it belongs to."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

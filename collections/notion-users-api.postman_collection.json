@@ -1,502 +1,48 @@
 {
-  "info": {
-    "_postman_id": "2fb14f33-953e-46ad-8ebf-dcea7006bd84",
-    "name": "Notion Blocks Users API",
-    "description": "The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.\n\nContact Support:\n Name: Notion Labs Inc.\n Email: developers@makenotion.com",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "createdAt": "2026-08-03T11:21:59.000Z",
-    "updatedAt": "2026-08-03T11:21:59.000Z",
-    "lastUpdatedBy": "35240",
-    "uid": "35240-2fb14f33-953e-46ad-8ebf-dcea7006bd84"
-  },
   "item": [
     {
-      "name": "users",
+      "id": "60f49569-175e-49de-9efc-748bbc81d9c8",
+      "name": "Users",
+      "description": {
+        "content": "Users represent people or bots in a Notion workspace. Person users are human members of the workspace, while bot users represent API integrations. Use these endpoints to list users, retrieve specific users, or get information about the current bot integration.",
+        "type": "text/plain"
+      },
       "item": [
         {
-          "name": "{user_id}",
-          "item": [
-            {
-              "name": "Notion Retrieve a user",
-              "id": "7e922d9c-0142-44f4-9515-9514e80ce244",
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                    "key": "Notion-Version",
-                    "value": "2022-06-28"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/users/:user_id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    ":user_id"
-                  ],
-                  "variable": [
-                    {
-                      "id": "c27d353e-c8c3-433d-8251-8a422c6565ea",
-                      "key": "user_id",
-                      "value": "<uuid>",
-                      "description": "(Required) The ID of the user to retrieve."
-                    }
-                  ]
-                },
-                "description": "Retrieves a User object using the ID specified in the path. Returns user details including name, avatar, and type (person or bot)."
-              },
-              "response": [
-                {
-                  "id": "fb711570-dc42-4229-bffa-c36ef3f7248b",
-                  "name": "User successfully retrieved.",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/users/:user_id",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "users",
-                        ":user_id"
-                      ],
-                      "variable": [
-                        {
-                          "key": "user_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"type\": \"bot\",\n  \"name\": \"<string,null>\",\n  \"avatar_url\": \"<string,null-uri>\",\n  \"person\": {\n    \"email\": \"<email>\"\n  },\n  \"bot\": {\n    \"owner\": {\n      \"type\": \"workspace\",\n      \"workspace\": \"<boolean>\"\n    },\n    \"workspace_name\": \"<string,null>\"\n  }\n}",
-                  "createdAt": "2026-08-03T11:21:59.000Z",
-                  "updatedAt": "2026-08-03T11:21:59.000Z",
-                  "uid": "35240-fb711570-dc42-4229-bffa-c36ef3f7248b"
-                },
-                {
-                  "id": "f42cb90c-6ce3-40e0-b1dc-5b56426b98ea",
-                  "name": "The bearer token is missing, invalid, or the integration lacks access.",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/users/:user_id",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "users",
-                        ":user_id"
-                      ],
-                      "variable": [
-                        {
-                          "key": "user_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Unauthorized",
-                  "code": 401,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:59.000Z",
-                  "updatedAt": "2026-08-03T11:21:59.000Z",
-                  "uid": "35240-f42cb90c-6ce3-40e0-b1dc-5b56426b98ea"
-                },
-                {
-                  "id": "c308716b-97a1-4cd4-95a3-a3d3392623d6",
-                  "name": "The requested resource does not exist or the integration lacks access to it.",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/users/:user_id",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "users",
-                        ":user_id"
-                      ],
-                      "variable": [
-                        {
-                          "key": "user_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Not Found",
-                  "code": 404,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:59.000Z",
-                  "updatedAt": "2026-08-03T11:21:59.000Z",
-                  "uid": "35240-c308716b-97a1-4cd4-95a3-a3d3392623d6"
-                },
-                {
-                  "id": "d915539b-ef1b-4f98-a040-3f9c0263c997",
-                  "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/users/:user_id",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "users",
-                        ":user_id"
-                      ],
-                      "variable": [
-                        {
-                          "key": "user_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Too Many Requests",
-                  "code": 429,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    },
-                    {
-                      "disabled": false,
-                      "description": {
-                        "content": "The number of seconds to wait before retrying.",
-                        "type": "text/plain"
-                      },
-                      "key": "Retry-After",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:59.000Z",
-                  "updatedAt": "2026-08-03T11:21:59.000Z",
-                  "uid": "35240-d915539b-ef1b-4f98-a040-3f9c0263c997"
-                }
-              ],
-              "createdAt": "2026-08-03T11:21:59.000Z",
-              "updatedAt": "2026-08-03T11:21:59.000Z",
-              "uid": "35240-7e922d9c-0142-44f4-9515-9514e80ce244"
-            }
-          ],
-          "id": "2d1c67ba-8c8d-42c4-aa1c-08a97682adfe",
-          "createdAt": "2026-08-03T11:21:59.000Z",
-          "updatedAt": "2026-08-03T11:21:59.000Z",
-          "uid": "35240-2d1c67ba-8c8d-42c4-aa1c-08a97682adfe"
-        },
-        {
-          "name": "me",
-          "item": [
-            {
-              "name": "Notion Retrieve the bot user",
-              "id": "24181b57-8944-400b-a2d8-5e6df2115d2f",
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                    "key": "Notion-Version",
-                    "value": "2022-06-28"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/users/me",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users",
-                    "me"
-                  ]
-                },
-                "description": "Retrieves the bot User associated with the current API token. Returns information about the integration including its name, owner, and the workspace it belongs to."
-              },
-              "response": [
-                {
-                  "id": "4526ff82-32dc-4a65-b78b-fc2ff8570d57",
-                  "name": "Bot user successfully retrieved.",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/users/me",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "users",
-                        "me"
-                      ]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"type\": \"bot\",\n  \"name\": \"<string,null>\",\n  \"avatar_url\": \"<string,null-uri>\",\n  \"person\": {\n    \"email\": \"<email>\"\n  },\n  \"bot\": {\n    \"owner\": {\n      \"type\": \"workspace\",\n      \"workspace\": \"<boolean>\"\n    },\n    \"workspace_name\": \"<string,null>\"\n  }\n}",
-                  "createdAt": "2026-08-03T11:21:59.000Z",
-                  "updatedAt": "2026-08-03T11:21:59.000Z",
-                  "uid": "35240-4526ff82-32dc-4a65-b78b-fc2ff8570d57"
-                },
-                {
-                  "id": "e6bcf0ff-9cba-4bb7-bd4f-339d2bfa7cee",
-                  "name": "The bearer token is missing, invalid, or the integration lacks access.",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/users/me",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "users",
-                        "me"
-                      ]
-                    }
-                  },
-                  "status": "Unauthorized",
-                  "code": 401,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:59.000Z",
-                  "updatedAt": "2026-08-03T11:21:59.000Z",
-                  "uid": "35240-e6bcf0ff-9cba-4bb7-bd4f-339d2bfa7cee"
-                },
-                {
-                  "id": "b504a59d-1b97-441b-9989-2111477934b5",
-                  "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/users/me",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "users",
-                        "me"
-                      ]
-                    }
-                  },
-                  "status": "Too Many Requests",
-                  "code": 429,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    },
-                    {
-                      "disabled": false,
-                      "description": {
-                        "content": "The number of seconds to wait before retrying.",
-                        "type": "text/plain"
-                      },
-                      "key": "Retry-After",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:59.000Z",
-                  "updatedAt": "2026-08-03T11:21:59.000Z",
-                  "uid": "35240-b504a59d-1b97-441b-9989-2111477934b5"
-                }
-              ],
-              "createdAt": "2026-08-03T11:21:59.000Z",
-              "updatedAt": "2026-08-03T11:21:59.000Z",
-              "uid": "35240-24181b57-8944-400b-a2d8-5e6df2115d2f"
-            }
-          ],
-          "id": "a2d8e7e4-ed30-4c7f-b9d5-7e0f8a6a8e18",
-          "createdAt": "2026-08-03T11:21:59.000Z",
-          "updatedAt": "2026-08-03T11:21:59.000Z",
-          "uid": "35240-a2d8e7e4-ed30-4c7f-b9d5-7e0f8a6a8e18"
-        },
-        {
+          "id": "608901d3-b1f5-45e0-b236-c6035caa6b02",
           "name": "Notion List all users",
-          "id": "1869a360-010c-46ad-90ef-92e30ee85bf0",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
           "request": {
-            "method": "GET",
+            "name": "Notion List all users",
+            "description": {
+              "content": "Returns a paginated list of Users for the workspace. Guest users are not included. The response may include person users and bot users. Results are paginated with a maximum of 100 users per request.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor to continue fetching results."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Maximum number of users to return (max 100)."
+                }
+              ],
+              "variable": []
+            },
             "header": [
               {
+                "disabled": false,
                 "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
                 "key": "Notion-Version",
                 "value": "2022-06-28"
@@ -506,37 +52,44 @@
                 "value": "application/json"
               }
             ],
-            "url": {
-              "raw": "{{baseUrl}}/users?start_cursor=<string>&page_size=<integer>",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "users"
-              ],
-              "query": [
-                {
-                  "description": "Pagination cursor to continue fetching results.",
-                  "key": "start_cursor",
-                  "value": "<string>"
-                },
-                {
-                  "description": "Maximum number of users to return (max 100).",
-                  "key": "page_size",
-                  "value": "<integer>"
-                }
-              ]
-            },
-            "description": "Returns a paginated list of Users for the workspace. Guest users are not included. The response may include person users and bot users. Results are paginated with a maximum of 100 users per request."
+            "method": "GET",
+            "auth": null
           },
           "response": [
             {
-              "id": "2770cabd-c78b-43bb-9ccb-8f622cc4e3b9",
+              "id": "3bbc2c13-65de-4212-b648-df318baf54de",
               "name": "Users successfully retrieved.",
               "originalRequest": {
-                "method": "GET",
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
                 "header": [
                   {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
                     "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
                     "key": "Notion-Version",
                     "value": "2022-06-28"
@@ -544,58 +97,57 @@
                   {
                     "key": "Accept",
                     "value": "application/json"
-                  },
-                  {
-                    "description": "Added as a part of security scheme: bearer",
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   }
                 ],
-                "url": {
-                  "raw": "{{baseUrl}}/users?start_cursor=<string>&page_size=<integer>",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users"
-                  ],
-                  "query": [
-                    {
-                      "description": "Pagination cursor to continue fetching results.",
-                      "key": "start_cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "description": "Maximum number of users to return (max 100).",
-                      "key": "page_size",
-                      "value": "<integer>"
-                    }
-                  ]
-                }
+                "method": "GET",
+                "body": {}
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
+              "body": "{\n  \"object\": \"string\",\n  \"results\": [\n    {\n      \"key_0\": \"string\",\n      \"key_1\": true\n    },\n    {\n      \"key_0\": 8671,\n      \"key_1\": 9997,\n      \"key_2\": 185\n    }\n  ],\n  \"next_cursor\": \"string\",\n  \"has_more\": false,\n  \"type\": \"string\",\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "responseTime": null,
-              "body": "{\n  \"object\": \"<string>\",\n  \"results\": [\n    {\n      \"dolore_c90\": -23172995,\n      \"occaecat6\": 36711929.12649363\n    },\n    {\n      \"Excepteur_3\": \"mollit volupta\",\n      \"Duisee\": \"Lorem irure labori\",\n      \"est9_\": \"ea dolore in\"\n    }\n  ],\n  \"next_cursor\": \"<string,null>\",\n  \"has_more\": \"<boolean>\",\n  \"type\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-              "createdAt": "2026-08-03T11:21:59.000Z",
-              "updatedAt": "2026-08-03T11:21:59.000Z",
-              "uid": "35240-2770cabd-c78b-43bb-9ccb-8f622cc4e3b9"
+              "_postman_previewlanguage": "json"
             },
             {
-              "id": "98dc18f1-1b18-4a53-a17d-5d0dab1e3b5e",
+              "id": "29f715d6-2977-496e-a63b-ff47f8c5fbd9",
               "name": "The bearer token is missing, invalid, or the integration lacks access.",
               "originalRequest": {
-                "method": "GET",
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
                 "header": [
                   {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
                     "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
                     "key": "Notion-Version",
                     "value": "2022-06-28"
@@ -603,58 +155,57 @@
                   {
                     "key": "Accept",
                     "value": "application/json"
-                  },
-                  {
-                    "description": "Added as a part of security scheme: bearer",
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   }
                 ],
-                "url": {
-                  "raw": "{{baseUrl}}/users?start_cursor=<string>&page_size=<integer>",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users"
-                  ],
-                  "query": [
-                    {
-                      "description": "Pagination cursor to continue fetching results.",
-                      "key": "start_cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "description": "Maximum number of users to return (max 100).",
-                      "key": "page_size",
-                      "value": "<integer>"
-                    }
-                  ]
-                }
+                "method": "GET",
+                "body": {}
               },
               "status": "Unauthorized",
               "code": 401,
-              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 2711,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "responseTime": null,
-              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-              "createdAt": "2026-08-03T11:21:59.000Z",
-              "updatedAt": "2026-08-03T11:21:59.000Z",
-              "uid": "35240-98dc18f1-1b18-4a53-a17d-5d0dab1e3b5e"
+              "_postman_previewlanguage": "json"
             },
             {
-              "id": "5a02d6dc-5d27-42b0-8783-59c79305cbd0",
+              "id": "2f50a0e7-7403-4f3c-93cf-0eb35c56f563",
               "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
               "originalRequest": {
-                "method": "GET",
+                "url": {
+                  "path": [
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
                 "header": [
                   {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
                     "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
                     "key": "Notion-Version",
                     "value": "2022-06-28"
@@ -662,70 +213,531 @@
                   {
                     "key": "Accept",
                     "value": "application/json"
-                  },
-                  {
-                    "description": "Added as a part of security scheme: bearer",
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   }
                 ],
-                "url": {
-                  "raw": "{{baseUrl}}/users?start_cursor=<string>&page_size=<integer>",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "users"
-                  ],
-                  "query": [
-                    {
-                      "description": "Pagination cursor to continue fetching results.",
-                      "key": "start_cursor",
-                      "value": "<string>"
-                    },
-                    {
-                      "description": "Maximum number of users to return (max 100).",
-                      "key": "page_size",
-                      "value": "<integer>"
-                    }
-                  ]
-                }
+                "method": "GET",
+                "body": {}
               },
               "status": "Too Many Requests",
               "code": 429,
-              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "8744"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 2711,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d065b0e-5605-40b3-ae9f-9a86dd149111",
+          "name": "Notion Retrieve a user",
+          "request": {
+            "name": "Notion Retrieve a user",
+            "description": {
+              "content": "Retrieves a User object using the ID specified in the path. Returns user details including name, avatar, and type (person or bot).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ":user_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "user_id",
+                  "description": "(Required) The ID of the user to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                "key": "Notion-Version",
+                "value": "2022-06-28"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "35c19bb8-674d-46cb-be2a-059e4c18cff8",
+              "name": "User successfully retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "user_id",
+                      "description": "(Required) The ID of the user to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
-                },
-                {
-                  "disabled": false,
-                  "description": {
-                    "content": "The number of seconds to wait before retrying.",
-                    "type": "text/plain"
-                  },
-                  "key": "Retry-After",
-                  "value": "<integer>"
                 }
               ],
+              "body": "{\n  \"object\": \"string\",\n  \"id\": \"fb951ffa-021b-89c2-0117-50404714de86\",\n  \"type\": \"bot\",\n  \"name\": \"string\",\n  \"avatar_url\": \"http://UeuXoEayikFu.bvzxt,7qTNAQKTqiHdSCMQAHbId5-dQqp0IP\",\n  \"person\": {\n    \"email\": \"Fo9iYbufxm@iIJZLuAYVPIGWAMcGgpsv.gjo\"\n  },\n  \"bot\": {\n    \"owner\": {\n      \"type\": \"user\",\n      \"workspace\": true\n    },\n    \"workspace_name\": \"string\"\n  }\n}",
               "cookie": [],
-              "responseTime": null,
-              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-              "createdAt": "2026-08-03T11:21:59.000Z",
-              "updatedAt": "2026-08-03T11:21:59.000Z",
-              "uid": "35240-5a02d6dc-5d27-42b0-8783-59c79305cbd0"
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb262c4c-3111-44ff-8e12-8b7f02206648",
+              "name": "The bearer token is missing, invalid, or the integration lacks access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "user_id",
+                      "description": "(Required) The ID of the user to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 2711,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f237c948-7d7c-4a5e-a5fc-5689acf35434",
+              "name": "The requested resource does not exist or the integration lacks access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "user_id",
+                      "description": "(Required) The ID of the user to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 2711,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3c9dff87-c9e8-4f8c-9d27-4ffe3317b99f",
+              "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ":user_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "user_id",
+                      "description": "(Required) The ID of the user to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "8744"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 2711,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
             }
           ],
-          "createdAt": "2026-08-03T11:21:59.000Z",
-          "updatedAt": "2026-08-03T11:21:59.000Z",
-          "uid": "35240-1869a360-010c-46ad-90ef-92e30ee85bf0"
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0bcf3c2-7aac-4093-89ac-4d6747e167d8",
+          "name": "Notion Retrieve the bot user",
+          "request": {
+            "name": "Notion Retrieve the bot user",
+            "description": {
+              "content": "Retrieves the bot User associated with the current API token. Returns information about the integration including its name, owner, and the workspace it belongs to.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                "me"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                "key": "Notion-Version",
+                "value": "2022-06-28"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "37fdfb76-0a96-47e8-b516-dd2a3cd14fee",
+              "name": "Bot user successfully retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"id\": \"fb951ffa-021b-89c2-0117-50404714de86\",\n  \"type\": \"bot\",\n  \"name\": \"string\",\n  \"avatar_url\": \"http://UeuXoEayikFu.bvzxt,7qTNAQKTqiHdSCMQAHbId5-dQqp0IP\",\n  \"person\": {\n    \"email\": \"Fo9iYbufxm@iIJZLuAYVPIGWAMcGgpsv.gjo\"\n  },\n  \"bot\": {\n    \"owner\": {\n      \"type\": \"user\",\n      \"workspace\": true\n    },\n    \"workspace_name\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6d03acc-9105-4bcd-be7a-6e506a2d57d6",
+              "name": "The bearer token is missing, invalid, or the integration lacks access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 2711,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df9657b2-fc25-4af8-84f8-98bc1e00bf3d",
+              "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    "me"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "8744"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 2711,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
         }
       ],
-      "id": "995ea030-5c15-4aec-93ee-201a9fafafad",
-      "createdAt": "2026-08-03T11:21:59.000Z",
-      "updatedAt": "2026-08-03T11:21:59.000Z",
-      "uid": "35240-995ea030-5c15-4aec-93ee-201a9fafafad"
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.notion.com/v1",
+      "key": "baseUrl"
     }
   ],
   "auth": {
@@ -733,15 +745,17 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}",
-        "type": "string"
+        "value": "{{bearerToken}}"
       }
     ]
   },
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "https://api.notion.com/v1"
+  "info": {
+    "_postman_id": "037acb91-649f-4446-858b-1aefea2d6446",
+    "name": "Notion Blocks Users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.\n\nContact Support:\n Name: Notion Labs Inc.\n Email: developers@makenotion.com",
+      "type": "text/plain"
     }
-  ]
+  }
 }

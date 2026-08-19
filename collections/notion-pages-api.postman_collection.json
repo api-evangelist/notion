@@ -1,1118 +1,35 @@
 {
-  "info": {
-    "_postman_id": "bd22130c-8363-4995-8f0f-6ef4860202da",
-    "name": "Notion Blocks Pages API",
-    "description": "The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.\n\nContact Support:\n Name: Notion Labs Inc.\n Email: developers@makenotion.com",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "createdAt": "2026-08-03T11:21:34.000Z",
-    "updatedAt": "2026-08-03T11:21:35.000Z",
-    "lastUpdatedBy": "35240",
-    "uid": "35240-bd22130c-8363-4995-8f0f-6ef4860202da"
-  },
   "item": [
     {
-      "name": "pages",
+      "id": "9796f505-5da9-464e-948a-1b975de3e026",
+      "name": "Pages",
+      "description": {
+        "content": "Pages represent documents in Notion workspaces. They can exist as standalone pages or as entries within a database. Pages contain properties (metadata) and content composed of blocks. Use these endpoints to create, retrieve, update, archive, and manage page properties and content.",
+        "type": "text/plain"
+      },
       "item": [
         {
-          "name": "{page_id}",
-          "item": [
-            {
-              "name": "properties",
-              "item": [
-                {
-                  "name": "{property_id}",
-                  "item": [
-                    {
-                      "name": "Notion Retrieve a page property item",
-                      "id": "0049ea65-96c4-43c5-aa95-dd11995d11bd",
-                      "protocolProfileBehavior": {
-                        "disableBodyPruning": true
-                      },
-                      "request": {
-                        "method": "GET",
-                        "header": [
-                          {
-                            "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                            "key": "Notion-Version",
-                            "value": "2022-06-28"
-                          },
-                          {
-                            "key": "Accept",
-                            "value": "application/json"
-                          }
-                        ],
-                        "url": {
-                          "raw": "{{baseUrl}}/pages/:page_id/properties/:property_id?start_cursor=<string>&page_size=<integer>",
-                          "host": [
-                            "{{baseUrl}}"
-                          ],
-                          "path": [
-                            "pages",
-                            ":page_id",
-                            "properties",
-                            ":property_id"
-                          ],
-                          "query": [
-                            {
-                              "description": "Pagination cursor for paginated property types. If supplied, returns results starting after the cursor.",
-                              "key": "start_cursor",
-                              "value": "<string>"
-                            },
-                            {
-                              "description": "Maximum number of property items to return (max 100).",
-                              "key": "page_size",
-                              "value": "<integer>"
-                            }
-                          ],
-                          "variable": [
-                            {
-                              "id": "0f9d975a-fdc5-4725-866c-e43439aa1ad8",
-                              "key": "page_id",
-                              "value": "<uuid>",
-                              "description": "(Required) The ID of the page."
-                            },
-                            {
-                              "id": "3bec6ad4-0bfb-4786-b742-d37e31eaab0d",
-                              "key": "property_id",
-                              "value": "<string>",
-                              "description": "(Required) The ID of the property to retrieve."
-                            }
-                          ]
-                        },
-                        "description": "Retrieves a property item from a page. For paginated properties like rich text, relation, rollup, and people, this endpoint returns a paginated list. For all other property types, it returns a single property item."
-                      },
-                      "response": [
-                        {
-                          "id": "7de8f149-a0b0-4883-ad66-059c2cec9f0b",
-                          "name": "Property item successfully retrieved.",
-                          "originalRequest": {
-                            "method": "GET",
-                            "header": [
-                              {
-                                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                                "key": "Notion-Version",
-                                "value": "2022-06-28"
-                              },
-                              {
-                                "key": "Accept",
-                                "value": "application/json"
-                              },
-                              {
-                                "description": "Added as a part of security scheme: bearer",
-                                "key": "Authorization",
-                                "value": "Bearer <token>"
-                              }
-                            ],
-                            "url": {
-                              "raw": "{{baseUrl}}/pages/:page_id/properties/:property_id?start_cursor=<string>&page_size=<integer>",
-                              "host": [
-                                "{{baseUrl}}"
-                              ],
-                              "path": [
-                                "pages",
-                                ":page_id",
-                                "properties",
-                                ":property_id"
-                              ],
-                              "query": [
-                                {
-                                  "description": "Pagination cursor for paginated property types. If supplied, returns results starting after the cursor.",
-                                  "key": "start_cursor",
-                                  "value": "<string>"
-                                },
-                                {
-                                  "description": "Maximum number of property items to return (max 100).",
-                                  "key": "page_size",
-                                  "value": "<integer>"
-                                }
-                              ],
-                              "variable": [
-                                {
-                                  "key": "page_id"
-                                },
-                                {
-                                  "key": "property_id"
-                                }
-                              ]
-                            }
-                          },
-                          "status": "OK",
-                          "code": 200,
-                          "_postman_previewlanguage": "json",
-                          "header": [
-                            {
-                              "key": "Content-Type",
-                              "value": "application/json"
-                            }
-                          ],
-                          "cookie": [],
-                          "responseTime": null,
-                          "body": "{}",
-                          "createdAt": "2026-08-03T11:21:35.000Z",
-                          "updatedAt": "2026-08-03T11:21:35.000Z",
-                          "uid": "35240-7de8f149-a0b0-4883-ad66-059c2cec9f0b"
-                        },
-                        {
-                          "id": "589e06f7-3b12-45d3-ab2e-ab2825416686",
-                          "name": "The bearer token is missing, invalid, or the integration lacks access.",
-                          "originalRequest": {
-                            "method": "GET",
-                            "header": [
-                              {
-                                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                                "key": "Notion-Version",
-                                "value": "2022-06-28"
-                              },
-                              {
-                                "key": "Accept",
-                                "value": "application/json"
-                              },
-                              {
-                                "description": "Added as a part of security scheme: bearer",
-                                "key": "Authorization",
-                                "value": "Bearer <token>"
-                              }
-                            ],
-                            "url": {
-                              "raw": "{{baseUrl}}/pages/:page_id/properties/:property_id?start_cursor=<string>&page_size=<integer>",
-                              "host": [
-                                "{{baseUrl}}"
-                              ],
-                              "path": [
-                                "pages",
-                                ":page_id",
-                                "properties",
-                                ":property_id"
-                              ],
-                              "query": [
-                                {
-                                  "description": "Pagination cursor for paginated property types. If supplied, returns results starting after the cursor.",
-                                  "key": "start_cursor",
-                                  "value": "<string>"
-                                },
-                                {
-                                  "description": "Maximum number of property items to return (max 100).",
-                                  "key": "page_size",
-                                  "value": "<integer>"
-                                }
-                              ],
-                              "variable": [
-                                {
-                                  "key": "page_id"
-                                },
-                                {
-                                  "key": "property_id"
-                                }
-                              ]
-                            }
-                          },
-                          "status": "Unauthorized",
-                          "code": 401,
-                          "_postman_previewlanguage": "json",
-                          "header": [
-                            {
-                              "key": "Content-Type",
-                              "value": "application/json"
-                            }
-                          ],
-                          "cookie": [],
-                          "responseTime": null,
-                          "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                          "createdAt": "2026-08-03T11:21:35.000Z",
-                          "updatedAt": "2026-08-03T11:21:35.000Z",
-                          "uid": "35240-589e06f7-3b12-45d3-ab2e-ab2825416686"
-                        },
-                        {
-                          "id": "f0128f3e-a48d-4bb7-bb2c-66491ffe060e",
-                          "name": "The requested resource does not exist or the integration lacks access to it.",
-                          "originalRequest": {
-                            "method": "GET",
-                            "header": [
-                              {
-                                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                                "key": "Notion-Version",
-                                "value": "2022-06-28"
-                              },
-                              {
-                                "key": "Accept",
-                                "value": "application/json"
-                              },
-                              {
-                                "description": "Added as a part of security scheme: bearer",
-                                "key": "Authorization",
-                                "value": "Bearer <token>"
-                              }
-                            ],
-                            "url": {
-                              "raw": "{{baseUrl}}/pages/:page_id/properties/:property_id?start_cursor=<string>&page_size=<integer>",
-                              "host": [
-                                "{{baseUrl}}"
-                              ],
-                              "path": [
-                                "pages",
-                                ":page_id",
-                                "properties",
-                                ":property_id"
-                              ],
-                              "query": [
-                                {
-                                  "description": "Pagination cursor for paginated property types. If supplied, returns results starting after the cursor.",
-                                  "key": "start_cursor",
-                                  "value": "<string>"
-                                },
-                                {
-                                  "description": "Maximum number of property items to return (max 100).",
-                                  "key": "page_size",
-                                  "value": "<integer>"
-                                }
-                              ],
-                              "variable": [
-                                {
-                                  "key": "page_id"
-                                },
-                                {
-                                  "key": "property_id"
-                                }
-                              ]
-                            }
-                          },
-                          "status": "Not Found",
-                          "code": 404,
-                          "_postman_previewlanguage": "json",
-                          "header": [
-                            {
-                              "key": "Content-Type",
-                              "value": "application/json"
-                            }
-                          ],
-                          "cookie": [],
-                          "responseTime": null,
-                          "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                          "createdAt": "2026-08-03T11:21:35.000Z",
-                          "updatedAt": "2026-08-03T11:21:35.000Z",
-                          "uid": "35240-f0128f3e-a48d-4bb7-bb2c-66491ffe060e"
-                        },
-                        {
-                          "id": "30c4f336-88ea-4f23-8cfd-2f904db5f783",
-                          "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
-                          "originalRequest": {
-                            "method": "GET",
-                            "header": [
-                              {
-                                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                                "key": "Notion-Version",
-                                "value": "2022-06-28"
-                              },
-                              {
-                                "key": "Accept",
-                                "value": "application/json"
-                              },
-                              {
-                                "description": "Added as a part of security scheme: bearer",
-                                "key": "Authorization",
-                                "value": "Bearer <token>"
-                              }
-                            ],
-                            "url": {
-                              "raw": "{{baseUrl}}/pages/:page_id/properties/:property_id?start_cursor=<string>&page_size=<integer>",
-                              "host": [
-                                "{{baseUrl}}"
-                              ],
-                              "path": [
-                                "pages",
-                                ":page_id",
-                                "properties",
-                                ":property_id"
-                              ],
-                              "query": [
-                                {
-                                  "description": "Pagination cursor for paginated property types. If supplied, returns results starting after the cursor.",
-                                  "key": "start_cursor",
-                                  "value": "<string>"
-                                },
-                                {
-                                  "description": "Maximum number of property items to return (max 100).",
-                                  "key": "page_size",
-                                  "value": "<integer>"
-                                }
-                              ],
-                              "variable": [
-                                {
-                                  "key": "page_id"
-                                },
-                                {
-                                  "key": "property_id"
-                                }
-                              ]
-                            }
-                          },
-                          "status": "Too Many Requests",
-                          "code": 429,
-                          "_postman_previewlanguage": "json",
-                          "header": [
-                            {
-                              "key": "Content-Type",
-                              "value": "application/json"
-                            },
-                            {
-                              "disabled": false,
-                              "description": {
-                                "content": "The number of seconds to wait before retrying.",
-                                "type": "text/plain"
-                              },
-                              "key": "Retry-After",
-                              "value": "<integer>"
-                            }
-                          ],
-                          "cookie": [],
-                          "responseTime": null,
-                          "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                          "createdAt": "2026-08-03T11:21:35.000Z",
-                          "updatedAt": "2026-08-03T11:21:35.000Z",
-                          "uid": "35240-30c4f336-88ea-4f23-8cfd-2f904db5f783"
-                        }
-                      ],
-                      "createdAt": "2026-08-03T11:21:35.000Z",
-                      "updatedAt": "2026-08-03T11:21:35.000Z",
-                      "uid": "35240-0049ea65-96c4-43c5-aa95-dd11995d11bd"
-                    }
-                  ],
-                  "id": "142db53f-d712-45ae-9777-83b68e2e472e",
-                  "createdAt": "2026-08-03T11:21:35.000Z",
-                  "updatedAt": "2026-08-03T11:21:35.000Z",
-                  "uid": "35240-142db53f-d712-45ae-9777-83b68e2e472e"
-                }
-              ],
-              "id": "76d8e150-53f2-4e29-8c15-6e8bdb453272",
-              "createdAt": "2026-08-03T11:21:35.000Z",
-              "updatedAt": "2026-08-03T11:21:35.000Z",
-              "uid": "35240-76d8e150-53f2-4e29-8c15-6e8bdb453272"
-            },
-            {
-              "name": "Notion Retrieve a page",
-              "id": "4aa113d3-7433-41f6-b1e3-0d406f9fda66",
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "method": "GET",
-                "header": [
-                  {
-                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                    "key": "Notion-Version",
-                    "value": "2022-06-28"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "url": {
-                  "raw": "{{baseUrl}}/pages/:page_id?filter_properties=<string>&filter_properties=<string>",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "pages",
-                    ":page_id"
-                  ],
-                  "query": [
-                    {
-                      "description": "A list of page property value IDs to include in the response. If provided, only the specified properties will be returned.",
-                      "key": "filter_properties",
-                      "value": "<string>"
-                    },
-                    {
-                      "description": "A list of page property value IDs to include in the response. If provided, only the specified properties will be returned.",
-                      "key": "filter_properties",
-                      "value": "<string>"
-                    }
-                  ],
-                  "variable": [
-                    {
-                      "id": "7cd9ff84-012c-45f3-a878-c391588b4698",
-                      "key": "page_id",
-                      "value": "<uuid>",
-                      "description": "(Required) The ID of the page to retrieve."
-                    }
-                  ]
-                },
-                "description": "Retrieves a Page object using the ID specified in the path. Returns page properties but not page content (blocks). To retrieve page content, use the retrieve block children endpoint on the page ID."
-              },
-              "response": [
-                {
-                  "id": "16698140-7104-4035-9ff3-50ece745f807",
-                  "name": "Page successfully retrieved.",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/pages/:page_id?filter_properties=<string>",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "pages",
-                        ":page_id"
-                      ],
-                      "query": [
-                        {
-                          "description": "A list of page property value IDs to include in the response. If provided, only the specified properties will be returned.",
-                          "key": "filter_properties",
-                          "value": "<string>"
-                        }
-                      ],
-                      "variable": [
-                        {
-                          "key": "page_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"created_time\": \"<dateTime>\",\n  \"last_edited_time\": \"<dateTime>\",\n  \"created_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"last_edited_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"archived\": \"<boolean>\",\n  \"properties\": {\n    \"aliqua_03f\": -14252683.548384398\n  },\n  \"parent\": {\n    \"type\": \"workspace\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"url\": \"<uri>\",\n  \"in_trash\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"external\",\n    \"file\": {\n      \"url\": \"<uri>\",\n      \"expiry_time\": \"<dateTime>\"\n    },\n    \"external\": {\n      \"url\": \"<uri>\"\n    },\n    \"name\": \"<string>\",\n    \"caption\": [\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"<string>\",\n        \"text\": {\n          \"content\": \"<string>\",\n          \"link\": null\n        },\n        \"mention\": {\n          \"quis_d07\": 81619822.98368588,\n          \"eadb6\": \"in ipsum pariatur\"\n        },\n        \"equation\": {\n          \"expression\": \"<string>\"\n        },\n        \"annotations\": {\n          \"bold\": \"<boolean>\",\n          \"italic\": \"<boolean>\",\n          \"strikethrough\": \"<boolean>\",\n          \"underline\": \"<boolean>\",\n          \"code\": \"<boolean>\",\n          \"color\": \"<string>\"\n        },\n        \"href\": \"<string,null-uri>\"\n      },\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"<string>\",\n        \"text\": {\n          \"content\": \"<string>\",\n          \"link\": {\n            \"url\": \"<uri>\"\n          }\n        },\n        \"mention\": {\n          \"occaecat7\": \"cupidatat fugi\"\n        },\n        \"equation\": {\n          \"expression\": \"<string>\"\n        },\n        \"annotations\": {\n          \"bold\": \"<boolean>\",\n          \"italic\": \"<boolean>\",\n          \"strikethrough\": \"<boolean>\",\n          \"underline\": \"<boolean>\",\n          \"code\": \"<boolean>\",\n          \"color\": \"<string>\"\n        },\n        \"href\": \"<string,null-uri>\"\n      }\n    ]\n  },\n  \"public_url\": \"<string,null-uri>\"\n}",
-                  "createdAt": "2026-08-03T11:21:35.000Z",
-                  "updatedAt": "2026-08-03T11:21:35.000Z",
-                  "uid": "35240-16698140-7104-4035-9ff3-50ece745f807"
-                },
-                {
-                  "id": "f1d672f0-1112-438b-bc83-b29274784ea5",
-                  "name": "The bearer token is missing, invalid, or the integration lacks access.",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/pages/:page_id?filter_properties=<string>",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "pages",
-                        ":page_id"
-                      ],
-                      "query": [
-                        {
-                          "description": "A list of page property value IDs to include in the response. If provided, only the specified properties will be returned.",
-                          "key": "filter_properties",
-                          "value": "<string>"
-                        }
-                      ],
-                      "variable": [
-                        {
-                          "key": "page_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Unauthorized",
-                  "code": 401,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:35.000Z",
-                  "updatedAt": "2026-08-03T11:21:35.000Z",
-                  "uid": "35240-f1d672f0-1112-438b-bc83-b29274784ea5"
-                },
-                {
-                  "id": "d90614fd-892f-40fd-b091-b8226cf65793",
-                  "name": "The requested resource does not exist or the integration lacks access to it.",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/pages/:page_id?filter_properties=<string>",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "pages",
-                        ":page_id"
-                      ],
-                      "query": [
-                        {
-                          "description": "A list of page property value IDs to include in the response. If provided, only the specified properties will be returned.",
-                          "key": "filter_properties",
-                          "value": "<string>"
-                        }
-                      ],
-                      "variable": [
-                        {
-                          "key": "page_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Not Found",
-                  "code": 404,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:35.000Z",
-                  "updatedAt": "2026-08-03T11:21:35.000Z",
-                  "uid": "35240-d90614fd-892f-40fd-b091-b8226cf65793"
-                },
-                {
-                  "id": "5f2c5c73-b91b-4cf8-b174-336275a1cd42",
-                  "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
-                  "originalRequest": {
-                    "method": "GET",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "url": {
-                      "raw": "{{baseUrl}}/pages/:page_id?filter_properties=<string>",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "pages",
-                        ":page_id"
-                      ],
-                      "query": [
-                        {
-                          "description": "A list of page property value IDs to include in the response. If provided, only the specified properties will be returned.",
-                          "key": "filter_properties",
-                          "value": "<string>"
-                        }
-                      ],
-                      "variable": [
-                        {
-                          "key": "page_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Too Many Requests",
-                  "code": 429,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    },
-                    {
-                      "disabled": false,
-                      "description": {
-                        "content": "The number of seconds to wait before retrying.",
-                        "type": "text/plain"
-                      },
-                      "key": "Retry-After",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:35.000Z",
-                  "updatedAt": "2026-08-03T11:21:35.000Z",
-                  "uid": "35240-5f2c5c73-b91b-4cf8-b174-336275a1cd42"
-                }
-              ],
-              "createdAt": "2026-08-03T11:21:35.000Z",
-              "updatedAt": "2026-08-03T11:21:35.000Z",
-              "uid": "35240-4aa113d3-7433-41f6-b1e3-0d406f9fda66"
-            },
-            {
-              "name": "Notion Update page properties",
-              "id": "33ef0661-d2e2-4e8b-9c26-0d2826b138c4",
-              "protocolProfileBehavior": {
-                "disableBodyPruning": true
-              },
-              "request": {
-                "method": "PATCH",
-                "header": [
-                  {
-                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                    "key": "Notion-Version",
-                    "value": "2022-06-28"
-                  },
-                  {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
-                    "key": "Accept",
-                    "value": "application/json"
-                  }
-                ],
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n  \"properties\": {\n    \"quis_98\": -44660011,\n    \"minim_3\": 3062583\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
-                  "options": {
-                    "raw": {
-                      "headerFamily": "json",
-                      "language": "json"
-                    }
-                  }
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/pages/:page_id",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "pages",
-                    ":page_id"
-                  ],
-                  "variable": [
-                    {
-                      "id": "6ce8e2e2-6596-417a-a9eb-031cd57b9d1f",
-                      "key": "page_id",
-                      "value": "<uuid>",
-                      "description": "(Required) The ID of the page to update."
-                    }
-                  ]
-                },
-                "description": "Updates the properties of a page. Only the properties specified in the request body will be updated. Properties that are not included will remain unchanged. Can also update the page icon, cover, and archived status."
-              },
-              "response": [
-                {
-                  "id": "99584de6-b070-4fb6-8827-3a494dfe1fb7",
-                  "name": "Page successfully updated.",
-                  "originalRequest": {
-                    "method": "PATCH",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"properties\": {\n    \"quis_98\": -44660011,\n    \"minim_3\": 3062583\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
-                      "options": {
-                        "raw": {
-                          "headerFamily": "json",
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "{{baseUrl}}/pages/:page_id",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "pages",
-                        ":page_id"
-                      ],
-                      "variable": [
-                        {
-                          "key": "page_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "OK",
-                  "code": 200,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"created_time\": \"<dateTime>\",\n  \"last_edited_time\": \"<dateTime>\",\n  \"created_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"last_edited_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"archived\": \"<boolean>\",\n  \"properties\": {\n    \"aliqua_03f\": -14252683.548384398\n  },\n  \"parent\": {\n    \"type\": \"workspace\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"url\": \"<uri>\",\n  \"in_trash\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"external\",\n    \"file\": {\n      \"url\": \"<uri>\",\n      \"expiry_time\": \"<dateTime>\"\n    },\n    \"external\": {\n      \"url\": \"<uri>\"\n    },\n    \"name\": \"<string>\",\n    \"caption\": [\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"<string>\",\n        \"text\": {\n          \"content\": \"<string>\",\n          \"link\": null\n        },\n        \"mention\": {\n          \"quis_d07\": 81619822.98368588,\n          \"eadb6\": \"in ipsum pariatur\"\n        },\n        \"equation\": {\n          \"expression\": \"<string>\"\n        },\n        \"annotations\": {\n          \"bold\": \"<boolean>\",\n          \"italic\": \"<boolean>\",\n          \"strikethrough\": \"<boolean>\",\n          \"underline\": \"<boolean>\",\n          \"code\": \"<boolean>\",\n          \"color\": \"<string>\"\n        },\n        \"href\": \"<string,null-uri>\"\n      },\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"<string>\",\n        \"text\": {\n          \"content\": \"<string>\",\n          \"link\": {\n            \"url\": \"<uri>\"\n          }\n        },\n        \"mention\": {\n          \"occaecat7\": \"cupidatat fugi\"\n        },\n        \"equation\": {\n          \"expression\": \"<string>\"\n        },\n        \"annotations\": {\n          \"bold\": \"<boolean>\",\n          \"italic\": \"<boolean>\",\n          \"strikethrough\": \"<boolean>\",\n          \"underline\": \"<boolean>\",\n          \"code\": \"<boolean>\",\n          \"color\": \"<string>\"\n        },\n        \"href\": \"<string,null-uri>\"\n      }\n    ]\n  },\n  \"public_url\": \"<string,null-uri>\"\n}",
-                  "createdAt": "2026-08-03T11:21:35.000Z",
-                  "updatedAt": "2026-08-03T11:21:35.000Z",
-                  "uid": "35240-99584de6-b070-4fb6-8827-3a494dfe1fb7"
-                },
-                {
-                  "id": "be8c7bbe-f17e-415a-8664-6798cbe80a3f",
-                  "name": "The request was invalid or malformed.",
-                  "originalRequest": {
-                    "method": "PATCH",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"properties\": {\n    \"quis_98\": -44660011,\n    \"minim_3\": 3062583\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
-                      "options": {
-                        "raw": {
-                          "headerFamily": "json",
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "{{baseUrl}}/pages/:page_id",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "pages",
-                        ":page_id"
-                      ],
-                      "variable": [
-                        {
-                          "key": "page_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Bad Request",
-                  "code": 400,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:35.000Z",
-                  "updatedAt": "2026-08-03T11:21:35.000Z",
-                  "uid": "35240-be8c7bbe-f17e-415a-8664-6798cbe80a3f"
-                },
-                {
-                  "id": "52443980-d7b4-45b3-a4dc-dce415c307e8",
-                  "name": "The bearer token is missing, invalid, or the integration lacks access.",
-                  "originalRequest": {
-                    "method": "PATCH",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"properties\": {\n    \"quis_98\": -44660011,\n    \"minim_3\": 3062583\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
-                      "options": {
-                        "raw": {
-                          "headerFamily": "json",
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "{{baseUrl}}/pages/:page_id",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "pages",
-                        ":page_id"
-                      ],
-                      "variable": [
-                        {
-                          "key": "page_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Unauthorized",
-                  "code": 401,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:35.000Z",
-                  "updatedAt": "2026-08-03T11:21:35.000Z",
-                  "uid": "35240-52443980-d7b4-45b3-a4dc-dce415c307e8"
-                },
-                {
-                  "id": "15bd8019-9184-48af-9e10-0883b5f048c7",
-                  "name": "The requested resource does not exist or the integration lacks access to it.",
-                  "originalRequest": {
-                    "method": "PATCH",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"properties\": {\n    \"quis_98\": -44660011,\n    \"minim_3\": 3062583\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
-                      "options": {
-                        "raw": {
-                          "headerFamily": "json",
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "{{baseUrl}}/pages/:page_id",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "pages",
-                        ":page_id"
-                      ],
-                      "variable": [
-                        {
-                          "key": "page_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Not Found",
-                  "code": 404,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:35.000Z",
-                  "updatedAt": "2026-08-03T11:21:35.000Z",
-                  "uid": "35240-15bd8019-9184-48af-9e10-0883b5f048c7"
-                },
-                {
-                  "id": "0c61867d-80eb-4858-b5ce-14881df1fe44",
-                  "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
-                  "originalRequest": {
-                    "method": "PATCH",
-                    "header": [
-                      {
-                        "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
-                        "key": "Notion-Version",
-                        "value": "2022-06-28"
-                      },
-                      {
-                        "key": "Content-Type",
-                        "value": "application/json"
-                      },
-                      {
-                        "key": "Accept",
-                        "value": "application/json"
-                      },
-                      {
-                        "description": "Added as a part of security scheme: bearer",
-                        "key": "Authorization",
-                        "value": "Bearer <token>"
-                      }
-                    ],
-                    "body": {
-                      "mode": "raw",
-                      "raw": "{\n  \"properties\": {\n    \"quis_98\": -44660011,\n    \"minim_3\": 3062583\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
-                      "options": {
-                        "raw": {
-                          "headerFamily": "json",
-                          "language": "json"
-                        }
-                      }
-                    },
-                    "url": {
-                      "raw": "{{baseUrl}}/pages/:page_id",
-                      "host": [
-                        "{{baseUrl}}"
-                      ],
-                      "path": [
-                        "pages",
-                        ":page_id"
-                      ],
-                      "variable": [
-                        {
-                          "key": "page_id"
-                        }
-                      ]
-                    }
-                  },
-                  "status": "Too Many Requests",
-                  "code": 429,
-                  "_postman_previewlanguage": "json",
-                  "header": [
-                    {
-                      "key": "Content-Type",
-                      "value": "application/json"
-                    },
-                    {
-                      "disabled": false,
-                      "description": {
-                        "content": "The number of seconds to wait before retrying.",
-                        "type": "text/plain"
-                      },
-                      "key": "Retry-After",
-                      "value": "<integer>"
-                    }
-                  ],
-                  "cookie": [],
-                  "responseTime": null,
-                  "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-                  "createdAt": "2026-08-03T11:21:35.000Z",
-                  "updatedAt": "2026-08-03T11:21:35.000Z",
-                  "uid": "35240-0c61867d-80eb-4858-b5ce-14881df1fe44"
-                }
-              ],
-              "createdAt": "2026-08-03T11:21:35.000Z",
-              "updatedAt": "2026-08-03T11:21:35.000Z",
-              "uid": "35240-33ef0661-d2e2-4e8b-9c26-0d2826b138c4"
-            }
-          ],
-          "id": "8201f240-f635-4dce-bc62-d40bf29efd5c",
-          "createdAt": "2026-08-03T11:21:35.000Z",
-          "updatedAt": "2026-08-03T11:21:35.000Z",
-          "uid": "35240-8201f240-f635-4dce-bc62-d40bf29efd5c"
-        },
-        {
+          "id": "b74d87c9-5dd3-4e30-accb-519952072519",
           "name": "Notion Create a page",
-          "id": "1763a686-c429-491f-857c-0854cce16920",
-          "protocolProfileBehavior": {
-            "disableBodyPruning": true
-          },
           "request": {
-            "method": "POST",
+            "name": "Notion Create a page",
+            "description": {
+              "content": "Creates a new page that is a child of an existing page or database. If the parent is a database, the property values of the new page must conform to the parent database's schema. The request body must include a parent and properties. Page content can optionally be provided as an array of block objects in the children field.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pages"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
             "header": [
               {
+                "disabled": false,
                 "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
                 "key": "Notion-Version",
                 "value": "2022-06-28"
@@ -1126,352 +43,1444 @@
                 "value": "application/json"
               }
             ],
+            "method": "POST",
+            "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"parent\": {\n    \"type\": \"workspace\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"properties\": {\n    \"laborea79\": 73385184.86584356,\n    \"magna_45\": 67620173\n  },\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"divider\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"block_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"breadcrumb\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"database_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
+              "raw": "{\n  \"parent\": {\n    \"type\": \"<string>\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"properties\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  },\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"<string>\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"<string>\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"<string>\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"<string>\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
               "options": {
                 "raw": {
-                  "headerFamily": "json",
                   "language": "json"
                 }
               }
-            },
-            "url": {
-              "raw": "{{baseUrl}}/pages",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "pages"
-              ]
-            },
-            "description": "Creates a new page that is a child of an existing page or database. If the parent is a database, the property values of the new page must conform to the parent database's schema. The request body must include a parent and properties. Page content can optionally be provided as an array of block objects in the children field."
+            }
           },
           "response": [
             {
-              "id": "13bfd6e8-377a-43bd-a7a3-13978c2d7c4a",
+              "id": "51b04ef8-a600-4131-8f58-40f0383759c5",
               "name": "Page successfully created.",
               "originalRequest": {
-                "method": "POST",
+                "url": {
+                  "path": [
+                    "pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
                 "header": [
                   {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
                     "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
                     "key": "Notion-Version",
                     "value": "2022-06-28"
                   },
                   {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
                     "key": "Accept",
                     "value": "application/json"
-                  },
-                  {
-                    "description": "Added as a part of security scheme: bearer",
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   }
                 ],
+                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"parent\": {\n    \"type\": \"workspace\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"properties\": {\n    \"laborea79\": 73385184.86584356,\n    \"magna_45\": 67620173\n  },\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"divider\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"block_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"breadcrumb\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"database_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
+                  "raw": "{\n  \"parent\": {\n    \"type\": \"block_id\",\n    \"database_id\": \"ac98c46f-7b93-dd98-ca3b-6b901290e992\",\n    \"page_id\": \"037eb3e2-bc13-1e9b-bed6-fb0f3855dcd2\",\n    \"block_id\": \"a48a6e4e-096a-146a-4b3f-65fdb4872172\",\n    \"workspace\": false\n  },\n  \"properties\": {\n    \"key_0\": \"string\"\n  },\n  \"children\": [\n    {\n      \"object\": \"string\",\n      \"id\": \"5a79e4cb-5119-2789-4591-61e8b6728f1e\",\n      \"type\": \"code\",\n      \"created_time\": \"2002-12-22T05:10:55.393Z\",\n      \"last_edited_time\": \"2022-08-09T03:13:03.418Z\",\n      \"has_children\": false,\n      \"parent\": {\n        \"type\": \"block_id\",\n        \"database_id\": \"7ddb2d9f-78c4-0e32-dec7-b985718d4d31\",\n        \"page_id\": \"629677bd-94a1-a31d-6902-66248fefd46f\",\n        \"block_id\": \"bcce7daa-7ad2-d193-7937-2419aa65d55e\",\n        \"workspace\": true\n      },\n      \"created_by\": {\n        \"object\": \"string\",\n        \"id\": \"8dd0f6ee-071b-2c63-9dbc-9fa810f19cdb\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"string\",\n        \"id\": \"10625aa8-7706-7745-d21f-60fa7484e4a4\"\n      },\n      \"archived\": true,\n      \"in_trash\": true\n    },\n    {\n      \"object\": \"string\",\n      \"id\": \"3e3404b4-ab22-ec92-1aa2-af58b64b709c\",\n      \"type\": \"code\",\n      \"created_time\": \"1959-07-07T11:40:58.518Z\",\n      \"last_edited_time\": \"2019-09-25T09:59:37.354Z\",\n      \"has_children\": false,\n      \"parent\": {\n        \"type\": \"workspace\",\n        \"database_id\": \"f89654e8-5559-db5d-ba50-e04a7bd84d0e\",\n        \"page_id\": \"ed7d15cd-9c73-8a60-953a-c0e4bf3e1d10\",\n        \"block_id\": \"380a72ce-5b99-d30c-9516-a30a6b3a3ad9\",\n        \"workspace\": true\n      },\n      \"created_by\": {\n        \"object\": \"string\",\n        \"id\": \"2fb5431a-6906-74b5-c49e-e0e4c5e0f41d\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"string\",\n        \"id\": \"b57d355c-770f-3a0b-4c5d-7495752ccdd9\"\n      },\n      \"archived\": true,\n      \"in_trash\": true\n    }\n  ],\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"string\",\n    \"external\": {\n      \"url\": \"https://PUvRQYbidgOPLjxuUCOrj.nmzpfWYMH65KcYpoKJ\"\n    }\n  }\n}",
                   "options": {
                     "raw": {
-                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/pages",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "pages"
-                  ]
                 }
               },
               "status": "OK",
               "code": 200,
-              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
+              "body": "{\n  \"object\": \"string\",\n  \"id\": \"7c5a3486-3a2a-faae-770a-09141149ec70\",\n  \"created_time\": \"1984-08-14T08:08:57.920Z\",\n  \"last_edited_time\": \"1971-08-10T22:49:41.743Z\",\n  \"created_by\": {\n    \"object\": \"string\",\n    \"id\": \"a3ba520f-269b-81e1-b339-6cab8d6facfc\"\n  },\n  \"last_edited_by\": {\n    \"object\": \"string\",\n    \"id\": \"16af08fd-dc60-36de-f336-74229ae6b607\"\n  },\n  \"archived\": true,\n  \"properties\": {\n    \"key_0\": false,\n    \"key_1\": 8958,\n    \"key_2\": 9950.67625457521\n  },\n  \"parent\": {\n    \"type\": \"page_id\",\n    \"database_id\": \"307e39ed-e586-719b-e421-0881582dd691\",\n    \"page_id\": \"a5fbd65f-5cc0-c333-1719-25636b87ff00\",\n    \"block_id\": \"ae5309db-e09d-9430-49df-3c354cba7367\",\n    \"workspace\": false\n  },\n  \"url\": \"http://SHIeDj.zpjmiEHmu0NEr7qftP3WK7Rfi88BUpNgGqItBaK,hS.MmXDMT1o0E3IyKprkk\",\n  \"in_trash\": true,\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"file\",\n    \"file\": {\n      \"url\": \"http://b.msmPpjebLA6c9.cApKjgB8LpPZbThM.bjB2H\",\n      \"expiry_time\": \"2025-10-22T07:29:12.934Z\"\n    },\n    \"external\": {\n      \"url\": \"https://VtgeYWJdAWnWhScTnenlNQjwhxFN.pufEqhsRRx4J\"\n    },\n    \"name\": \"string\",\n    \"caption\": [\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"string\",\n        \"text\": {\n          \"content\": \"string\",\n          \"link\": {\n            \"url\": \"https://smYmiGLCbN.fsrjf-Kx.1SkpSnWz3uxeWHoSaztN9xIk\"\n          }\n        },\n        \"mention\": {\n          \"key_0\": 2397,\n          \"key_1\": 8835\n        },\n        \"equation\": {\n          \"expression\": \"string\"\n        },\n        \"annotations\": {\n          \"bold\": false,\n          \"italic\": true,\n          \"strikethrough\": false,\n          \"underline\": false,\n          \"code\": false,\n          \"color\": \"string\"\n        },\n        \"href\": \"http://AVBYwRqYbuHTyRQjxWgkINAqC.gtLWD.iOMZ9CarCh\"\n      },\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"string\",\n        \"text\": {\n          \"content\": \"string\",\n          \"link\": {\n            \"url\": \"http://kLTfS.gtitxtNS0GK9fbjTBT.rrHWCWkF2ZieYRoXx1Gp6lIfPjTKAAQBPz\"\n          }\n        },\n        \"mention\": {\n          \"key_0\": \"string\"\n        },\n        \"equation\": {\n          \"expression\": \"string\"\n        },\n        \"annotations\": {\n          \"bold\": true,\n          \"italic\": true,\n          \"strikethrough\": true,\n          \"underline\": true,\n          \"code\": false,\n          \"color\": \"string\"\n        },\n        \"href\": \"https://WOsVSzxnhbIQGRrKFtsB.oizG3AAYaYOzSl..ByO+AvZVTxwhLZbAmvM\"\n      }\n    ]\n  },\n  \"public_url\": \"https://qUHVzRK.fbjeWe6jzSg11fEkvxpCvaGfnOBwoQi641q1iCgl4I7j\"\n}",
               "cookie": [],
-              "responseTime": null,
-              "body": "{\n  \"object\": \"<string>\",\n  \"id\": \"<uuid>\",\n  \"created_time\": \"<dateTime>\",\n  \"last_edited_time\": \"<dateTime>\",\n  \"created_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"last_edited_by\": {\n    \"object\": \"<string>\",\n    \"id\": \"<uuid>\"\n  },\n  \"archived\": \"<boolean>\",\n  \"properties\": {\n    \"aliqua_03f\": -14252683.548384398\n  },\n  \"parent\": {\n    \"type\": \"workspace\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"url\": \"<uri>\",\n  \"in_trash\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"external\",\n    \"file\": {\n      \"url\": \"<uri>\",\n      \"expiry_time\": \"<dateTime>\"\n    },\n    \"external\": {\n      \"url\": \"<uri>\"\n    },\n    \"name\": \"<string>\",\n    \"caption\": [\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"<string>\",\n        \"text\": {\n          \"content\": \"<string>\",\n          \"link\": null\n        },\n        \"mention\": {\n          \"quis_d07\": 81619822.98368588,\n          \"eadb6\": \"in ipsum pariatur\"\n        },\n        \"equation\": {\n          \"expression\": \"<string>\"\n        },\n        \"annotations\": {\n          \"bold\": \"<boolean>\",\n          \"italic\": \"<boolean>\",\n          \"strikethrough\": \"<boolean>\",\n          \"underline\": \"<boolean>\",\n          \"code\": \"<boolean>\",\n          \"color\": \"<string>\"\n        },\n        \"href\": \"<string,null-uri>\"\n      },\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"<string>\",\n        \"text\": {\n          \"content\": \"<string>\",\n          \"link\": {\n            \"url\": \"<uri>\"\n          }\n        },\n        \"mention\": {\n          \"occaecat7\": \"cupidatat fugi\"\n        },\n        \"equation\": {\n          \"expression\": \"<string>\"\n        },\n        \"annotations\": {\n          \"bold\": \"<boolean>\",\n          \"italic\": \"<boolean>\",\n          \"strikethrough\": \"<boolean>\",\n          \"underline\": \"<boolean>\",\n          \"code\": \"<boolean>\",\n          \"color\": \"<string>\"\n        },\n        \"href\": \"<string,null-uri>\"\n      }\n    ]\n  },\n  \"public_url\": \"<string,null-uri>\"\n}",
-              "createdAt": "2026-08-03T11:21:35.000Z",
-              "updatedAt": "2026-08-03T11:21:35.000Z",
-              "uid": "35240-13bfd6e8-377a-43bd-a7a3-13978c2d7c4a"
+              "_postman_previewlanguage": "json"
             },
             {
-              "id": "55181180-5496-43d0-93bf-940e216cc5a6",
+              "id": "bea42637-3ae3-4d58-9d66-2c52b53a9d40",
               "name": "The request was invalid or malformed.",
               "originalRequest": {
-                "method": "POST",
+                "url": {
+                  "path": [
+                    "pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
                 "header": [
                   {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
                     "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
                     "key": "Notion-Version",
                     "value": "2022-06-28"
                   },
                   {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
                     "key": "Accept",
                     "value": "application/json"
-                  },
-                  {
-                    "description": "Added as a part of security scheme: bearer",
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   }
                 ],
+                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"parent\": {\n    \"type\": \"workspace\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"properties\": {\n    \"laborea79\": 73385184.86584356,\n    \"magna_45\": 67620173\n  },\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"divider\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"block_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"breadcrumb\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"database_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
+                  "raw": "{\n  \"parent\": {\n    \"type\": \"block_id\",\n    \"database_id\": \"ac98c46f-7b93-dd98-ca3b-6b901290e992\",\n    \"page_id\": \"037eb3e2-bc13-1e9b-bed6-fb0f3855dcd2\",\n    \"block_id\": \"a48a6e4e-096a-146a-4b3f-65fdb4872172\",\n    \"workspace\": false\n  },\n  \"properties\": {\n    \"key_0\": \"string\"\n  },\n  \"children\": [\n    {\n      \"object\": \"string\",\n      \"id\": \"5a79e4cb-5119-2789-4591-61e8b6728f1e\",\n      \"type\": \"code\",\n      \"created_time\": \"2002-12-22T05:10:55.393Z\",\n      \"last_edited_time\": \"2022-08-09T03:13:03.418Z\",\n      \"has_children\": false,\n      \"parent\": {\n        \"type\": \"block_id\",\n        \"database_id\": \"7ddb2d9f-78c4-0e32-dec7-b985718d4d31\",\n        \"page_id\": \"629677bd-94a1-a31d-6902-66248fefd46f\",\n        \"block_id\": \"bcce7daa-7ad2-d193-7937-2419aa65d55e\",\n        \"workspace\": true\n      },\n      \"created_by\": {\n        \"object\": \"string\",\n        \"id\": \"8dd0f6ee-071b-2c63-9dbc-9fa810f19cdb\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"string\",\n        \"id\": \"10625aa8-7706-7745-d21f-60fa7484e4a4\"\n      },\n      \"archived\": true,\n      \"in_trash\": true\n    },\n    {\n      \"object\": \"string\",\n      \"id\": \"3e3404b4-ab22-ec92-1aa2-af58b64b709c\",\n      \"type\": \"code\",\n      \"created_time\": \"1959-07-07T11:40:58.518Z\",\n      \"last_edited_time\": \"2019-09-25T09:59:37.354Z\",\n      \"has_children\": false,\n      \"parent\": {\n        \"type\": \"workspace\",\n        \"database_id\": \"f89654e8-5559-db5d-ba50-e04a7bd84d0e\",\n        \"page_id\": \"ed7d15cd-9c73-8a60-953a-c0e4bf3e1d10\",\n        \"block_id\": \"380a72ce-5b99-d30c-9516-a30a6b3a3ad9\",\n        \"workspace\": true\n      },\n      \"created_by\": {\n        \"object\": \"string\",\n        \"id\": \"2fb5431a-6906-74b5-c49e-e0e4c5e0f41d\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"string\",\n        \"id\": \"b57d355c-770f-3a0b-4c5d-7495752ccdd9\"\n      },\n      \"archived\": true,\n      \"in_trash\": true\n    }\n  ],\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"string\",\n    \"external\": {\n      \"url\": \"https://PUvRQYbidgOPLjxuUCOrj.nmzpfWYMH65KcYpoKJ\"\n    }\n  }\n}",
                   "options": {
                     "raw": {
-                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/pages",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "pages"
-                  ]
                 }
               },
               "status": "Bad Request",
               "code": 400,
-              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "responseTime": null,
-              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-              "createdAt": "2026-08-03T11:21:35.000Z",
-              "updatedAt": "2026-08-03T11:21:35.000Z",
-              "uid": "35240-55181180-5496-43d0-93bf-940e216cc5a6"
+              "_postman_previewlanguage": "json"
             },
             {
-              "id": "c9a11305-5564-421a-a014-1a4961a4a4b7",
+              "id": "49d00c5c-1902-448c-8bf7-e7dc9e5a582e",
               "name": "The bearer token is missing, invalid, or the integration lacks access.",
               "originalRequest": {
-                "method": "POST",
+                "url": {
+                  "path": [
+                    "pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
                 "header": [
                   {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
                     "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
                     "key": "Notion-Version",
                     "value": "2022-06-28"
                   },
                   {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
                     "key": "Accept",
                     "value": "application/json"
-                  },
-                  {
-                    "description": "Added as a part of security scheme: bearer",
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   }
                 ],
+                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"parent\": {\n    \"type\": \"workspace\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"properties\": {\n    \"laborea79\": 73385184.86584356,\n    \"magna_45\": 67620173\n  },\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"divider\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"block_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"breadcrumb\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"database_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
+                  "raw": "{\n  \"parent\": {\n    \"type\": \"block_id\",\n    \"database_id\": \"ac98c46f-7b93-dd98-ca3b-6b901290e992\",\n    \"page_id\": \"037eb3e2-bc13-1e9b-bed6-fb0f3855dcd2\",\n    \"block_id\": \"a48a6e4e-096a-146a-4b3f-65fdb4872172\",\n    \"workspace\": false\n  },\n  \"properties\": {\n    \"key_0\": \"string\"\n  },\n  \"children\": [\n    {\n      \"object\": \"string\",\n      \"id\": \"5a79e4cb-5119-2789-4591-61e8b6728f1e\",\n      \"type\": \"code\",\n      \"created_time\": \"2002-12-22T05:10:55.393Z\",\n      \"last_edited_time\": \"2022-08-09T03:13:03.418Z\",\n      \"has_children\": false,\n      \"parent\": {\n        \"type\": \"block_id\",\n        \"database_id\": \"7ddb2d9f-78c4-0e32-dec7-b985718d4d31\",\n        \"page_id\": \"629677bd-94a1-a31d-6902-66248fefd46f\",\n        \"block_id\": \"bcce7daa-7ad2-d193-7937-2419aa65d55e\",\n        \"workspace\": true\n      },\n      \"created_by\": {\n        \"object\": \"string\",\n        \"id\": \"8dd0f6ee-071b-2c63-9dbc-9fa810f19cdb\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"string\",\n        \"id\": \"10625aa8-7706-7745-d21f-60fa7484e4a4\"\n      },\n      \"archived\": true,\n      \"in_trash\": true\n    },\n    {\n      \"object\": \"string\",\n      \"id\": \"3e3404b4-ab22-ec92-1aa2-af58b64b709c\",\n      \"type\": \"code\",\n      \"created_time\": \"1959-07-07T11:40:58.518Z\",\n      \"last_edited_time\": \"2019-09-25T09:59:37.354Z\",\n      \"has_children\": false,\n      \"parent\": {\n        \"type\": \"workspace\",\n        \"database_id\": \"f89654e8-5559-db5d-ba50-e04a7bd84d0e\",\n        \"page_id\": \"ed7d15cd-9c73-8a60-953a-c0e4bf3e1d10\",\n        \"block_id\": \"380a72ce-5b99-d30c-9516-a30a6b3a3ad9\",\n        \"workspace\": true\n      },\n      \"created_by\": {\n        \"object\": \"string\",\n        \"id\": \"2fb5431a-6906-74b5-c49e-e0e4c5e0f41d\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"string\",\n        \"id\": \"b57d355c-770f-3a0b-4c5d-7495752ccdd9\"\n      },\n      \"archived\": true,\n      \"in_trash\": true\n    }\n  ],\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"string\",\n    \"external\": {\n      \"url\": \"https://PUvRQYbidgOPLjxuUCOrj.nmzpfWYMH65KcYpoKJ\"\n    }\n  }\n}",
                   "options": {
                     "raw": {
-                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/pages",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "pages"
-                  ]
                 }
               },
               "status": "Unauthorized",
               "code": 401,
-              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "responseTime": null,
-              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-              "createdAt": "2026-08-03T11:21:35.000Z",
-              "updatedAt": "2026-08-03T11:21:35.000Z",
-              "uid": "35240-c9a11305-5564-421a-a014-1a4961a4a4b7"
+              "_postman_previewlanguage": "json"
             },
             {
-              "id": "5b3baf05-5f63-4bd9-8b04-64b25f6d18f8",
+              "id": "1f947485-f736-4d23-be52-e8b2c7146b4b",
               "name": "The requested resource does not exist or the integration lacks access to it.",
               "originalRequest": {
-                "method": "POST",
+                "url": {
+                  "path": [
+                    "pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
                 "header": [
                   {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
                     "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
                     "key": "Notion-Version",
                     "value": "2022-06-28"
                   },
                   {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
                     "key": "Accept",
                     "value": "application/json"
-                  },
-                  {
-                    "description": "Added as a part of security scheme: bearer",
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   }
                 ],
+                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"parent\": {\n    \"type\": \"workspace\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"properties\": {\n    \"laborea79\": 73385184.86584356,\n    \"magna_45\": 67620173\n  },\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"divider\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"block_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"breadcrumb\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"database_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
+                  "raw": "{\n  \"parent\": {\n    \"type\": \"block_id\",\n    \"database_id\": \"ac98c46f-7b93-dd98-ca3b-6b901290e992\",\n    \"page_id\": \"037eb3e2-bc13-1e9b-bed6-fb0f3855dcd2\",\n    \"block_id\": \"a48a6e4e-096a-146a-4b3f-65fdb4872172\",\n    \"workspace\": false\n  },\n  \"properties\": {\n    \"key_0\": \"string\"\n  },\n  \"children\": [\n    {\n      \"object\": \"string\",\n      \"id\": \"5a79e4cb-5119-2789-4591-61e8b6728f1e\",\n      \"type\": \"code\",\n      \"created_time\": \"2002-12-22T05:10:55.393Z\",\n      \"last_edited_time\": \"2022-08-09T03:13:03.418Z\",\n      \"has_children\": false,\n      \"parent\": {\n        \"type\": \"block_id\",\n        \"database_id\": \"7ddb2d9f-78c4-0e32-dec7-b985718d4d31\",\n        \"page_id\": \"629677bd-94a1-a31d-6902-66248fefd46f\",\n        \"block_id\": \"bcce7daa-7ad2-d193-7937-2419aa65d55e\",\n        \"workspace\": true\n      },\n      \"created_by\": {\n        \"object\": \"string\",\n        \"id\": \"8dd0f6ee-071b-2c63-9dbc-9fa810f19cdb\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"string\",\n        \"id\": \"10625aa8-7706-7745-d21f-60fa7484e4a4\"\n      },\n      \"archived\": true,\n      \"in_trash\": true\n    },\n    {\n      \"object\": \"string\",\n      \"id\": \"3e3404b4-ab22-ec92-1aa2-af58b64b709c\",\n      \"type\": \"code\",\n      \"created_time\": \"1959-07-07T11:40:58.518Z\",\n      \"last_edited_time\": \"2019-09-25T09:59:37.354Z\",\n      \"has_children\": false,\n      \"parent\": {\n        \"type\": \"workspace\",\n        \"database_id\": \"f89654e8-5559-db5d-ba50-e04a7bd84d0e\",\n        \"page_id\": \"ed7d15cd-9c73-8a60-953a-c0e4bf3e1d10\",\n        \"block_id\": \"380a72ce-5b99-d30c-9516-a30a6b3a3ad9\",\n        \"workspace\": true\n      },\n      \"created_by\": {\n        \"object\": \"string\",\n        \"id\": \"2fb5431a-6906-74b5-c49e-e0e4c5e0f41d\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"string\",\n        \"id\": \"b57d355c-770f-3a0b-4c5d-7495752ccdd9\"\n      },\n      \"archived\": true,\n      \"in_trash\": true\n    }\n  ],\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"string\",\n    \"external\": {\n      \"url\": \"https://PUvRQYbidgOPLjxuUCOrj.nmzpfWYMH65KcYpoKJ\"\n    }\n  }\n}",
                   "options": {
                     "raw": {
-                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/pages",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "pages"
-                  ]
                 }
               },
               "status": "Not Found",
               "code": 404,
-              "_postman_previewlanguage": "json",
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
                 }
               ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
               "cookie": [],
-              "responseTime": null,
-              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-              "createdAt": "2026-08-03T11:21:35.000Z",
-              "updatedAt": "2026-08-03T11:21:35.000Z",
-              "uid": "35240-5b3baf05-5f63-4bd9-8b04-64b25f6d18f8"
+              "_postman_previewlanguage": "json"
             },
             {
-              "id": "1ceaed4a-016c-40d2-aa40-2a9445923e5b",
+              "id": "ca883343-8410-4b0a-a5ea-12125bb57979",
               "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
               "originalRequest": {
-                "method": "POST",
+                "url": {
+                  "path": [
+                    "pages"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
                 "header": [
                   {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
                     "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
                     "key": "Notion-Version",
                     "value": "2022-06-28"
                   },
                   {
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  },
-                  {
                     "key": "Accept",
                     "value": "application/json"
-                  },
-                  {
-                    "description": "Added as a part of security scheme: bearer",
-                    "key": "Authorization",
-                    "value": "Bearer <token>"
                   }
                 ],
+                "method": "POST",
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"parent\": {\n    \"type\": \"workspace\",\n    \"database_id\": \"<uuid>\",\n    \"page_id\": \"<uuid>\",\n    \"block_id\": \"<uuid>\",\n    \"workspace\": \"<boolean>\"\n  },\n  \"properties\": {\n    \"laborea79\": 73385184.86584356,\n    \"magna_45\": 67620173\n  },\n  \"children\": [\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"divider\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"block_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    },\n    {\n      \"object\": \"<string>\",\n      \"id\": \"<uuid>\",\n      \"type\": \"breadcrumb\",\n      \"created_time\": \"<dateTime>\",\n      \"last_edited_time\": \"<dateTime>\",\n      \"has_children\": \"<boolean>\",\n      \"parent\": {\n        \"type\": \"database_id\",\n        \"database_id\": \"<uuid>\",\n        \"page_id\": \"<uuid>\",\n        \"block_id\": \"<uuid>\",\n        \"workspace\": \"<boolean>\"\n      },\n      \"created_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"<string>\",\n        \"id\": \"<uuid>\"\n      },\n      \"archived\": \"<boolean>\",\n      \"in_trash\": \"<boolean>\"\n    }\n  ],\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
+                  "raw": "{\n  \"parent\": {\n    \"type\": \"block_id\",\n    \"database_id\": \"ac98c46f-7b93-dd98-ca3b-6b901290e992\",\n    \"page_id\": \"037eb3e2-bc13-1e9b-bed6-fb0f3855dcd2\",\n    \"block_id\": \"a48a6e4e-096a-146a-4b3f-65fdb4872172\",\n    \"workspace\": false\n  },\n  \"properties\": {\n    \"key_0\": \"string\"\n  },\n  \"children\": [\n    {\n      \"object\": \"string\",\n      \"id\": \"5a79e4cb-5119-2789-4591-61e8b6728f1e\",\n      \"type\": \"code\",\n      \"created_time\": \"2002-12-22T05:10:55.393Z\",\n      \"last_edited_time\": \"2022-08-09T03:13:03.418Z\",\n      \"has_children\": false,\n      \"parent\": {\n        \"type\": \"block_id\",\n        \"database_id\": \"7ddb2d9f-78c4-0e32-dec7-b985718d4d31\",\n        \"page_id\": \"629677bd-94a1-a31d-6902-66248fefd46f\",\n        \"block_id\": \"bcce7daa-7ad2-d193-7937-2419aa65d55e\",\n        \"workspace\": true\n      },\n      \"created_by\": {\n        \"object\": \"string\",\n        \"id\": \"8dd0f6ee-071b-2c63-9dbc-9fa810f19cdb\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"string\",\n        \"id\": \"10625aa8-7706-7745-d21f-60fa7484e4a4\"\n      },\n      \"archived\": true,\n      \"in_trash\": true\n    },\n    {\n      \"object\": \"string\",\n      \"id\": \"3e3404b4-ab22-ec92-1aa2-af58b64b709c\",\n      \"type\": \"code\",\n      \"created_time\": \"1959-07-07T11:40:58.518Z\",\n      \"last_edited_time\": \"2019-09-25T09:59:37.354Z\",\n      \"has_children\": false,\n      \"parent\": {\n        \"type\": \"workspace\",\n        \"database_id\": \"f89654e8-5559-db5d-ba50-e04a7bd84d0e\",\n        \"page_id\": \"ed7d15cd-9c73-8a60-953a-c0e4bf3e1d10\",\n        \"block_id\": \"380a72ce-5b99-d30c-9516-a30a6b3a3ad9\",\n        \"workspace\": true\n      },\n      \"created_by\": {\n        \"object\": \"string\",\n        \"id\": \"2fb5431a-6906-74b5-c49e-e0e4c5e0f41d\"\n      },\n      \"last_edited_by\": {\n        \"object\": \"string\",\n        \"id\": \"b57d355c-770f-3a0b-4c5d-7495752ccdd9\"\n      },\n      \"archived\": true,\n      \"in_trash\": true\n    }\n  ],\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"string\",\n    \"external\": {\n      \"url\": \"https://PUvRQYbidgOPLjxuUCOrj.nmzpfWYMH65KcYpoKJ\"\n    }\n  }\n}",
                   "options": {
                     "raw": {
-                      "headerFamily": "json",
                       "language": "json"
                     }
                   }
-                },
-                "url": {
-                  "raw": "{{baseUrl}}/pages",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "pages"
-                  ]
                 }
               },
               "status": "Too Many Requests",
               "code": 429,
-              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "2091"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "554f8264-1643-43af-a5e7-ab58fcc20f11",
+          "name": "Notion Retrieve a page",
+          "request": {
+            "name": "Notion Retrieve a page",
+            "description": {
+              "content": "Retrieves a Page object using the ID specified in the path. Returns page properties but not page content (blocks). To retrieve page content, use the retrieve block children endpoint on the page ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pages",
+                ":page_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "filter_properties",
+                  "value": "<string>",
+                  "description": "A list of page property value IDs to include in the response. If provided, only the specified properties will be returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "filter_properties",
+                  "value": "<string>",
+                  "description": "A list of page property value IDs to include in the response. If provided, only the specified properties will be returned."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "page_id",
+                  "description": "(Required) The ID of the page to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                "key": "Notion-Version",
+                "value": "2022-06-28"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fe1f2b54-9f1b-4339-8487-a10816bb91c7",
+              "name": "Page successfully retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter_properties",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter_properties",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
               "header": [
                 {
                   "key": "Content-Type",
                   "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"id\": \"7c5a3486-3a2a-faae-770a-09141149ec70\",\n  \"created_time\": \"1984-08-14T08:08:57.920Z\",\n  \"last_edited_time\": \"1971-08-10T22:49:41.743Z\",\n  \"created_by\": {\n    \"object\": \"string\",\n    \"id\": \"a3ba520f-269b-81e1-b339-6cab8d6facfc\"\n  },\n  \"last_edited_by\": {\n    \"object\": \"string\",\n    \"id\": \"16af08fd-dc60-36de-f336-74229ae6b607\"\n  },\n  \"archived\": true,\n  \"properties\": {\n    \"key_0\": false,\n    \"key_1\": 8958,\n    \"key_2\": 9950.67625457521\n  },\n  \"parent\": {\n    \"type\": \"page_id\",\n    \"database_id\": \"307e39ed-e586-719b-e421-0881582dd691\",\n    \"page_id\": \"a5fbd65f-5cc0-c333-1719-25636b87ff00\",\n    \"block_id\": \"ae5309db-e09d-9430-49df-3c354cba7367\",\n    \"workspace\": false\n  },\n  \"url\": \"http://SHIeDj.zpjmiEHmu0NEr7qftP3WK7Rfi88BUpNgGqItBaK,hS.MmXDMT1o0E3IyKprkk\",\n  \"in_trash\": true,\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"file\",\n    \"file\": {\n      \"url\": \"http://b.msmPpjebLA6c9.cApKjgB8LpPZbThM.bjB2H\",\n      \"expiry_time\": \"2025-10-22T07:29:12.934Z\"\n    },\n    \"external\": {\n      \"url\": \"https://VtgeYWJdAWnWhScTnenlNQjwhxFN.pufEqhsRRx4J\"\n    },\n    \"name\": \"string\",\n    \"caption\": [\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"string\",\n        \"text\": {\n          \"content\": \"string\",\n          \"link\": {\n            \"url\": \"https://smYmiGLCbN.fsrjf-Kx.1SkpSnWz3uxeWHoSaztN9xIk\"\n          }\n        },\n        \"mention\": {\n          \"key_0\": 2397,\n          \"key_1\": 8835\n        },\n        \"equation\": {\n          \"expression\": \"string\"\n        },\n        \"annotations\": {\n          \"bold\": false,\n          \"italic\": true,\n          \"strikethrough\": false,\n          \"underline\": false,\n          \"code\": false,\n          \"color\": \"string\"\n        },\n        \"href\": \"http://AVBYwRqYbuHTyRQjxWgkINAqC.gtLWD.iOMZ9CarCh\"\n      },\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"string\",\n        \"text\": {\n          \"content\": \"string\",\n          \"link\": {\n            \"url\": \"http://kLTfS.gtitxtNS0GK9fbjTBT.rrHWCWkF2ZieYRoXx1Gp6lIfPjTKAAQBPz\"\n          }\n        },\n        \"mention\": {\n          \"key_0\": \"string\"\n        },\n        \"equation\": {\n          \"expression\": \"string\"\n        },\n        \"annotations\": {\n          \"bold\": true,\n          \"italic\": true,\n          \"strikethrough\": true,\n          \"underline\": true,\n          \"code\": false,\n          \"color\": \"string\"\n        },\n        \"href\": \"https://WOsVSzxnhbIQGRrKFtsB.oizG3AAYaYOzSl..ByO+AvZVTxwhLZbAmvM\"\n      }\n    ]\n  },\n  \"public_url\": \"https://qUHVzRK.fbjeWe6jzSg11fEkvxpCvaGfnOBwoQi641q1iCgl4I7j\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0aae790-b5b7-42cf-90bb-4a66a67c995b",
+              "name": "The bearer token is missing, invalid, or the integration lacks access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter_properties",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter_properties",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e35dcb82-fea7-4e91-8d75-979d936e1090",
+              "name": "The requested resource does not exist or the integration lacks access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter_properties",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter_properties",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "86e45559-f16d-425e-8309-7d502037316d",
+              "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "filter_properties",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filter_properties",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "2091"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c5e1d817-2049-4fe2-8775-7c2144460efa",
+          "name": "Notion Update page properties",
+          "request": {
+            "name": "Notion Update page properties",
+            "description": {
+              "content": "Updates the properties of a page. Only the properties specified in the request body will be updated. Properties that are not included will remain unchanged. Can also update the page icon, cover, and archived status.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pages",
+                ":page_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "page_id",
+                  "description": "(Required) The ID of the page to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                "key": "Notion-Version",
+                "value": "2022-06-28"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"properties\": {\n    \"key_0\": \"string\"\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"<string>\",\n    \"emoji\": \"<string>\"\n  },\n  \"cover\": {\n    \"type\": \"<string>\",\n    \"external\": {\n      \"url\": \"<uri>\"\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "84422f84-67af-4bbf-a458-de3c67d43e6f",
+              "name": "Page successfully updated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": {\n    \"key_0\": true\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"string\",\n    \"external\": {\n      \"url\": \"http://gSdQmCSqmsAH.ccKPaOXqTzj\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"id\": \"7c5a3486-3a2a-faae-770a-09141149ec70\",\n  \"created_time\": \"1984-08-14T08:08:57.920Z\",\n  \"last_edited_time\": \"1971-08-10T22:49:41.743Z\",\n  \"created_by\": {\n    \"object\": \"string\",\n    \"id\": \"a3ba520f-269b-81e1-b339-6cab8d6facfc\"\n  },\n  \"last_edited_by\": {\n    \"object\": \"string\",\n    \"id\": \"16af08fd-dc60-36de-f336-74229ae6b607\"\n  },\n  \"archived\": true,\n  \"properties\": {\n    \"key_0\": false,\n    \"key_1\": 8958,\n    \"key_2\": 9950.67625457521\n  },\n  \"parent\": {\n    \"type\": \"page_id\",\n    \"database_id\": \"307e39ed-e586-719b-e421-0881582dd691\",\n    \"page_id\": \"a5fbd65f-5cc0-c333-1719-25636b87ff00\",\n    \"block_id\": \"ae5309db-e09d-9430-49df-3c354cba7367\",\n    \"workspace\": false\n  },\n  \"url\": \"http://SHIeDj.zpjmiEHmu0NEr7qftP3WK7Rfi88BUpNgGqItBaK,hS.MmXDMT1o0E3IyKprkk\",\n  \"in_trash\": true,\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"file\",\n    \"file\": {\n      \"url\": \"http://b.msmPpjebLA6c9.cApKjgB8LpPZbThM.bjB2H\",\n      \"expiry_time\": \"2025-10-22T07:29:12.934Z\"\n    },\n    \"external\": {\n      \"url\": \"https://VtgeYWJdAWnWhScTnenlNQjwhxFN.pufEqhsRRx4J\"\n    },\n    \"name\": \"string\",\n    \"caption\": [\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"string\",\n        \"text\": {\n          \"content\": \"string\",\n          \"link\": {\n            \"url\": \"https://smYmiGLCbN.fsrjf-Kx.1SkpSnWz3uxeWHoSaztN9xIk\"\n          }\n        },\n        \"mention\": {\n          \"key_0\": 2397,\n          \"key_1\": 8835\n        },\n        \"equation\": {\n          \"expression\": \"string\"\n        },\n        \"annotations\": {\n          \"bold\": false,\n          \"italic\": true,\n          \"strikethrough\": false,\n          \"underline\": false,\n          \"code\": false,\n          \"color\": \"string\"\n        },\n        \"href\": \"http://AVBYwRqYbuHTyRQjxWgkINAqC.gtLWD.iOMZ9CarCh\"\n      },\n      {\n        \"type\": \"mention\",\n        \"plain_text\": \"string\",\n        \"text\": {\n          \"content\": \"string\",\n          \"link\": {\n            \"url\": \"http://kLTfS.gtitxtNS0GK9fbjTBT.rrHWCWkF2ZieYRoXx1Gp6lIfPjTKAAQBPz\"\n          }\n        },\n        \"mention\": {\n          \"key_0\": \"string\"\n        },\n        \"equation\": {\n          \"expression\": \"string\"\n        },\n        \"annotations\": {\n          \"bold\": true,\n          \"italic\": true,\n          \"strikethrough\": true,\n          \"underline\": true,\n          \"code\": false,\n          \"color\": \"string\"\n        },\n        \"href\": \"https://WOsVSzxnhbIQGRrKFtsB.oizG3AAYaYOzSl..ByO+AvZVTxwhLZbAmvM\"\n      }\n    ]\n  },\n  \"public_url\": \"https://qUHVzRK.fbjeWe6jzSg11fEkvxpCvaGfnOBwoQi641q1iCgl4I7j\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7531ef42-4ee8-4564-bfc6-d87b287c1647",
+              "name": "The request was invalid or malformed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": {\n    \"key_0\": true\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"string\",\n    \"external\": {\n      \"url\": \"http://gSdQmCSqmsAH.ccKPaOXqTzj\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "892e9bc6-8451-4220-b47e-a27b11f12acf",
+              "name": "The bearer token is missing, invalid, or the integration lacks access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": {\n    \"key_0\": true\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"string\",\n    \"external\": {\n      \"url\": \"http://gSdQmCSqmsAH.ccKPaOXqTzj\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0ad0d0be-7905-409a-9b08-f0d183b9df87",
+              "name": "The requested resource does not exist or the integration lacks access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": {\n    \"key_0\": true\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"string\",\n    \"external\": {\n      \"url\": \"http://gSdQmCSqmsAH.ccKPaOXqTzj\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "00ab190e-c294-48b0-b483-55dccd8086ad",
+              "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"properties\": {\n    \"key_0\": true\n  },\n  \"archived\": \"<boolean>\",\n  \"icon\": {\n    \"type\": \"string\",\n    \"emoji\": \"string\"\n  },\n  \"cover\": {\n    \"type\": \"string\",\n    \"external\": {\n      \"url\": \"http://gSdQmCSqmsAH.ccKPaOXqTzj\"\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "2091"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bc3a2f6d-b064-46ee-aa18-a066fb87b499",
+          "name": "Notion Retrieve a page property item",
+          "request": {
+            "name": "Notion Retrieve a page property item",
+            "description": {
+              "content": "Retrieves a property item from a page. For paginated properties like rich text, relation, rollup, and people, this endpoint returns a paginated list. For all other property types, it returns a single property item.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "pages",
+                ":page_id",
+                "properties",
+                ":property_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "start_cursor",
+                  "value": "<string>",
+                  "description": "Pagination cursor for paginated property types. If supplied, returns results starting after the cursor."
                 },
                 {
                   "disabled": false,
-                  "description": {
-                    "content": "The number of seconds to wait before retrying.",
-                    "type": "text/plain"
-                  },
-                  "key": "Retry-After",
-                  "value": "<integer>"
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Maximum number of property items to return (max 100)."
                 }
               ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "page_id",
+                  "description": "(Required) The ID of the page."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "property_id",
+                  "description": "(Required) The ID of the property to retrieve."
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                "key": "Notion-Version",
+                "value": "2022-06-28"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9142e0e1-1c6c-4cee-86f1-09c3362c18ca",
+              "name": "Property item successfully retrieved.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id",
+                    "properties",
+                    ":property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "property_id",
+                      "description": "(Required) The ID of the property to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
               "cookie": [],
-              "responseTime": null,
-              "body": "{\n  \"object\": \"<string>\",\n  \"status\": \"<integer>\",\n  \"code\": \"<string>\",\n  \"message\": \"<string>\",\n  \"request_id\": \"<string>\"\n}",
-              "createdAt": "2026-08-03T11:21:35.000Z",
-              "updatedAt": "2026-08-03T11:21:35.000Z",
-              "uid": "35240-1ceaed4a-016c-40d2-aa40-2a9445923e5b"
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "080f32a7-18d6-43a4-a634-f493b0fada45",
+              "name": "The bearer token is missing, invalid, or the integration lacks access.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id",
+                    "properties",
+                    ":property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "property_id",
+                      "description": "(Required) The ID of the property to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d6bb90b-065d-4f12-851b-02fb31af4f40",
+              "name": "The requested resource does not exist or the integration lacks access to it.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id",
+                    "properties",
+                    ":property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "property_id",
+                      "description": "(Required) The ID of the property to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d91e535e-3fe4-4cfa-94ba-56edf6292fa7",
+              "name": "The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "pages",
+                    ":page_id",
+                    "properties",
+                    ":property_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "start_cursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "page_id",
+                      "description": "(Required) The ID of the page."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "property_id",
+                      "description": "(Required) The ID of the property to retrieve."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.",
+                    "key": "Notion-Version",
+                    "value": "2022-06-28"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "disabled": false,
+                  "description": "The number of seconds to wait before retrying.",
+                  "key": "Retry-After",
+                  "value": "2091"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"object\": \"string\",\n  \"status\": 8237,\n  \"code\": \"string\",\n  \"message\": \"string\",\n  \"request_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
             }
           ],
-          "createdAt": "2026-08-03T11:21:35.000Z",
-          "updatedAt": "2026-08-03T11:21:35.000Z",
-          "uid": "35240-1763a686-c429-491f-857c-0854cce16920"
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
         }
       ],
-      "id": "7dcaa0f6-2a9f-4860-82ea-d459372b85b3",
-      "createdAt": "2026-08-03T11:21:35.000Z",
-      "updatedAt": "2026-08-03T11:21:35.000Z",
-      "uid": "35240-7dcaa0f6-2a9f-4860-82ea-d459372b85b3"
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.notion.com/v1",
+      "key": "baseUrl"
     }
   ],
   "auth": {
@@ -1479,15 +1488,17 @@
     "bearer": [
       {
         "key": "token",
-        "value": "{{bearerToken}}",
-        "type": "string"
+        "value": "{{bearerToken}}"
       }
     ]
   },
-  "variable": [
-    {
-      "key": "baseUrl",
-      "value": "https://api.notion.com/v1"
+  "info": {
+    "_postman_id": "efc6d5e6-9e57-41f3-9136-212be377f510",
+    "name": "Notion Blocks Pages API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.\n\nContact Support:\n Name: Notion Labs Inc.\n Email: developers@makenotion.com",
+      "type": "text/plain"
     }
-  ]
+  }
 }
