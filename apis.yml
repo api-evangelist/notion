@@ -1133,4 +1133,4 @@ description: Notion is an all-in-one workspace that combines notes, tasks, wikis
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
-specificationVersion: '0.19'
+specificationVersion: '0.23'
