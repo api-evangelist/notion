@@ -577,6 +577,8 @@ apis:
     or get information about the current bot integration.
   humanURL: https://developers.notion.com
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
@@ -685,6 +687,17 @@ apis:
     url: graphql/notion-graphql.md
 name: Notion
 tags:
+- Collaboration
+- Database
+- Ideas
+- Notes
+- Productivity
+- Project
+- T1
+- Task
+- Wiki
+- Workspace
+tags_raw:
 - Collaboration
 - Database
 - Ideas
