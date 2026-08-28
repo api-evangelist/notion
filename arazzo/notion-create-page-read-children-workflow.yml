@@ -12,8 +12,11 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: notionApi
-  url: ../openapi/notion-openapi.yml
+- name: blocksApi
+  url: ../openapi/notion-blocks-api-openapi.yml
+  type: openapi
+- name: pagesApi
+  url: ../openapi/notion-pages-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-page-read-children

@@ -12,8 +12,8 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: notionApi
-  url: ../openapi/notion-openapi.yml
+- name: commentsApi
+  url: ../openapi/notion-comments-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: comment-thread-reply

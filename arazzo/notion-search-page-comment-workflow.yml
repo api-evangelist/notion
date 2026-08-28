@@ -12,8 +12,14 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: notionApi
-  url: ../openapi/notion-openapi.yml
+- name: commentsApi
+  url: ../openapi/notion-comments-api-openapi.yml
+  type: openapi
+- name: pagesApi
+  url: ../openapi/notion-pages-api-openapi.yml
+  type: openapi
+- name: searchApi
+  url: ../openapi/notion-search-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: search-page-comment
