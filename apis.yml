@@ -236,6 +236,8 @@ apis:
     Use these endpoints to create, retrieve, update, and query databases.
   humanURL: https://developers.notion.com
   tags:
+  - Database
+  tags_raw:
   - Databases
   properties:
   - type: OpenAPI
