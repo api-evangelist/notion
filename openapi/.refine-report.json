@@ -1,12 +1,7 @@
 {
   "provider": "notion",
   "sources": [
-    "notion-blocks-api-openapi.yml",
-    "notion-comments-api-openapi.yml",
-    "notion-databases-api-openapi.yml",
-    "notion-pages-api-openapi.yml",
-    "notion-search-api-openapi.yml",
-    "notion-users-api-openapi.yml"
+    "_original/notion-openapi.yml"
   ],
   "outputs": [
     "notion-blocks-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "notion-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "notion-blocks-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "notion-comments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "notion-databases-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "notion-pages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "notion-search-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "notion-users-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Notion Blocks Comments API
+  title: Notion Comments API
   description: The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.
   version: 2022-06-28
   contact:
@@ -118,6 +118,36 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
+  responses:
+    RateLimited:
+      description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        Retry-After:
+          description: The number of seconds to wait before retrying.
+          schema:
+            type: integer
+    NotFound:
+      description: The requested resource does not exist or the integration lacks access to it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The bearer token is missing, invalid, or the integration lacks access.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   schemas:
     PaginatedList:
       type: object
@@ -152,6 +182,101 @@ components:
       - results
       - next_cursor
       - has_more
+    PartialUser:
+      type: object
+      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
+      properties:
+        object:
+          type: string
+          description: Always "user".
+          const: user
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the user.
+      required:
+      - object
+      - id
+    Comment:
+      type: object
+      description: A Comment object represents a comment on a Notion page or block. Comments contain rich text content and are associated with discussion threads.
+      properties:
+        object:
+          type: string
+          description: Always "comment" for comment objects.
+          const: comment
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the comment.
+        parent:
+          type: object
+          description: The parent page or block the comment belongs to.
+          properties:
+            type:
+              type: string
+              enum:
+              - page_id
+              - block_id
+            page_id:
+              type: string
+              format: uuid
+            block_id:
+              type: string
+              format: uuid
+        discussion_id:
+          type: string
+          format: uuid
+          description: The ID of the discussion thread the comment belongs to.
+        created_time:
+          type: string
+          format: date-time
+          description: Date and time when the comment was created (ISO 8601).
+        last_edited_time:
+          type: string
+          format: date-time
+          description: Date and time when the comment was last edited (ISO 8601).
+        created_by:
+          $ref: '#/components/schemas/PartialUser'
+        rich_text:
+          type: array
+          description: Rich text content of the comment.
+          items:
+            $ref: '#/components/schemas/RichText'
+      required:
+      - object
+      - id
+      - parent
+      - discussion_id
+      - created_time
+      - last_edited_time
+      - created_by
+      - rich_text
+    Error:
+      type: object
+      description: An error response from the Notion API.
+      properties:
+        object:
+          type: string
+          description: Always "error" for error responses.
+          const: error
+        status:
+          type: integer
+          description: The HTTP status code.
+        code:
+          type: string
+          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
+        message:
+          type: string
+          description: A human-readable error message.
+        request_id:
+          type: string
+          description: A unique identifier for the failed request.
+      required:
+      - object
+      - status
+      - code
+      - message
     RichText:
       type: object
       description: A Rich Text object represents styled text content in Notion. Rich text can include annotations like bold, italic, and color, as well as links and mentions of other Notion objects.
@@ -225,131 +350,6 @@ components:
       required:
       - type
       - plain_text
-    Comment:
-      type: object
-      description: A Comment object represents a comment on a Notion page or block. Comments contain rich text content and are associated with discussion threads.
-      properties:
-        object:
-          type: string
-          description: Always "comment" for comment objects.
-          const: comment
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the comment.
-        parent:
-          type: object
-          description: The parent page or block the comment belongs to.
-          properties:
-            type:
-              type: string
-              enum:
-              - page_id
-              - block_id
-            page_id:
-              type: string
-              format: uuid
-            block_id:
-              type: string
-              format: uuid
-        discussion_id:
-          type: string
-          format: uuid
-          description: The ID of the discussion thread the comment belongs to.
-        created_time:
-          type: string
-          format: date-time
-          description: Date and time when the comment was created (ISO 8601).
-        last_edited_time:
-          type: string
-          format: date-time
-          description: Date and time when the comment was last edited (ISO 8601).
-        created_by:
-          $ref: '#/components/schemas/PartialUser'
-        rich_text:
-          type: array
-          description: Rich text content of the comment.
-          items:
-            $ref: '#/components/schemas/RichText'
-      required:
-      - object
-      - id
-      - parent
-      - discussion_id
-      - created_time
-      - last_edited_time
-      - created_by
-      - rich_text
-    PartialUser:
-      type: object
-      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
-      properties:
-        object:
-          type: string
-          description: Always "user".
-          const: user
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the user.
-      required:
-      - object
-      - id
-    Error:
-      type: object
-      description: An error response from the Notion API.
-      properties:
-        object:
-          type: string
-          description: Always "error" for error responses.
-          const: error
-        status:
-          type: integer
-          description: The HTTP status code.
-        code:
-          type: string
-          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
-        message:
-          type: string
-          description: A human-readable error message.
-        request_id:
-          type: string
-          description: A unique identifier for the failed request.
-      required:
-      - object
-      - status
-      - code
-      - message
-  responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or the integration lacks access.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      headers:
-        Retry-After:
-          description: The number of seconds to wait before retrying.
-          schema:
-            type: integer
-    BadRequest:
-      description: The request was invalid or malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource does not exist or the integration lacks access to it.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   parameters:
     NotionVersion:
       name: Notion-Version

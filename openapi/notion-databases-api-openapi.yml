@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Notion Blocks Databases API
+  title: Notion Databases API
   description: The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.
   version: 2022-06-28
   contact:
@@ -266,6 +266,133 @@ paths:
           $ref: '#/components/responses/RateLimited'
 components:
   schemas:
+    File:
+      type: object
+      description: A File object represents a file in Notion. Files can be either hosted by Notion (type "file") or externally hosted (type "external").
+      properties:
+        type:
+          type: string
+          description: The type of file hosting.
+          enum:
+          - file
+          - external
+        file:
+          type: object
+          description: Notion-hosted file details. Present when type is "file". These URLs expire after one hour.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The authenticated S3 URL for the file.
+            expiry_time:
+              type: string
+              format: date-time
+              description: The expiration time of the URL.
+        external:
+          type: object
+          description: External file details. Present when type is "external".
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The URL of the externally hosted file.
+        name:
+          type: string
+          description: The name of the file.
+        caption:
+          type: array
+          description: Caption for the file as rich text.
+          items:
+            $ref: '#/components/schemas/RichText'
+      required:
+      - type
+    Emoji:
+      type: object
+      description: An emoji icon object.
+      properties:
+        type:
+          type: string
+          const: emoji
+          description: Always "emoji".
+        emoji:
+          type: string
+          description: The emoji character.
+      required:
+      - type
+      - emoji
+    RichText:
+      type: object
+      description: A Rich Text object represents styled text content in Notion. Rich text can include annotations like bold, italic, and color, as well as links and mentions of other Notion objects.
+      properties:
+        type:
+          type: string
+          description: The type of this rich text object.
+          enum:
+          - text
+          - mention
+          - equation
+        text:
+          type: object
+          description: Text content and optional link. Present when type is "text".
+          properties:
+            content:
+              type: string
+              description: The actual text content.
+            link:
+              type:
+              - object
+              - 'null'
+              description: Optional link within the text.
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: The URL the text links to.
+        mention:
+          type: object
+          description: Mention content. Present when type is "mention". Can reference users, pages, databases, dates, or link previews.
+          additionalProperties: true
+        equation:
+          type: object
+          description: Equation content in KaTeX format. Present when type is "equation".
+          properties:
+            expression:
+              type: string
+              description: The LaTeX equation expression.
+        annotations:
+          type: object
+          description: Styling annotations applied to the text.
+          properties:
+            bold:
+              type: boolean
+              description: Whether the text is bold.
+            italic:
+              type: boolean
+              description: Whether the text is italic.
+            strikethrough:
+              type: boolean
+              description: Whether the text has a strikethrough.
+            underline:
+              type: boolean
+              description: Whether the text is underlined.
+            code:
+              type: boolean
+              description: Whether the text is formatted as inline code.
+            color:
+              type: string
+              description: The color of the text. Possible values include default, gray, brown, orange, yellow, green, blue, purple, pink, red, and their background variants (e.g., gray_background).
+        plain_text:
+          type: string
+          description: The plain text content without annotations.
+        href:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The URL of any link in the text, or null.
+      required:
+      - type
+      - plain_text
     PaginatedList:
       type: object
       description: A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.
@@ -299,20 +426,95 @@ components:
       - results
       - next_cursor
       - has_more
-    Emoji:
+    Parent:
       type: object
-      description: An emoji icon object.
+      description: A Parent object represents the parent of a page, database, or block. The parent can be a workspace, page, database, or block.
       properties:
         type:
           type: string
-          const: emoji
-          description: Always "emoji".
-        emoji:
+          description: The type of parent.
+          enum:
+          - database_id
+          - page_id
+          - block_id
+          - workspace
+        database_id:
           type: string
-          description: The emoji character.
+          format: uuid
+          description: The ID of the parent database. Present when type is "database_id".
+        page_id:
+          type: string
+          format: uuid
+          description: The ID of the parent page. Present when type is "page_id".
+        block_id:
+          type: string
+          format: uuid
+          description: The ID of the parent block. Present when type is "block_id".
+        workspace:
+          type: boolean
+          description: Always true when the parent is the workspace. Present when type is "workspace".
       required:
       - type
-      - emoji
+    PartialUser:
+      type: object
+      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
+      properties:
+        object:
+          type: string
+          description: Always "user".
+          const: user
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the user.
+      required:
+      - object
+      - id
+    Error:
+      type: object
+      description: An error response from the Notion API.
+      properties:
+        object:
+          type: string
+          description: Always "error" for error responses.
+          const: error
+        status:
+          type: integer
+          description: The HTTP status code.
+        code:
+          type: string
+          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
+        message:
+          type: string
+          description: A human-readable error message.
+        request_id:
+          type: string
+          description: A unique identifier for the failed request.
+      required:
+      - object
+      - status
+      - code
+      - message
+    ExternalFile:
+      type: object
+      description: An external file reference.
+      properties:
+        type:
+          type: string
+          const: external
+          description: Always "external".
+        external:
+          type: object
+          required:
+          - url
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The URL of the external file.
+      required:
+      - type
+      - external
     Database:
       type: object
       description: A Database object represents a database in Notion. Databases are collections of pages that share a common schema of properties. The schema defines the columns and their types that all pages in the database will have.
@@ -397,46 +599,6 @@ components:
       - parent
       - url
       - archived
-    File:
-      type: object
-      description: A File object represents a file in Notion. Files can be either hosted by Notion (type "file") or externally hosted (type "external").
-      properties:
-        type:
-          type: string
-          description: The type of file hosting.
-          enum:
-          - file
-          - external
-        file:
-          type: object
-          description: Notion-hosted file details. Present when type is "file". These URLs expire after one hour.
-          properties:
-            url:
-              type: string
-              format: uri
-              description: The authenticated S3 URL for the file.
-            expiry_time:
-              type: string
-              format: date-time
-              description: The expiration time of the URL.
-        external:
-          type: object
-          description: External file details. Present when type is "external".
-          properties:
-            url:
-              type: string
-              format: uri
-              description: The URL of the externally hosted file.
-        name:
-          type: string
-          description: The name of the file.
-        caption:
-          type: array
-          description: Caption for the file as rich text.
-          items:
-            $ref: '#/components/schemas/RichText'
-      required:
-      - type
     PropertySchema:
       type: object
       description: A Property Schema object defines a database property's configuration including its type and type-specific settings. Common property types include title, rich_text, number, select, multi_select, date, people, files, checkbox, url, email, phone_number, formula, relation, rollup, created_time, created_by, last_edited_time, last_edited_by, and status.
@@ -474,175 +636,7 @@ components:
           - unique_id
           - verification
       additionalProperties: true
-    RichText:
-      type: object
-      description: A Rich Text object represents styled text content in Notion. Rich text can include annotations like bold, italic, and color, as well as links and mentions of other Notion objects.
-      properties:
-        type:
-          type: string
-          description: The type of this rich text object.
-          enum:
-          - text
-          - mention
-          - equation
-        text:
-          type: object
-          description: Text content and optional link. Present when type is "text".
-          properties:
-            content:
-              type: string
-              description: The actual text content.
-            link:
-              type:
-              - object
-              - 'null'
-              description: Optional link within the text.
-              properties:
-                url:
-                  type: string
-                  format: uri
-                  description: The URL the text links to.
-        mention:
-          type: object
-          description: Mention content. Present when type is "mention". Can reference users, pages, databases, dates, or link previews.
-          additionalProperties: true
-        equation:
-          type: object
-          description: Equation content in KaTeX format. Present when type is "equation".
-          properties:
-            expression:
-              type: string
-              description: The LaTeX equation expression.
-        annotations:
-          type: object
-          description: Styling annotations applied to the text.
-          properties:
-            bold:
-              type: boolean
-              description: Whether the text is bold.
-            italic:
-              type: boolean
-              description: Whether the text is italic.
-            strikethrough:
-              type: boolean
-              description: Whether the text has a strikethrough.
-            underline:
-              type: boolean
-              description: Whether the text is underlined.
-            code:
-              type: boolean
-              description: Whether the text is formatted as inline code.
-            color:
-              type: string
-              description: The color of the text. Possible values include default, gray, brown, orange, yellow, green, blue, purple, pink, red, and their background variants (e.g., gray_background).
-        plain_text:
-          type: string
-          description: The plain text content without annotations.
-        href:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The URL of any link in the text, or null.
-      required:
-      - type
-      - plain_text
-    Parent:
-      type: object
-      description: A Parent object represents the parent of a page, database, or block. The parent can be a workspace, page, database, or block.
-      properties:
-        type:
-          type: string
-          description: The type of parent.
-          enum:
-          - database_id
-          - page_id
-          - block_id
-          - workspace
-        database_id:
-          type: string
-          format: uuid
-          description: The ID of the parent database. Present when type is "database_id".
-        page_id:
-          type: string
-          format: uuid
-          description: The ID of the parent page. Present when type is "page_id".
-        block_id:
-          type: string
-          format: uuid
-          description: The ID of the parent block. Present when type is "block_id".
-        workspace:
-          type: boolean
-          description: Always true when the parent is the workspace. Present when type is "workspace".
-      required:
-      - type
-    ExternalFile:
-      type: object
-      description: An external file reference.
-      properties:
-        type:
-          type: string
-          const: external
-          description: Always "external".
-        external:
-          type: object
-          required:
-          - url
-          properties:
-            url:
-              type: string
-              format: uri
-              description: The URL of the external file.
-      required:
-      - type
-      - external
-    PartialUser:
-      type: object
-      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
-      properties:
-        object:
-          type: string
-          description: Always "user".
-          const: user
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the user.
-      required:
-      - object
-      - id
-    Error:
-      type: object
-      description: An error response from the Notion API.
-      properties:
-        object:
-          type: string
-          description: Always "error" for error responses.
-          const: error
-        status:
-          type: integer
-          description: The HTTP status code.
-        code:
-          type: string
-          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
-        message:
-          type: string
-          description: A human-readable error message.
-        request_id:
-          type: string
-          description: A unique identifier for the failed request.
-      required:
-      - object
-      - status
-      - code
-      - message
   responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or the integration lacks access.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     RateLimited:
       description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
       content:
@@ -654,14 +648,20 @@ components:
           description: The number of seconds to wait before retrying.
           schema:
             type: integer
-    BadRequest:
-      description: The request was invalid or malformed.
+    Unauthorized:
+      description: The bearer token is missing, invalid, or the integration lacks access.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource does not exist or the integration lacks access to it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or malformed.
       content:
         application/json:
           schema:

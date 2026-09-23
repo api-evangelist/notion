@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: Notion Blocks API
   description: The Notion API allows developers to integrate with Notion workspaces programmatically. Build integrations that connect Notion with other tools, automate workflows, and manage workspace content including pages, databases, blocks, users, comments, and search. Notion is an all-in-one workspace that combines notes, tasks, wikis, and databases into a flexible, collaborative platform.
@@ -224,39 +224,6 @@ paths:
           $ref: '#/components/responses/RateLimited'
 components:
   schemas:
-    PaginatedList:
-      type: object
-      description: A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.
-      properties:
-        object:
-          type: string
-          description: Always "list" for paginated responses.
-          const: list
-        results:
-          type: array
-          description: The array of result objects for the current page.
-          items:
-            type: object
-            additionalProperties: true
-        next_cursor:
-          type:
-          - string
-          - 'null'
-          description: The cursor to use for the next page of results, or null if there are no more results.
-        has_more:
-          type: boolean
-          description: Whether there are more results available beyond this page.
-        type:
-          type: string
-          description: The type of objects in the results array.
-        request_id:
-          type: string
-          description: A unique identifier for this API request.
-      required:
-      - object
-      - results
-      - next_cursor
-      - has_more
     Block:
       type: object
       description: A Block object represents a piece of content within a Notion page. Blocks are the building blocks of all page content and can be of many types including paragraphs, headings, lists, images, code, tables, and more. Blocks can contain other blocks as children, forming a tree structure.
@@ -336,6 +303,54 @@ components:
       - created_time
       - last_edited_time
       - has_children
+    PaginatedList:
+      type: object
+      description: A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.
+      properties:
+        object:
+          type: string
+          description: Always "list" for paginated responses.
+          const: list
+        results:
+          type: array
+          description: The array of result objects for the current page.
+          items:
+            type: object
+            additionalProperties: true
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: The cursor to use for the next page of results, or null if there are no more results.
+        has_more:
+          type: boolean
+          description: Whether there are more results available beyond this page.
+        type:
+          type: string
+          description: The type of objects in the results array.
+        request_id:
+          type: string
+          description: A unique identifier for this API request.
+      required:
+      - object
+      - results
+      - next_cursor
+      - has_more
+    PartialUser:
+      type: object
+      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
+      properties:
+        object:
+          type: string
+          description: Always "user".
+          const: user
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the user.
+      required:
+      - object
+      - id
     Parent:
       type: object
       description: A Parent object represents the parent of a page, database, or block. The parent can be a workspace, page, database, or block.
@@ -365,21 +380,6 @@ components:
           description: Always true when the parent is the workspace. Present when type is "workspace".
       required:
       - type
-    PartialUser:
-      type: object
-      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
-      properties:
-        object:
-          type: string
-          description: Always "user".
-          const: user
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the user.
-      required:
-      - object
-      - id
     Error:
       type: object
       description: An error response from the Notion API.
@@ -406,12 +406,6 @@ components:
       - code
       - message
   responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or the integration lacks access.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     RateLimited:
       description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
       content:
@@ -423,14 +417,20 @@ components:
           description: The number of seconds to wait before retrying.
           schema:
             type: integer
-    BadRequest:
-      description: The request was invalid or malformed.
+    Unauthorized:
+      description: The bearer token is missing, invalid, or the integration lacks access.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
     NotFound:
       description: The requested resource does not exist or the integration lacks access to it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or malformed.
       content:
         application/json:
           schema:
