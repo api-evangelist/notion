@@ -113,8 +113,6 @@ apis:
     url: https://developers.notion.com/reference/refresh-a-token
   - type: TokenRevokeAPI
     url: https://developers.notion.com/reference/revoke-token
-  - type: GraphQL
-    url: graphql/notion-graphql.md
 - aid: notion:notion-comments-api
   name: Notion Comments API
   description: >-
@@ -226,8 +224,6 @@ apis:
     url: https://developers.notion.com/reference/refresh-a-token
   - type: TokenRevokeAPI
     url: https://developers.notion.com/reference/revoke-token
-  - type: GraphQL
-    url: graphql/notion-graphql.md
 - aid: notion:notion-databases-api
   name: Notion Databases API
   description: >-
@@ -342,8 +338,6 @@ apis:
     url: https://developers.notion.com/reference/refresh-a-token
   - type: TokenRevokeAPI
     url: https://developers.notion.com/reference/revoke-token
-  - type: GraphQL
-    url: graphql/notion-graphql.md
 - aid: notion:notion-pages-api
   name: Notion Pages API
   description: >-
@@ -456,8 +450,6 @@ apis:
     url: https://developers.notion.com/reference/refresh-a-token
   - type: TokenRevokeAPI
     url: https://developers.notion.com/reference/revoke-token
-  - type: GraphQL
-    url: graphql/notion-graphql.md
 - aid: notion:notion-search-api
   name: Notion Search API
   description: >-
@@ -569,8 +561,6 @@ apis:
     url: https://developers.notion.com/reference/refresh-a-token
   - type: TokenRevokeAPI
     url: https://developers.notion.com/reference/revoke-token
-  - type: GraphQL
-    url: graphql/notion-graphql.md
 - aid: notion:notion-users-api
   name: Notion Users API
   description: >-
@@ -685,8 +675,6 @@ apis:
     url: https://developers.notion.com/reference/refresh-a-token
   - type: TokenRevokeAPI
     url: https://developers.notion.com/reference/revoke-token
-  - type: GraphQL
-    url: graphql/notion-graphql.md
 name: Notion
 tags:
 - Collaboration
