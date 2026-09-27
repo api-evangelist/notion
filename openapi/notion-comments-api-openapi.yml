@@ -118,36 +118,6 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
-  responses:
-    RateLimited:
-      description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      headers:
-        Retry-After:
-          description: The number of seconds to wait before retrying.
-          schema:
-            type: integer
-    NotFound:
-      description: The requested resource does not exist or the integration lacks access to it.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    Unauthorized:
-      description: The bearer token is missing, invalid, or the integration lacks access.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was invalid or malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
   schemas:
     PaginatedList:
       type: object
@@ -182,21 +152,6 @@ components:
       - results
       - next_cursor
       - has_more
-    PartialUser:
-      type: object
-      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
-      properties:
-        object:
-          type: string
-          description: Always "user".
-          const: user
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the user.
-      required:
-      - object
-      - id
     Comment:
       type: object
       description: A Comment object represents a comment on a Notion page or block. Comments contain rich text content and are associated with discussion threads.
@@ -277,6 +232,21 @@ components:
       - status
       - code
       - message
+    PartialUser:
+      type: object
+      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
+      properties:
+        object:
+          type: string
+          description: Always "user".
+          const: user
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the user.
+      required:
+      - object
+      - id
     RichText:
       type: object
       description: A Rich Text object represents styled text content in Notion. Rich text can include annotations like bold, italic, and color, as well as links and mentions of other Notion objects.
@@ -350,6 +320,36 @@ components:
       required:
       - type
       - plain_text
+  responses:
+    NotFound:
+      description: The requested resource does not exist or the integration lacks access to it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The bearer token is missing, invalid, or the integration lacks access.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        Retry-After:
+          description: The number of seconds to wait before retrying.
+          schema:
+            type: integer
   parameters:
     NotionVersion:
       name: Notion-Version
