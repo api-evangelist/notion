@@ -112,64 +112,6 @@ paths:
           $ref: '#/components/responses/RateLimited'
 components:
   schemas:
-    PaginatedList:
-      type: object
-      description: A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.
-      properties:
-        object:
-          type: string
-          description: Always "list" for paginated responses.
-          const: list
-        results:
-          type: array
-          description: The array of result objects for the current page.
-          items:
-            type: object
-            additionalProperties: true
-        next_cursor:
-          type:
-          - string
-          - 'null'
-          description: The cursor to use for the next page of results, or null if there are no more results.
-        has_more:
-          type: boolean
-          description: Whether there are more results available beyond this page.
-        type:
-          type: string
-          description: The type of objects in the results array.
-        request_id:
-          type: string
-          description: A unique identifier for this API request.
-      required:
-      - object
-      - results
-      - next_cursor
-      - has_more
-    Error:
-      type: object
-      description: An error response from the Notion API.
-      properties:
-        object:
-          type: string
-          description: Always "error" for error responses.
-          const: error
-        status:
-          type: integer
-          description: The HTTP status code.
-        code:
-          type: string
-          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
-        message:
-          type: string
-          description: A human-readable error message.
-        request_id:
-          type: string
-          description: A unique identifier for the failed request.
-      required:
-      - object
-      - status
-      - code
-      - message
     User:
       type: object
       description: A User object represents a user in a Notion workspace. Users can be either people (human workspace members) or bots (API integrations). User objects include identifying information such as name, email, and avatar URL.
@@ -231,13 +173,65 @@ components:
       required:
       - object
       - id
+    PaginatedList:
+      type: object
+      description: A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.
+      properties:
+        object:
+          type: string
+          description: Always "list" for paginated responses.
+          const: list
+        results:
+          type: array
+          description: The array of result objects for the current page.
+          items:
+            type: object
+            additionalProperties: true
+        next_cursor:
+          type:
+          - string
+          - 'null'
+          description: The cursor to use for the next page of results, or null if there are no more results.
+        has_more:
+          type: boolean
+          description: Whether there are more results available beyond this page.
+        type:
+          type: string
+          description: The type of objects in the results array.
+        request_id:
+          type: string
+          description: A unique identifier for this API request.
+      required:
+      - object
+      - results
+      - next_cursor
+      - has_more
+    Error:
+      type: object
+      description: An error response from the Notion API.
+      properties:
+        object:
+          type: string
+          description: Always "error" for error responses.
+          const: error
+        status:
+          type: integer
+          description: The HTTP status code.
+        code:
+          type: string
+          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
+        message:
+          type: string
+          description: A human-readable error message.
+        request_id:
+          type: string
+          description: A unique identifier for the failed request.
+      required:
+      - object
+      - status
+      - code
+      - message
   responses:
-    NotFound:
-      description: The requested resource does not exist or the integration lacks access to it.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: The bearer token is missing, invalid, or the integration lacks access.
       content:
@@ -255,6 +249,12 @@ components:
           description: The number of seconds to wait before retrying.
           schema:
             type: integer
+    NotFound:
+      description: The requested resource does not exist or the integration lacks access to it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
   parameters:
     NotionVersion:
       name: Notion-Version
