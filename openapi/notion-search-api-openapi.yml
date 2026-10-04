@@ -94,9 +94,26 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
+  parameters:
+    NotionVersion:
+      name: Notion-Version
+      in: header
+      required: true
+      description: The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.
+      schema:
+        type: string
+        default: '2022-06-28'
+        examples:
+        - '2022-06-28'
   responses:
     Unauthorized:
       description: The bearer token is missing, invalid, or the integration lacks access.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or malformed.
       content:
         application/json:
           schema:
@@ -112,23 +129,6 @@ components:
           description: The number of seconds to wait before retrying.
           schema:
             type: integer
-    BadRequest:
-      description: The request was invalid or malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    NotionVersion:
-      name: Notion-Version
-      in: header
-      required: true
-      description: The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.
-      schema:
-        type: string
-        default: '2022-06-28'
-        examples:
-        - '2022-06-28'
   schemas:
     PaginatedList:
       type: object

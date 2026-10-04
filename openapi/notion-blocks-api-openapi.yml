@@ -223,77 +223,22 @@ paths:
         '429':
           $ref: '#/components/responses/RateLimited'
 components:
-  responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or the integration lacks access.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    RateLimited:
-      description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-      headers:
-        Retry-After:
-          description: The number of seconds to wait before retrying.
-          schema:
-            type: integer
-    NotFound:
-      description: The requested resource does not exist or the integration lacks access to it.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was invalid or malformed.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    NotionVersion:
-      name: Notion-Version
-      in: header
-      required: true
-      description: The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.
-      schema:
-        type: string
-        default: '2022-06-28'
-        examples:
-        - '2022-06-28'
   schemas:
-    Parent:
+    PartialUser:
       type: object
-      description: A Parent object represents the parent of a page, database, or block. The parent can be a workspace, page, database, or block.
+      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
       properties:
-        type:
+        object:
           type: string
-          description: The type of parent.
-          enum:
-          - database_id
-          - page_id
-          - block_id
-          - workspace
-        database_id:
+          description: Always "user".
+          const: user
+        id:
           type: string
           format: uuid
-          description: The ID of the parent database. Present when type is "database_id".
-        page_id:
-          type: string
-          format: uuid
-          description: The ID of the parent page. Present when type is "page_id".
-        block_id:
-          type: string
-          format: uuid
-          description: The ID of the parent block. Present when type is "block_id".
-        workspace:
-          type: boolean
-          description: Always true when the parent is the workspace. Present when type is "workspace".
+          description: Unique identifier for the user.
       required:
-      - type
+      - object
+      - id
     PaginatedList:
       type: object
       description: A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.
@@ -327,21 +272,6 @@ components:
       - results
       - next_cursor
       - has_more
-    PartialUser:
-      type: object
-      description: A partial User object containing only the object type and ID. Used in created_by and last_edited_by fields.
-      properties:
-        object:
-          type: string
-          description: Always "user".
-          const: user
-        id:
-          type: string
-          format: uuid
-          description: Unique identifier for the user.
-      required:
-      - object
-      - id
     Block:
       type: object
       description: A Block object represents a piece of content within a Notion page. Blocks are the building blocks of all page content and can be of many types including paragraphs, headings, lists, images, code, tables, and more. Blocks can contain other blocks as children, forming a tree structure.
@@ -446,6 +376,76 @@ components:
       - status
       - code
       - message
+    Parent:
+      type: object
+      description: A Parent object represents the parent of a page, database, or block. The parent can be a workspace, page, database, or block.
+      properties:
+        type:
+          type: string
+          description: The type of parent.
+          enum:
+          - database_id
+          - page_id
+          - block_id
+          - workspace
+        database_id:
+          type: string
+          format: uuid
+          description: The ID of the parent database. Present when type is "database_id".
+        page_id:
+          type: string
+          format: uuid
+          description: The ID of the parent page. Present when type is "page_id".
+        block_id:
+          type: string
+          format: uuid
+          description: The ID of the parent block. Present when type is "block_id".
+        workspace:
+          type: boolean
+          description: Always true when the parent is the workspace. Present when type is "workspace".
+      required:
+      - type
+  parameters:
+    NotionVersion:
+      name: Notion-Version
+      in: header
+      required: true
+      description: The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.
+      schema:
+        type: string
+        default: '2022-06-28'
+        examples:
+        - '2022-06-28'
+  responses:
+    NotFound:
+      description: The requested resource does not exist or the integration lacks access to it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The bearer token is missing, invalid, or the integration lacks access.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequest:
+      description: The request was invalid or malformed.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    RateLimited:
+      description: The request has been rate limited. Notion enforces rate limits of 3 requests per second for integrations. Retry after the specified delay.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+      headers:
+        Retry-After:
+          description: The number of seconds to wait before retrying.
+          schema:
+            type: integer
   securitySchemes:
     bearerAuth:
       type: http

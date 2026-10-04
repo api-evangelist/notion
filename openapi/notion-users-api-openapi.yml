@@ -231,7 +231,24 @@ components:
       - status
       - code
       - message
+  parameters:
+    NotionVersion:
+      name: Notion-Version
+      in: header
+      required: true
+      description: The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.
+      schema:
+        type: string
+        default: '2022-06-28'
+        examples:
+        - '2022-06-28'
   responses:
+    NotFound:
+      description: The requested resource does not exist or the integration lacks access to it.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
     Unauthorized:
       description: The bearer token is missing, invalid, or the integration lacks access.
       content:
@@ -249,23 +266,6 @@ components:
           description: The number of seconds to wait before retrying.
           schema:
             type: integer
-    NotFound:
-      description: The requested resource does not exist or the integration lacks access to it.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-  parameters:
-    NotionVersion:
-      name: Notion-Version
-      in: header
-      required: true
-      description: The version of the Notion API to use. The current version is 2022-06-28. This header is required for all API requests.
-      schema:
-        type: string
-        default: '2022-06-28'
-        examples:
-        - '2022-06-28'
   securitySchemes:
     bearerAuth:
       type: http
