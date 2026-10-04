@@ -687,6 +687,7 @@ tags:
 - Task
 - Wiki
 - Workspace
+- Knowledge Management
 tags_raw:
 - Collaboration
 - Database
@@ -698,6 +699,7 @@ tags_raw:
 - Tasks
 - Wiki
 - Workspace
+- Knowledge Management
 type: Index
 deliveryModel:
   model: open-core
