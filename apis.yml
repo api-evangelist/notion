@@ -731,6 +731,10 @@ accessModel:
 image: https://www.notion.so/images/meta/default.png
 access: 3rd-Party
 common:
+- type: Plans
+  url: plans/notion-plans-pricing.yml
+- type: FinOps
+  url: finops/notion-finops.yml
 - type: Website
   url: https://www.notion.com/
 - type: IssueTracker
