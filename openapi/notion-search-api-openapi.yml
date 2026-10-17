@@ -106,14 +106,14 @@ components:
         examples:
         - '2022-06-28'
   responses:
-    Unauthorized:
-      description: The bearer token is missing, invalid, or the integration lacks access.
+    BadRequest:
+      description: The request was invalid or malformed.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request was invalid or malformed.
+    Unauthorized:
+      description: The bearer token is missing, invalid, or the integration lacks access.
       content:
         application/json:
           schema:
@@ -130,6 +130,31 @@ components:
           schema:
             type: integer
   schemas:
+    Error:
+      type: object
+      description: An error response from the Notion API.
+      properties:
+        object:
+          type: string
+          description: Always "error" for error responses.
+          const: error
+        status:
+          type: integer
+          description: The HTTP status code.
+        code:
+          type: string
+          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
+        message:
+          type: string
+          description: A human-readable error message.
+        request_id:
+          type: string
+          description: A unique identifier for the failed request.
+      required:
+      - object
+      - status
+      - code
+      - message
     PaginatedList:
       type: object
       description: A paginated list of results returned by list and query endpoints. All paginated responses follow the same structure with a results array, pagination info, and object type.
@@ -163,31 +188,6 @@ components:
       - results
       - next_cursor
       - has_more
-    Error:
-      type: object
-      description: An error response from the Notion API.
-      properties:
-        object:
-          type: string
-          description: Always "error" for error responses.
-          const: error
-        status:
-          type: integer
-          description: The HTTP status code.
-        code:
-          type: string
-          description: A machine-readable error code. Common codes include invalid_json, invalid_request_url, invalid_request, validation_error, missing_version, unauthorized, restricted_resource, object_not_found, conflict_error, rate_limited, internal_server_error, service_unavailable, and database_connection_unavailable.
-        message:
-          type: string
-          description: A human-readable error message.
-        request_id:
-          type: string
-          description: A unique identifier for the failed request.
-      required:
-      - object
-      - status
-      - code
-      - message
   securitySchemes:
     bearerAuth:
       type: http
