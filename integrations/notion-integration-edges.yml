@@ -13,6 +13,9 @@ checked:
 - https://n8n.io/integrations/notion/
 - https://registry.modelcontextprotocol.io/v0/servers
 - https://zapier.com/apps/notion/integrations
+- microsoft-teams/integrations/microsoft-teams-integration-edges.yml
+- slack/integrations/slack-integration-edges.yml
+- zoom/integrations/zoom-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: n8n
@@ -508,4 +511,57 @@ edges:
       cloud: true
   detected_by: sweep-data-integration.py
   first_seen: '2026-10-18'
+- partner_name: Microsoft Teams (own)
+  partner: microsoft-teams
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://appsource.microsoft.com/en-us/product/office/WA200012239
+  mirror_of: microsoft-teams/integrations/microsoft-teams-integration-edges.yml
+  apps:
+  - Notion Notifications
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Microsoft Teams app
+  publisher_verified:
+  - Microsoft 365 Certified
+- partner_name: Slack (own)
+  partner: slack
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://slack.com/marketplace/A06R8RG5LAW-notion-ai
+  mirror_of: slack/integrations/slack-integration-edges.yml
+  apps:
+  - Notion AI
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Slack app
+- partner_name: Zoom (own)
+  partner: zoom
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.zoom.us/apps/GrqMaKk8T0Oq37TtM38fYA
+  mirror_of: zoom/integrations/zoom-integration-edges.yml
+  apps:
+  - Notion Calendar
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Zoom app
 templates: []
