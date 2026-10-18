@@ -107,7 +107,7 @@
       type: source
       lapsed: false
       cloud: true
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: notion-microsoft-teams-own
   label: Microsoft Teams (own)
