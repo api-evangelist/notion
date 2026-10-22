@@ -148,3 +148,85 @@
     builder: Pipedream repo (component)
   status: not-a-workflow
   arazzo: null
+- slug: notion-ismap
+  label: ISMAP
+  partner_name: ISMAP
+  category: Japan government cloud security assessment (ISMAP)
+  type: contract
+  channel: regulator-register
+  evidence: https://www.ismap.go.jp/csm?id=cloud_service_list
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: ISMAP / ISMAP-LIU cloud service lists (www.ismap.go.jp)
+    standard: ISMAP
+    spec_file: null
+    role: ismap-registered
+    registrations:
+    - register_number: C26-0120-2
+      registration_type: ISMAP
+      service: Notion
+      registered_name: Notion Labs, Inc.
+      service_url: https://www.notion.com
+      matched_domain: notion.com
+      matched_by: domain
+      evidence_url: https://www.ismap.go.jp/csm?id=cloud_service_list
+      scope_of_statement: https://www.ismap.go.jp/sys_attachment.do?sys_id=8a01821f2bf20710434ff14a6e91bf51
+    signal_note: certified_products = one entry per ISMAP registration TYPE (ISMAP, ISMAP-LIU), never per service;
+      services are context, never counted. The lists carry current registrations only (a filed renewal keeps a registration
+      valid), so lapsed is always false
+    certified_products:
+    - product: ISMAP
+      standard: ISMAP
+      registration_type: ISMAP
+      lapsed: false
+    detected_by: sweep-japan-ismap-tisax-assessments.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
+- slug: notion-obsidian
+  label: Obsidian
+  partner: obsidian
+  partner_name: Obsidian
+  category: Obsidian community plugin
+  type: marketplace
+  marketplace: obsidian-community-plugins
+  channel: community-plugin
+  evidence: https://github.com/jxpeng98/obsidian-to-NotionNext
+  source: edge
+  relationship: connector-listing
+  contract_reference:
+    register: Obsidian community-plugins.json (obsidianmd/obsidian-releases@793b5211) + plugin repo README / manifest
+      / source
+    spec_file: null
+    role: obsidian-community-plugin:community
+    registered_name: jxpeng98
+    register_id: https://github.com/jxpeng98/obsidian-to-NotionNext
+    matched_domain: notion.com
+    matched_by: domain+name-in-listing
+    matched_where: source
+    matched_host: api.notion.com
+    builder: community
+    plugins:
+    - share-to-notionnext
+    - obsidian-notion-video
+    - notional
+    - auto-note-importer
+    - feynman-learning
+    - notion-vault-sync
+    - notion-database-sync
+    - notion-pull-lite
+    - multisync
+    - markdown-relay
+    - journal-sync-bridge
+    - akbun-notion-sync
+    - llm-wiki-sync
+    - vault-to-notion
+    downloads_context: 34849
+    signal_note: 'ONE edge per provider: a community plugin names the provider in its name/description AND carries
+      the provider''s domain or API host in its README or source. Builder is a named community author (not the provider).
+      Plugin and download counts are context, never counted.'
+    detected_by: sweep-obsidian-community-plugins.py
+    detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null

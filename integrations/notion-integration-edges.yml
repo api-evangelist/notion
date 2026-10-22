@@ -18,6 +18,12 @@ checked:
 - microsoft-teams/integrations/microsoft-teams-integration-edges.yml
 - slack/integrations/slack-integration-edges.yml
 - zoom/integrations/zoom-integration-edges.yml
+- https://www.ismap.go.jp/csm?id=cloud_service_list
+- https://www.ismap.go.jp/csm?id=cloud_service_list_liu
+- https://raw.githubusercontent.com/<repo>/HEAD/README.md
+- https://raw.githubusercontent.com/<repo>/HEAD/manifest.json
+- https://raw.githubusercontent.com/obsidianmd/obsidian-releases/793b52114f54b055b760ef47761ec5c93d689804/community-plugin-stats.json
+- https://raw.githubusercontent.com/obsidianmd/obsidian-releases/793b52114f54b055b760ef47761ec5c93d689804/community-plugins.json
 summary: null
 marketplace_apps:
 - marketplace: n8n
@@ -566,4 +572,103 @@ edges:
     builder: Pipedream repo (component)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: ISMAP
+  partner: null
+  partner_match: register
+  type: contract
+  channel: regulator-register
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://www.ismap.go.jp/csm?id=cloud_service_list
+  category: Japan government cloud security assessment (ISMAP)
+  contract_reference:
+    register: ISMAP / ISMAP-LIU cloud service lists (www.ismap.go.jp)
+    standard: ISMAP
+    spec_file: null
+    role: ismap-registered
+    registrations:
+    - register_number: C26-0120-2
+      registration_type: ISMAP
+      service: Notion
+      registered_name: Notion Labs, Inc.
+      service_url: https://www.notion.com
+      matched_domain: notion.com
+      matched_by: domain
+      evidence_url: https://www.ismap.go.jp/csm?id=cloud_service_list
+      scope_of_statement: https://www.ismap.go.jp/sys_attachment.do?sys_id=8a01821f2bf20710434ff14a6e91bf51
+    signal_note: certified_products = one entry per ISMAP registration TYPE (ISMAP, ISMAP-LIU), never per service;
+      services are context, never counted. The lists carry current registrations only (a filed renewal keeps a registration
+      valid), so lapsed is always false
+    certified_products:
+    - product: ISMAP
+      standard: ISMAP
+      registration_type: ISMAP
+      lapsed: false
+    detected_by: sweep-japan-ismap-tisax-assessments.py
+    detected: '2026-10-22'
+  detected_by: sweep-japan-ismap-tisax-assessments.py
+  first_seen: '2026-10-22'
+- partner_name: Obsidian
+  partner: obsidian
+  partner_match: aggregator
+  type: marketplace
+  marketplace: obsidian-community-plugins
+  channel: community-plugin
+  relationship: connector-listing
+  direction: third-party
+  evidence: https://github.com/jxpeng98/obsidian-to-NotionNext
+  app: Share to NotionNext
+  listing_count: 14
+  category: Obsidian community plugin
+  partner_url: https://obsidian.md/plugins
+  contract_reference:
+    register: Obsidian community-plugins.json (obsidianmd/obsidian-releases@793b5211) + plugin repo README / manifest
+      / source
+    spec_file: null
+    role: obsidian-community-plugin:community
+    registered_name: jxpeng98
+    register_id: https://github.com/jxpeng98/obsidian-to-NotionNext
+    matched_domain: notion.com
+    matched_by: domain+name-in-listing
+    matched_where: source
+    matched_host: api.notion.com
+    builder: community
+    plugins:
+    - share-to-notionnext
+    - obsidian-notion-video
+    - notional
+    - auto-note-importer
+    - feynman-learning
+    - notion-vault-sync
+    - notion-database-sync
+    - notion-pull-lite
+    - multisync
+    - markdown-relay
+    - journal-sync-bridge
+    - akbun-notion-sync
+    - llm-wiki-sync
+    - vault-to-notion
+    downloads_context: 34849
+    signal_note: 'ONE edge per provider: a community plugin names the provider in its name/description AND carries
+      the provider''s domain or API host in its README or source. Builder is a named community author (not the provider).
+      Plugin and download counts are context, never counted.'
+    detected_by: sweep-obsidian-community-plugins.py
+    detected: '2026-10-22'
+  detected_by: sweep-obsidian-community-plugins.py
+  first_seen: '2026-10-22'
+  apps:
+  - Share to NotionNext
+  - Notion Video
+  - Notional
+  - Auto Note Importer
+  - Feynman Learning
+  - Notion Vault Sync
+  - Notion Database Sync
+  - N2O Sync Lite
+  - Multi Cloud Sync
+  - Markdown Relay
+  - Journal Sync
+  - Akbun Notion Sync
+  - LLM Wiki Sync
+  - Vault to Notion
 templates: []
